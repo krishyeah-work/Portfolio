@@ -2,3 +2,10 @@
 .vercel/
 .DS_Store
 Thumbs.db
+
+# Internal source material: never publish (repo is public)
+*.docx
+*.pdf
+*.pptx
+*.xlsx
+portfolio-context/**/*PRD*
