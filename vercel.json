@@ -2,20 +2,20 @@
   "cleanUrls": true,
   "headers": [
     {
-      "source": "/assets/(.*)",
+      "source": "/(.*)\\.(css|js)",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=86400, stale-while-revalidate=604800"
+          "value": "public, max-age=0, must-revalidate"
         }
       ]
     },
     {
-      "source": "/work/(.*)\\.(webp|css|js|svg)",
+      "source": "/(.*)\\.(webp|svg|png|jpg)",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=86400, stale-while-revalidate=604800"
+          "value": "public, max-age=604800, stale-while-revalidate=86400"
         }
       ]
     }

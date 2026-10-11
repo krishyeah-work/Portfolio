@@ -35,21 +35,33 @@ function scramble(el, to, { duration = 700, upper = true } = {}) {
 }
 
 // Header name: hover shows "KRISHNA", leaving restores the full name.
+// The link keeps the full name's width, so the hover area never shrinks under the cursor
+// (otherwise the pointer would "leave" mid-animation and the effect would loop).
 document.querySelectorAll("[data-scramble-hover]").forEach((el) => {
   const full = el.textContent.trim();
   const short = el.dataset.scrambleHover;
   const link = el.closest("a") || el;
-  link.addEventListener("pointerenter", () => scramble(el, short, { duration: 450 }));
-  link.addEventListener("pointerleave", () => scramble(el, full, { duration: 550 }));
-  link.addEventListener("focus", () => scramble(el, short, { duration: 450 }));
-  link.addEventListener("blur", () => scramble(el, full, { duration: 550 }));
+  const lock = () => { link.style.minWidth = ""; link.style.minWidth = `${Math.ceil(link.getBoundingClientRect().width)}px`; };
+  lock();
+  document.fonts?.ready.then(lock);
+  let shown = full;
+  const show = (t, d) => { if (shown === t) return; shown = t; scramble(el, t, { duration: d }); };
+  link.addEventListener("pointerenter", () => show(short, 450));
+  link.addEventListener("pointerleave", () => show(full, 550));
+  link.addEventListener("focus", () => show(short, 450));
+  link.addEventListener("blur", () => show(full, 550));
 });
 
-// Case-study titles: start scrambled, then resolve.
+// Case-study titles: shown scrambled straight away, then resolved once fonts are ready and the
+// page has painted, so the effect is visible even on slower connections.
 document.querySelectorAll("[data-scramble-load]").forEach((el) => {
   const text = el.textContent.trim();
   el.setAttribute("aria-label", text);
-  scramble(el, text, { duration: 1100, upper: false });
+  if (reduce) return;
+  el.textContent = [...text].map((c) => (c === " " ? " " : GLYPHS[(Math.random() * GLYPHS.length) | 0].toLowerCase())).join("");
+  const fontsReady = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 1500))]);
+  const start = () => requestAnimationFrame(() => setTimeout(() => scramble(el, text, { duration: 1400, upper: false }), 150));
+  fontsReady.then(() => (document.hidden ? document.addEventListener("visibilitychange", start, { once: true }) : start()));
 });
 
 // Back to top.
