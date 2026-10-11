@@ -1,0 +1,28 @@
+/* cover.css — MailChimp cover (logo in pixel dust). Shared by the homepage card and the case-study hero. */
+
+:root { --mc-yellow: #ffe01b; }
+
+.mc-stage {
+  position: relative; display: grid; place-items: center; overflow: hidden;
+  aspect-ratio: 16 / 7; min-height: 240px;
+  border-radius: 18px; border: 1px solid var(--line);
+  background:
+    radial-gradient(45% 60% at 50% 52%, rgba(255, 224, 27, 0.1), transparent 70%),
+    linear-gradient(180deg, #111114, #0b0b0d);
+}
+@media (max-width: 700px) { .mc-stage { aspect-ratio: 4 / 3; } }
+.mc-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mc-stage__float { position: relative; width: clamp(76px, 10vw, 136px); animation: mc-float 7s ease-in-out infinite; }
+.mc-stage__logo {
+  display: block; width: 100%; height: auto; fill: var(--mc-yellow);
+  filter: drop-shadow(0 0 32px rgba(255, 224, 27, 0.22));
+  transform: translate(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 8px)) rotate(calc(var(--mx, 0) * 3deg));
+}
+@keyframes mc-float { 0%, 100% { transform: translateY(-6px); } 50% { transform: translateY(6px); } }
+@media (prefers-reduced-motion: reduce) { .mc-stage__float { animation: none; } }
+
+
+/* sizing per context */
+.cs-hero .mc-stage { margin-top: clamp(36px, 5vw, 56px); }
+.card__art.mc-stage { aspect-ratio: 16 / 11; min-height: 0; padding: 0; }
+.card__art.mc-stage .mc-stage__float { width: clamp(64px, 8vw, 112px); }

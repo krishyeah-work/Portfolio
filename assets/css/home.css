@@ -82,7 +82,7 @@
 /* ---------- about ---------- */
 .about-grid { display: grid; gap: clamp(36px, 5vw, 72px); }
 @media (min-width: 900px) { .about-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
-.about-copy { display: grid; gap: 1.1em; font-size: var(--fs-lead); line-height: 1.6; max-width: 36em; color: var(--ink-2); }
+.about-copy { display: grid; gap: 1.1em; align-content: start; font-size: var(--fs-lead); line-height: 1.6; max-width: 36em; color: var(--ink-2); }
 .ledger { list-style: none; border-top: 1px solid var(--line-strong); }
 .ledger li { display: grid; grid-template-columns: 7rem 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
 .ledger .label { padding-top: 3px; }

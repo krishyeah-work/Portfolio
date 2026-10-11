@@ -102,13 +102,12 @@ a:hover { color: var(--accent); }
 /* ---------- header ---------- */
 .site-header { position: sticky; top: 0; z-index: 5; background: rgba(12, 12, 14, 0.82); backdrop-filter: saturate(140%) blur(12px); -webkit-backdrop-filter: saturate(140%) blur(12px); border-bottom: 1px solid var(--line); }
 .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
-.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 500; font-size: 1rem; letter-spacing: -0.01em; }
-.brand:hover { color: var(--ink); }
-.brand-mark { width: 28px; height: 28px; flex: none; border-radius: 8px; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font-size: 0.8rem; font-weight: 600; letter-spacing: 0; }
+.brand { display: inline-flex; align-items: center; text-decoration: none; font-weight: 500; font-size: 0.95rem; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+.brand:hover { color: var(--accent); }
 .nav { display: flex; gap: clamp(16px, 2.6vw, 34px); font-size: 0.92rem; }
 .nav a { text-decoration: none; color: var(--muted); font-weight: 400; }
 .nav a:hover, .nav a[aria-current="page"] { color: var(--ink); }
-@media (max-width: 520px) { .brand-name { display: none; } .nav .nav-optional { display: none; } }
+@media (max-width: 520px) { .brand { font-size: 0.82rem; letter-spacing: 0.1em; } .nav .nav-optional { display: none; } }
 
 /* ---------- buttons ---------- */
 .btn {
@@ -159,3 +158,27 @@ a:hover { color: var(--accent); }
   .site-header, .toc { display: none; }
   body { background: #fff; color: #000; }
 }
+
+/* ---------- grain texture ---------- */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 60; pointer-events: none;
+  opacity: 0.06; mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.4 -0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+@media print { body::after { display: none; } }
+
+/* ---------- back to top ---------- */
+.to-top {
+  position: fixed; right: clamp(16px, 3vw, 32px); bottom: clamp(16px, 3vw, 32px); z-index: 40;
+  width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(22, 22, 26, 0.88); color: var(--ink); border: 1px solid var(--line-strong);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  font: inherit; font-size: 1.1rem; cursor: pointer;
+  opacity: 0; transform: translateY(12px); pointer-events: none;
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.to-top.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+.to-top:hover { border-color: var(--accent); color: var(--accent); }
+
+main:focus { outline: none; }

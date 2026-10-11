@@ -214,21 +214,25 @@
 .carousel__btn:disabled { opacity: 0.3; cursor: default; }
 .carousel__count { color: var(--muted); font-size: 0.88rem; min-width: 3.5em; text-align: center; }
 
-/* lightbox (enlarge any screen) */
+/* lightbox (enlarge any screen) — the image always fits the area between the close button and the hint */
 img.is-zoomable { cursor: zoom-in; }
 html.lb-open { overflow: hidden; }
 .lb {
-  position: fixed; inset: 0; z-index: 50; display: grid; place-items: center;
-  padding: clamp(56px, 6vw, 88px) clamp(16px, 5vw, 80px) clamp(40px, 5vw, 64px);
-  background: rgba(8, 8, 10, 0.94); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  --lb-top: 72px; --lb-bottom: 52px; --lb-side: clamp(12px, 4vw, 64px);
+  position: fixed; inset: 0; z-index: 70;
+  background: rgba(8, 8, 10, 0.95); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   opacity: 0; transition: opacity 0.2s var(--ease);
 }
 .lb[hidden] { display: none; }
 .lb.is-open { opacity: 1; }
-.lb__frame { width: 100%; height: 100%; display: grid; place-items: center; overflow: hidden; border-radius: 10px; }
+.lb__frame {
+  position: absolute; top: var(--lb-top); bottom: var(--lb-bottom); left: var(--lb-side); right: var(--lb-side);
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
 .lb__img {
-  max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: 10px; background: #fff;
-  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.9); cursor: zoom-in; transition: transform 0.35s var(--ease);
+  display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;
+  border-radius: 8px; background: #fff; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.9);
+  cursor: zoom-in; transition: transform 0.35s var(--ease);
 }
 .lb.is-zoomed .lb__img { cursor: zoom-out; border-radius: 0; }
 .lb.is-zoomed .lb__frame { touch-action: none; }

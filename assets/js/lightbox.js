@@ -16,7 +16,7 @@
   box.innerHTML = `
     <button type="button" class="lb__close" aria-label="Close enlarged image"><span class="lb__x" aria-hidden="true">×</span><span class="lb__back">Back</span></button>
     <div class="lb__frame"><img class="lb__img" alt=""></div>
-    <p class="lb__hint" aria-hidden="true">Click to zoom · Esc to close</p>`;
+    <p class="lb__hint" aria-hidden="true">Click/tap to zoom · Esc to close</p>`;
   document.body.append(box);
 
   const img = box.querySelector(".lb__img");

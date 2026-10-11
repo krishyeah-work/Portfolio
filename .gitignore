@@ -12,3 +12,6 @@ portfolio-context/**/*PRD*
 
 # Raw Figma exports (only optimized picks in assets/img are published)
 Resources from figma/
+
+# Public résumé is the one PDF that should be published
+!assets/Krishna-Revanth-Resume.pdf

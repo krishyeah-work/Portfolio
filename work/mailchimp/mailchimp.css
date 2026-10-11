@@ -1,36 +1,18 @@
 /* mailchimp.css — styles used only by the MailChimp case study.
    Shared case-study styles live in /assets/css/case-study.css. */
 
-:root { --mc-yellow: #ffe01b; }
-
-/* ---------- hero: logo floating in pixel dust ---------- */
-.mc-stage {
-  position: relative; display: grid; place-items: center; overflow: hidden;
-  margin-top: clamp(36px, 5vw, 56px); aspect-ratio: 16 / 7; min-height: 280px;
-  border-radius: 18px; border: 1px solid var(--line);
-  background:
-    radial-gradient(45% 60% at 50% 52%, rgba(255, 224, 27, 0.1), transparent 70%),
-    linear-gradient(180deg, #111114, #0b0b0d);
-}
-@media (max-width: 700px) { .mc-stage { aspect-ratio: 4 / 3; } }
-.mc-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.mc-stage__float { position: relative; width: clamp(108px, 15vw, 190px); animation: mc-float 7s ease-in-out infinite; }
-.mc-stage__logo {
-  display: block; width: 100%; height: auto; fill: var(--mc-yellow);
-  filter: drop-shadow(0 0 32px rgba(255, 224, 27, 0.22));
-  transform: translate(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 8px)) rotate(calc(var(--mx, 0) * 3deg));
-}
-@keyframes mc-float { 0%, 100% { transform: translateY(-6px); } 50% { transform: translateY(6px); } }
-@media (prefers-reduced-motion: reduce) { .mc-stage__float { animation: none; } }
-
 /* ---------- cart explorations: scroll sequence ---------- */
 .seq { margin-top: clamp(28px, 4vw, 44px); }
 .seq__list { list-style: none; display: grid; gap: clamp(48px, 6vw, 72px); }
 .seq__item { display: grid; gap: 20px; align-items: center; }
 @media (min-width: 860px) { .seq__item { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px; } }
+/* every cart sits in the same fixed frame, top-aligned, so each one lands in exactly the same spot */
 .seq__media { margin: 0; display: grid; place-items: center; }
-.seq__media .shot { width: auto; max-width: 100%; }
-.seq__media img { width: auto; max-width: 100%; max-height: min(64vh, 620px); }
+.seq__media .shot {
+  width: min(100%, calc(min(64vh, 620px) * 0.58)); aspect-ratio: 0.58;
+  display: flex; align-items: flex-start; justify-content: center; background: #fff;
+}
+.seq__media .shot img { width: 100%; height: 100%; object-fit: contain; object-position: top center; }
 .seq__item.is-final .shot { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 30px 60px -30px rgba(0, 0, 0, 0.8); }
 .seq__text { display: grid; gap: 10px; max-width: 30em; }
 .seq__text h4 { font-size: var(--fs-h3); font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; margin: 0; }
@@ -58,26 +40,23 @@
 @media (max-width: 859px) {
   .seq.is-live .seq__stage { top: 76px; height: calc(100vh - 96px); }
   .seq.is-live .seq__item { align-content: center; }
-  .seq.is-live .seq__media img { max-height: 46vh; }
+  .seq.is-live .seq__media .shot { width: min(100%, calc(46vh * 0.58)); }
 }
 
-/* ---------- guardrails: dialogs over an outlined dashboard ---------- */
+/* ---------- guardrails: dialogs over the real dashboard, traced in yellow lines ---------- */
 .gr-list { display: grid; gap: clamp(28px, 4vw, 44px); margin-top: clamp(24px, 3vw, 36px); }
 .gr { margin: 0; display: grid; gap: 12px; }
 .gr__stage {
-  position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--radius);
+  position: relative; aspect-ratio: 16 / 10; overflow: hidden; border-radius: var(--radius);
   border: 1px solid var(--line);
-  background: radial-gradient(60% 70% at 50% 55%, rgba(245, 196, 81, 0.06), transparent 70%), var(--bg-2);
+  background: radial-gradient(60% 70% at 50% 55%, rgba(245, 196, 81, 0.05), transparent 70%), var(--bg-2);
 }
-.gr__dash { position: absolute; inset: 0; width: 100%; height: 100%; }
-.gr__dash * { fill: none; stroke: rgba(245, 196, 81, 0.5); stroke-width: 1; vector-effect: non-scaling-stroke; }
-.gr__dash .soft { stroke: rgba(245, 196, 81, 0.24); }
-.gr__dash .fill { fill: rgba(245, 196, 81, 0.12); }
+.gr__dash { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* dialog width matches its real size on the 1600px-wide screen (994 / 2400 of the 1.5x export) */
 .gr__dialog {
-  position: absolute; left: 50%; top: 52%; width: min(72%, 680px); height: auto;
-  transform: translate(-50%, -50%); border-radius: 10px;
-  box-shadow: 0 0 0 1px rgba(245, 196, 81, 0.7), 0 36px 70px -24px rgba(0, 0, 0, 0.95);
+  position: absolute; left: 50%; top: 50%; width: 41.4%; height: auto;
+  transform: translate(-50%, -50%); border-radius: 8px;
+  box-shadow: 0 0 0 1px rgba(245, 196, 81, 0.75), 0 30px 60px -20px rgba(0, 0, 0, 0.95);
 }
 .gr figcaption { display: flex; gap: 12px; align-items: baseline; color: var(--muted); font-size: var(--fs-small); }
 .gr figcaption .label { color: var(--ink-2); flex: none; }
-@media (max-width: 600px) { .gr__stage { aspect-ratio: 4 / 3; } .gr__dialog { width: 88%; } }
