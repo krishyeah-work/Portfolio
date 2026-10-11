@@ -9,3 +9,6 @@ Thumbs.db
 *.pptx
 *.xlsx
 portfolio-context/**/*PRD*
+
+# Raw Figma exports (only optimized picks in assets/img are published)
+Resources from figma/

@@ -353,14 +353,13 @@ a:hover { color: var(--accent); }
 .param dt { font-size: 0.8rem; color: var(--muted); }
 .param dd { margin: 0; font-size: 0.95rem; color: var(--ink-2); line-height: 1.4; }
 
-/* iterations */
-.iters { display: grid; gap: clamp(28px, 4vw, 44px); margin-top: clamp(28px, 4vw, 44px); }
-.iter { display: grid; gap: 18px; }
-@media (min-width: 900px) { .iter { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 36px; align-items: start; } }
-.iter__text { display: grid; gap: 8px; }
-.iter__text h3 { font-size: var(--fs-h3); }
-.iter__text p { color: var(--muted); font-size: var(--fs-small); }
-.iter .shot { background: #3a3a3e; }
+/* wireframe rounds */
+.round { display: grid; gap: 4px; margin-top: clamp(32px, 4.5vw, 52px); }
+.round__text { display: grid; gap: 8px; max-width: 42em; }
+.round__text h3 { font-size: var(--fs-h3); }
+.round__text p { color: var(--muted); }
+.round .figs-2 { margin-top: 20px; }
+.round .shot { background: #fff; }
 
 /* final flow */
 .flow { list-style: none; display: grid; gap: 0; margin-top: clamp(28px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
@@ -376,11 +375,16 @@ a:hover { color: var(--accent); }
 .screen__head h3 { font-size: var(--fs-h3); }
 .screen__head p { color: var(--muted); }
 .screen__head .label { color: var(--accent); }
-.pending {
-  aspect-ratio: 16 / 10; border: 1px dashed var(--line-strong); border-radius: var(--radius);
-  display: grid; place-items: center; text-align: center; padding: 24px; color: var(--muted); background: var(--surface);
-}
-.pending strong { display: block; color: var(--ink-2); margin-top: 6px; font-weight: 400; }
+.figs-2--top { align-items: start; margin-top: 0; }
+
+/* cart explorations */
+.explore4 { display: grid; gap: 18px; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; margin-top: clamp(20px, 3vw, 32px); }
+@media (min-width: 1000px) { .explore4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.explore4 figure { margin: 0; display: grid; gap: 12px; }
+.explore4 figcaption { font-size: 0.88rem; line-height: 1.5; color: var(--muted); }
+.explore4 figcaption strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 2px; }
+.explore4 .is-final .shot { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 30px 60px -30px rgba(0, 0, 0, 0.8); }
+.explore4 .is-final figcaption strong { color: var(--accent); }
 
 /* team */
 .team { list-style: none; display: grid; gap: 0; margin-top: clamp(24px, 3vw, 36px); border-top: 1px solid var(--line-strong); }
