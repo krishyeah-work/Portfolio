@@ -69,8 +69,7 @@ document.querySelectorAll("[data-scramble-load]").forEach((el) => {
   const btn = document.createElement("button");
   btn.type = "button";
   btn.className = "to-top";
-  btn.setAttribute("aria-label", "Back to top");
-  btn.innerHTML = '<span aria-hidden="true">↑</span>';
+  btn.innerHTML = '<span class="to-top__icon" aria-hidden="true">↑</span><span class="to-top__text">Scroll to top</span>';
   document.body.append(btn);
   const update = () => btn.classList.toggle("is-visible", window.scrollY > 600);
   window.addEventListener("scroll", update, { passive: true });

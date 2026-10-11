@@ -7,7 +7,7 @@
   aspect-ratio: 16 / 7; min-height: 240px;
   border-radius: 18px; border: 1px solid var(--line);
   background:
-    radial-gradient(45% 60% at 50% 52%, rgba(255, 224, 27, 0.1), transparent 70%),
+    radial-gradient(40% 55% at 50% 52%, rgba(255, 224, 27, 0.045), transparent 70%),
     linear-gradient(180deg, #111114, #0b0b0d);
 }
 @media (max-width: 700px) { .mc-stage { aspect-ratio: 4 / 3; } }
@@ -15,7 +15,7 @@
 .mc-stage__float { position: relative; width: clamp(76px, 10vw, 136px); animation: mc-float 7s ease-in-out infinite; }
 .mc-stage__logo {
   display: block; width: 100%; height: auto; fill: var(--mc-yellow);
-  filter: drop-shadow(0 0 32px rgba(255, 224, 27, 0.22));
+  filter: drop-shadow(0 0 22px rgba(255, 224, 27, 0.1));
   transform: translate(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 8px)) rotate(calc(var(--mx, 0) * 3deg));
 }
 @keyframes mc-float { 0%, 100% { transform: translateY(-6px); } 50% { transform: translateY(6px); } }
