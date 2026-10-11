@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Selling Mailchimp through Intuit's sales team — Krishna Revanth</title>
+  <meta name="description" content="Case study: a purchase flow that lets Intuit sales agents sell Mailchimp to businesses new to Intuit, and shows clearly what is charged now and what is charged only after approval.">
+  <meta property="og:title" content="Selling Mailchimp through Intuit's sales team — Krishna Revanth">
+  <meta property="og:description" content="Splitting the cart by when money moves: a purchase-flow case study.">
+  <meta property="og:type" content="article">
+  <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f0f0e" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script src="/assets/js/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Krishna Revanth, home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="5" width="26" height="9" rx="2.5" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="3" y="18" width="26" height="9" rx="2.5" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-dasharray="4 3"/></svg>
+        <span class="brand-name">Krishna Revanth</span>
+      </a>
+      <nav class="nav mono" aria-label="Primary">
+        <a href="/#work" aria-current="page">Work</a>
+        <a class="nav-optional" href="/#approach">Approach</a>
+        <a href="/#about">About</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <header class="cs-hero">
+      <div class="wrap">
+        <a class="crumb mono" href="/#work">← All work</a>
+        <p class="mono muted" style="margin-top:28px">Case study 01 · Intuit × Mailchimp</p>
+        <h1 class="cs-title">What's charged now, and what's charged only if approved.</h1>
+        <p class="cs-lead">Intuit wanted its sales agents to sell Mailchimp to businesses that are new to Intuit. I designed the purchase flow agents use to build that order — including the decision that made add-ons with approval-dependent billing make sense to everyone on the call.</p>
+
+        <dl class="meta-grid">
+          <div><dt class="mono">My role</dt><dd>UX Designer — flows, mid-fi exploration, high-fi design, handoff</dd></div>
+          <div><dt class="mono">Team</dt><dd>UX lead, staff product designer, PM, engineering, legal, finance <span class="todo">names OK to publish?</span></dd></div>
+          <div><dt class="mono">Timeline</dt><dd>Jan – Mar 2026 <span class="todo">confirm</span></dd></div>
+          <div><dt class="mono">Used by</dt><dd>Intuit sales agents, inside Salesforce</dd></div>
+          <div><dt class="mono">Status</dt><dd>In launch / deployment · Oct 2026</dd></div>
+        </dl>
+      </div>
+    </header>
+
+    <div class="wrap">
+      <div class="tldr" aria-label="Summary">
+        <div><span class="mono">The problem</span><p>One cart, two kinds of charge. SMS can't be billed until an outside authority approves it; Email Marketing can be billed right away. A single total would tell the agent — and the customer — something untrue.</p></div>
+        <div><span class="mono">My call</span><p>I proposed splitting the cart into <strong>charged today</strong> and <strong>charged only if approved</strong>. The team aligned on it as a pattern that scales to future approval-dependent products.</p></div>
+        <div><span class="mono">Where it is</span><p>High-fidelity flows handed off; the feature is in launch and deployment as of October 2026. I don't have usage results to share yet.</p></div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="cs-cover">
+        <div>
+          <p class="mono" style="color:var(--accent)">Try the idea</p>
+          <h2>Pick an approval outcome. Watch what the customer pays.</h2>
+          <p>Today's charge never changes. The SMS charge only happens if approval comes through — and the summary says so before anyone confirms.</p>
+        </div>
+        <figure class="receipt" data-receipt aria-labelledby="r2-title">
+          <div class="receipt__head">
+            <span class="mono" id="r2-title">Order summary</span>
+            <span class="tag">Concept recreation</span>
+          </div>
+          <fieldset class="seg">
+            <legend class="mono">SMS approval comes back…</legend>
+            <div class="seg__opts">
+              <label><input type="radio" name="r2" value="pending" checked><span>Pending</span></label>
+              <label><input type="radio" name="r2" value="approved"><span>Approved</span></label>
+              <label><input type="radio" name="r2" value="denied"><span>Denied</span></label>
+            </div>
+          </fieldset>
+          <div class="bucket bucket--now">
+            <p class="bucket__label">Charged today</p>
+            <div class="line"><span>Email Marketing</span><span class="amt">$40.00</span></div>
+          </div>
+          <div class="bucket bucket--later">
+            <p class="bucket__label"><span class="s-pending">Charged only if approved</span><span class="s-approved">Approved · charged to saved card</span><span class="s-denied">Not approved · never charged</span></p>
+            <div class="line"><span>SMS add-on <small>Needs external approval first</small></span><span class="amt">$15.00</span></div>
+          </div>
+          <div class="receipt__total">
+            <span>Due today</span><span class="amt amt--big">$40.00</span>
+          </div>
+          <p class="receipt__after"><span class="s-pending">+ $15.00 later, only if SMS is approved</span><span class="s-approved">$15.00 charged when approval landed</span><span class="s-denied">Nothing else to pay</span></p>
+          <p class="sr-only" aria-live="polite" data-receipt-live></p>
+          <figcaption>Illustrative recreation with sample amounts. Not the production UI, prices or copy.</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="wrap section--tight">
+      <div class="cs-layout">
+        <nav class="toc" aria-label="On this page">
+          <ol class="mono">
+            <li><a href="#context"><span class="mono">01</span>Context</a></li>
+            <li><a href="#challenge"><span class="mono">02</span>Challenge</a></li>
+            <li><a href="#exploration"><span class="mono">03</span>Exploration</a></li>
+            <li><a href="#decision"><span class="mono">04</span>Decision</a></li>
+            <li><a href="#flows"><span class="mono">05</span>Flows</a></li>
+            <li><a href="#alignment"><span class="mono">06</span>Alignment</a></li>
+            <li><a href="#status"><span class="mono">07</span>Status &amp; impact</a></li>
+          </ol>
+        </nav>
+
+        <article>
+          <!-- 01 -->
+          <section class="cs-section" id="context" aria-labelledby="h-context">
+            <span class="mono">01 — Context</span>
+            <h2 id="h-context">A new way to bring Mailchimp to new customers.</h2>
+            <div class="prose">
+              <p>Intuit's sales agents talk to businesses every day, including ones that don't use any Intuit product yet. Internally these are <strong>NTTF</strong> customers: <em>New To The Franchise</em>.</p>
+              <p>The initiative gave agents a way to sell Mailchimp to those businesses directly from the sales channel, with <strong>Email Marketing</strong> as the primary product and <strong>Mailchimp SMS</strong> and <strong>Transactional Email</strong> as add-ons.</p>
+              <p>The business bet is simple: every agent conversation with a new business becomes a chance to start a Mailchimp relationship — if the agent can build the order confidently, in one flow, while the customer is still on the call.</p>
+              <p><span class="todo">PRD business goal / target: paste the approved wording and its time horizon, labelled as a target</span></p>
+            </div>
+          </section>
+
+          <!-- 02 -->
+          <section class="cs-section" id="challenge" aria-labelledby="h-challenge">
+            <span class="mono">02 — Challenge</span>
+            <h2 id="h-challenge">Some products can be billed today. Some can't be billed until someone else says yes.</h2>
+            <div class="prose">
+              <p>Email Marketing can be bought and billed immediately. SMS needs approval from an outside authority before the business can use it. The business consents up front to having its saved card charged for SMS <em>if</em> approval is granted — and isn't charged if it's denied.</p>
+              <p>So one order holds two clocks. The obvious cart design hides that.</p>
+            </div>
+
+            <figure class="figure">
+              <div class="compare">
+                <div class="panel">
+                  <div class="panel__label"><span class="mono">One total</span><span class="mono">Misleading</span></div>
+                  <div class="line"><span>Email Marketing</span><span class="amt">$40.00</span></div>
+                  <div class="line"><span>SMS add-on</span><span class="amt">$15.00</span></div>
+                  <div class="sum"><span>Total</span><span class="amt">$55.00</span></div>
+                  <p class="q"><b>Customer:</b> “So I'm paying $55 today?” — <b>No.</b> And if SMS is denied, never.</p>
+                </div>
+                <div class="panel panel--good">
+                  <div class="panel__label"><span class="mono">Split by when it's charged</span><span class="mono">Proposed</span></div>
+                  <div class="line"><span>Email Marketing</span><span class="amt">$40.00</span></div>
+                  <div class="sum"><span>Due today</span><span class="amt">$40.00</span></div>
+                  <div class="later line"><span>SMS add-on <small style="display:block;color:var(--muted)">Charged only if approved</small></span><span class="amt">$15.00</span></div>
+                  <p class="q">The agent can say exactly what happens today, what might happen later, and what decides it.</p>
+                </div>
+              </div>
+              <figcaption><span class="mono">Fig. 1</span>Concept illustration with sample amounts. The customer line is illustrative, not a research quote.</figcaption>
+            </figure>
+
+            <figure class="figure">
+              <div class="clocks">
+                <div class="lane">
+                  <div class="lane__head"><h3>Email Marketing</h3><span class="mono muted">No approval needed</span></div>
+                  <ol class="ticks" role="list">
+                    <li><span class="mono">Agent</span>Adds product to the order</li>
+                    <li><span class="mono">Customer</span>Confirms purchase</li>
+                    <li><span class="mono">Billing</span><span class="yes">Charged today</span></li>
+                  </ol>
+                </div>
+                <div class="lane lane--later">
+                  <div class="lane__head"><h3>Mailchimp SMS</h3><span class="mono muted">Approval-dependent</span></div>
+                  <ol class="ticks" role="list">
+                    <li><span class="mono">Agent</span>Adds SMS as an add-on</li>
+                    <li><span class="mono">Customer</span>Consents to a future charge on the saved card</li>
+                    <li><span class="mono">Outside authority</span>Reviews the request</li>
+                    <li class="fork"><span class="mono">Billing</span><span class="yes">Approved → charged</span><span>Denied → never charged</span></li>
+                  </ol>
+                </div>
+              </div>
+              <figcaption><span class="mono">Fig. 2</span>Two clocks in one order. Whether Transactional Email also needs approval is <span class="todo">confirm</span>.</figcaption>
+            </figure>
+          </section>
+
+          <!-- 03 -->
+          <section class="cs-section" id="exploration" aria-labelledby="h-exploration">
+            <span class="mono">03 — Exploration</span>
+            <h2 id="h-exploration">Showing options early, in mid-fidelity.</h2>
+            <div class="prose">
+              <p>I worked with the PM and staff product designer to pin down requirements and scope, then joined the team's solution brainstorms. From there I built <strong>mid-fidelity variations of the flow</strong> so we could compare approaches side by side instead of debating them in the abstract.</p>
+              <p><span class="todo">Add 2–3 directions you explored and why each was kept or dropped</span></p>
+            </div>
+            <figure class="figure">
+              <div class="frames frames--3">
+                <div class="frame-ph"><div><span class="mono">Mid-fi · A</span><strong>Awaiting approved frame</strong></div></div>
+                <div class="frame-ph"><div><span class="mono">Mid-fi · B</span><strong>Awaiting approved frame</strong></div></div>
+                <div class="frame-ph"><div><span class="mono">Mid-fi · C</span><strong>Awaiting approved frame</strong></div></div>
+              </div>
+              <figcaption><span class="mono">Fig. 3</span>Placeholder slots. Real frames will be added only once they're cleared for public use, and recreated or redacted where needed.</figcaption>
+            </figure>
+          </section>
+
+          <!-- 04 -->
+          <section class="cs-section" id="decision" aria-labelledby="h-decision">
+            <span class="mono">04 — Decision</span>
+            <h2 id="h-decision">Split the cart by when money moves.</h2>
+            <div class="prose">
+              <p>I proposed separating the order summary into two groups:</p>
+              <ul>
+                <li><strong>Charged today</strong> — products that can be billed immediately.</li>
+                <li><strong>Charged only if approved</strong> — products whose charge depends on a future approval, with the condition stated right next to the amount.</li>
+              </ul>
+              <p>The team aligned on this direction. Part of the reason was that it doesn't only fix SMS: any future product that needs outside approval drops into the second group without redesigning the summary.</p>
+            </div>
+            <p class="pull">An agent should never have to explain away the number on their own screen.</p>
+            <div class="prose">
+              <p>What the split has to communicate, every time:</p>
+              <ul>
+                <li><strong>Amount</strong> — what's paid today vs. what may be paid later.</li>
+                <li><strong>Condition</strong> — what the later charge depends on.</li>
+                <li><strong>Consent</strong> — that the saved card will be charged if approval comes through.</li>
+                <li><strong>Denial</strong> — that nothing is charged if it doesn't.</li>
+              </ul>
+              <p><span class="todo">Confirm how the final design handled timing, consent copy and denial — and what you owned vs. the UX lead</span></p>
+            </div>
+          </section>
+
+          <!-- 05 -->
+          <section class="cs-section" id="flows" aria-labelledby="h-flows">
+            <span class="mono">05 — Flows</span>
+            <h2 id="h-flows">Designing every way an order can change.</h2>
+            <div class="prose">
+              <p>Beyond the happy path, I took the high-fidelity design through each way an agent changes an order mid-conversation, and the moments where the system has to stop them.</p>
+            </div>
+            <ol class="flows" role="list">
+              <li><span class="mono">A</span><h3>Add</h3><p>Choose the primary product, then layer add-ons.</p></li>
+              <li><span class="mono">B</span><h3>Remove</h3><p>Take products off without breaking dependencies.</p></li>
+              <li><span class="mono">C</span><h3>Modify</h3><p>Change selections without restarting the order.</p></li>
+              <li><span class="mono">D</span><h3>Blockers</h3><p>States that stop a purchase until resolved. <span class="todo">examples</span></p></li>
+              <li><span class="mono">E</span><h3>Purchase</h3><p>Review the split summary and confirm.</p></li>
+            </ol>
+            <figure class="figure">
+              <div class="frame-ph"><div><span class="mono">High-fidelity flow</span><strong>Awaiting approved frames — will be recreated or redacted</strong></div></div>
+            </figure>
+          </section>
+
+          <!-- 06 -->
+          <section class="cs-section" id="alignment" aria-labelledby="h-alignment">
+            <span class="mono">06 — Alignment</span>
+            <h2 id="h-alignment">Billing that depends on consent needs more than design sign-off.</h2>
+            <div class="prose">
+              <p>Because the flow touches money and consent, I worked through requirements and feasibility with partners well beyond design, then supported changes and handoff as the feature moved toward launch.</p>
+            </div>
+            <ul class="partners" role="list">
+              <li><strong>Product</strong><span>Requirements, scope and the business goal</span></li>
+              <li><strong>Design lead &amp; staff designer</strong><span>Direction, critique, pattern consistency</span></li>
+              <li><strong>Engineering</strong><span>Feasibility of the split and approval states</span></li>
+              <li><strong>Legal &amp; finance</strong><span>Requirements around consent and conditional billing</span></li>
+            </ul>
+            <div class="prose" style="margin-top:24px">
+              <p><span class="todo">One concrete moment where partner feedback changed the design</span></p>
+            </div>
+          </section>
+
+          <!-- 07 -->
+          <section class="cs-section" id="status" aria-labelledby="h-status">
+            <span class="mono">07 — Status &amp; impact</span>
+            <h2 id="h-status">In launch. Here's what it's built to do.</h2>
+            <div class="status">
+              <div class="panel panel--good">
+                <h3>Where it is</h3>
+                <ul>
+                  <li>High-fidelity flows designed and handed off.</li>
+                  <li>In launch / deployment as of October 2026.</li>
+                  <li>No post-launch metrics yet — I'll add them here when they're real and cleared to share.</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <h3>What it's designed to enable</h3>
+                <ul>
+                  <li>Agents can sell Mailchimp to businesses new to Intuit, in the same conversation.</li>
+                  <li>Customers know what they pay today and what may follow.</li>
+                  <li>New approval-dependent products fit the same summary pattern.</li>
+                  <li><span class="todo">PRD target, labelled as a target</span></li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </article>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <a class="next-cs" href="/work/quickbooks-rate-tables/">
+        <span class="mono">Next case study · 02</span>
+        <h2>QuickBooks fee tables <span class="arrow" aria-hidden="true">→</span></h2>
+      </a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap mono">
+      <span>© 2026 Krishna Revanth</span>
+      <span>Product names belong to Intuit. Visuals are recreations.</span>
+    </div>
+  </footer>
+</body>
+</html>
