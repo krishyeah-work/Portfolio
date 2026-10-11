@@ -1,0 +1,83 @@
+/* mailchimp.css — styles used only by the MailChimp case study.
+   Shared case-study styles live in /assets/css/case-study.css. */
+
+:root { --mc-yellow: #ffe01b; }
+
+/* ---------- hero: logo floating in pixel dust ---------- */
+.mc-stage {
+  position: relative; display: grid; place-items: center; overflow: hidden;
+  margin-top: clamp(36px, 5vw, 56px); aspect-ratio: 16 / 7; min-height: 280px;
+  border-radius: 18px; border: 1px solid var(--line);
+  background:
+    radial-gradient(45% 60% at 50% 52%, rgba(255, 224, 27, 0.1), transparent 70%),
+    linear-gradient(180deg, #111114, #0b0b0d);
+}
+@media (max-width: 700px) { .mc-stage { aspect-ratio: 4 / 3; } }
+.mc-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mc-stage__float { position: relative; width: clamp(108px, 15vw, 190px); animation: mc-float 7s ease-in-out infinite; }
+.mc-stage__logo {
+  display: block; width: 100%; height: auto; fill: var(--mc-yellow);
+  filter: drop-shadow(0 0 32px rgba(255, 224, 27, 0.22));
+  transform: translate(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 8px)) rotate(calc(var(--mx, 0) * 3deg));
+}
+@keyframes mc-float { 0%, 100% { transform: translateY(-6px); } 50% { transform: translateY(6px); } }
+@media (prefers-reduced-motion: reduce) { .mc-stage__float { animation: none; } }
+
+/* ---------- cart explorations: scroll sequence ---------- */
+.seq { margin-top: clamp(28px, 4vw, 44px); }
+.seq__list { list-style: none; display: grid; gap: clamp(48px, 6vw, 72px); }
+.seq__item { display: grid; gap: 20px; align-items: center; }
+@media (min-width: 860px) { .seq__item { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px; } }
+.seq__media { margin: 0; display: grid; place-items: center; }
+.seq__media .shot { width: auto; max-width: 100%; }
+.seq__media img { width: auto; max-width: 100%; max-height: min(64vh, 620px); }
+.seq__item.is-final .shot { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 30px 60px -30px rgba(0, 0, 0, 0.8); }
+.seq__text { display: grid; gap: 10px; max-width: 30em; }
+.seq__text h4 { font-size: var(--fs-h3); font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; margin: 0; }
+.seq__text p { color: var(--ink-2); }
+.seq__text .label { color: var(--muted); }
+.seq__item.is-final .seq__text .label { color: var(--accent); }
+.seq__dots { display: none; }
+
+/* live (JS) mode: pinned stage, one cart at a time */
+.seq.is-live { height: calc(100vh - 120px + var(--n) * 62vh); }
+.seq.is-live .seq__stage { position: sticky; top: 96px; height: calc(100vh - 128px); }
+.seq.is-live .seq__list { position: relative; height: 100%; display: block; }
+.seq.is-live .seq__item {
+  position: absolute; inset: 0; opacity: 0; pointer-events: none;
+  transform: translateY(56px) scale(0.97);
+  transition: opacity 0.55s var(--ease), transform 0.75s var(--ease);
+}
+.seq.is-live .seq__item.is-past { transform: translateY(-40px) scale(0.97); }
+.seq.is-live .seq__item.is-active { opacity: 1; transform: none; pointer-events: auto; }
+.seq.is-live .seq__text { opacity: 0; transform: translateX(18px); transition: opacity 0.5s var(--ease) 0.15s, transform 0.6s var(--ease) 0.15s; }
+.seq.is-live .seq__item.is-active .seq__text { opacity: 1; transform: none; }
+.seq.is-live .seq__dots { display: flex; gap: 8px; position: absolute; left: 0; bottom: 0; }
+.seq__dot { width: 22px; height: 3px; border-radius: 2px; background: var(--line-strong); transition: background-color 0.3s var(--ease), width 0.3s var(--ease); }
+.seq__dot.is-active { background: var(--accent); width: 36px; }
+@media (max-width: 859px) {
+  .seq.is-live .seq__stage { top: 76px; height: calc(100vh - 96px); }
+  .seq.is-live .seq__item { align-content: center; }
+  .seq.is-live .seq__media img { max-height: 46vh; }
+}
+
+/* ---------- guardrails: dialogs over an outlined dashboard ---------- */
+.gr-list { display: grid; gap: clamp(28px, 4vw, 44px); margin-top: clamp(24px, 3vw, 36px); }
+.gr { margin: 0; display: grid; gap: 12px; }
+.gr__stage {
+  position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: radial-gradient(60% 70% at 50% 55%, rgba(245, 196, 81, 0.06), transparent 70%), var(--bg-2);
+}
+.gr__dash { position: absolute; inset: 0; width: 100%; height: 100%; }
+.gr__dash * { fill: none; stroke: rgba(245, 196, 81, 0.5); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.gr__dash .soft { stroke: rgba(245, 196, 81, 0.24); }
+.gr__dash .fill { fill: rgba(245, 196, 81, 0.12); }
+.gr__dialog {
+  position: absolute; left: 50%; top: 52%; width: min(72%, 680px); height: auto;
+  transform: translate(-50%, -50%); border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(245, 196, 81, 0.7), 0 36px 70px -24px rgba(0, 0, 0, 0.95);
+}
+.gr figcaption { display: flex; gap: 12px; align-items: baseline; color: var(--muted); font-size: var(--fs-small); }
+.gr figcaption .label { color: var(--ink-2); flex: none; }
+@media (max-width: 600px) { .gr__stage { aspect-ratio: 4 / 3; } .gr__dialog { width: 88%; } }

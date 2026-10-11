@@ -1,6 +1,4 @@
-// Progressive enhancement only. Every page works without this file.
-
-// Case-study contents: highlight the section in view.
+// toc.js — highlights the case-study contents link for the section in view. Optional enhancement.
 const tocLinks = document.querySelectorAll(".toc a[href^='#']");
 if (tocLinks.length && "IntersectionObserver" in window) {
   const byId = new Map([...tocLinks].map((a) => [a.hash.slice(1), a]));

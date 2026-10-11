@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MailChimp on Sales Agent Channel — Krishna Revanth</title>
+  <meta name="description" content="Case study: enabling Intuit sales agents to sell MailChimp Email Marketing, Transactional Email and SMS from the sales dashboard they already use for QuickBooks.">
+  <meta property="og:title" content="MailChimp on Sales Agent Channel — Krishna Revanth">
+  <meta property="og:description" content="Bringing MailChimp into Intuit's sales dashboard: context, requirements, wireframes, final designs and key decisions.">
+  <meta property="og:type" content="article">
+  <meta name="theme-color" content="#0c0c0e">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300..600&display=swap">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/case-study.css">
+  <link rel="stylesheet" href="/work/mailchimp/mailchimp.css">
+  <script src="/assets/js/toc.js" defer></script>
+  <script src="/assets/js/carousel.js" defer></script>
+  <script src="/assets/js/lightbox.js" defer></script>
+  <script src="/work/mailchimp/mailchimp.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Krishna Revanth, home">
+        <span class="brand-mark" aria-hidden="true">KR</span>
+        <span class="brand-name">Krishna Revanth</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="/#work" aria-current="page">Work</a>
+        <a class="nav-optional" href="/#approach">Approach</a>
+        <a href="/#about">About</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============ HERO ============ -->
+    <header class="cs-hero">
+      <div class="wrap">
+        <a class="crumb label" href="/#work">← All work</a>
+        <p class="label cs-eyebrow">Case study 01 · Intuit</p>
+        <h1 class="cs-title">MailChimp on Sales Agent Channel</h1>
+        <p class="cs-lead">Enabling Intuit sales agents to sell MailChimp Email Marketing, Transactional Email and SMS from the same sales dashboard they use for QuickBooks.</p>
+
+        <dl class="meta-grid">
+          <div><dt class="label">My role</dt><dd>UX Designer</dd></div>
+          <div><dt class="label">Team</dt><dd>UX lead, staff product designer, product manager, engineering, legal, finance</dd></div>
+          <div><dt class="label">Timeline</dt><dd>Jan – Mar 2026 <span class="todo">confirm</span></dd></div>
+          <div><dt class="label">Platform</dt><dd>Intuit sales dashboard, desktop</dd></div>
+          <div><dt class="label">Status</dt><dd>In launch, October 2026</dd></div>
+        </dl>
+
+        <div class="mc-stage" data-dust>
+          <canvas aria-hidden="true"></canvas>
+          <div class="mc-stage__float">
+            <svg class="mc-stage__logo" viewBox="0 0 246.24 261.34" role="img" aria-label="MailChimp logo">
+              <path d="M185.23,123.5c1.91-.23,3.74-.24,5.41,0,.97-2.23,1.14-6.07,.26-10.26-1.3-6.22-3.06-9.98-6.69-9.4-3.63,.59-3.77,5.09-2.47,11.31,.73,3.5,2.03,6.49,3.48,8.34Z"/>
+              <path d="M154.03,128.42c2.6,1.14,4.2,1.9,4.82,1.24,.4-.41,.28-1.2-.34-2.21-1.28-2.09-3.92-4.22-6.72-5.41-5.73-2.47-12.56-1.65-17.83,2.14-1.74,1.27-3.39,3.04-3.15,4.11,.08,.35,.34,.61,.95,.69,1.43,.16,6.45-2.37,12.22-2.72,4.08-.25,7.45,1.02,10.05,2.17Z"/>
+              <path d="M148.79,131.4c-3.39,.53-5.25,1.65-6.45,2.69-1.02,.89-1.66,1.88-1.65,2.58,0,.33,.15,.52,.26,.62,.15,.14,.34,.21,.56,.21,.76,0,2.48-.69,2.48-.69,4.71-1.69,7.82-1.48,10.9-1.13,1.7,.19,2.51,.3,2.88-.29,.11-.17,.24-.53-.1-1.08-.79-1.29-4.21-3.46-8.88-2.91Z"/>
+              <path d="M174.69,142.36c2.3,1.13,4.83,.69,5.66-.99s-.37-3.95-2.67-5.08c-2.3-1.13-4.83-.69-5.66,.99-.82,1.68,.37,3.95,2.67,5.08Z"/>
+              <path d="M189.48,129.44c-1.87-.03-3.42,2.02-3.46,4.58-.04,2.56,1.44,4.66,3.3,4.7,1.87,.03,3.42-2.02,3.46-4.58,.04-2.56-1.44-4.66-3.3-4.7Z"/>
+              <path d="M62.02,175.4c-.52,.12-1.1,.26-1.74,.25-1.37-.03-2.54-.61-3.19-1.62-.85-1.31-.8-3.26,.14-5.49,.13-.3,.28-.63,.44-1,1.5-3.36,4.01-8.99,1.19-14.35-2.12-4.04-5.57-6.55-9.73-7.08-3.99-.51-8.1,.97-10.72,3.86-4.13,4.56-4.78,10.76-3.98,12.96,.29,.8,.75,1.03,1.08,1.07,.7,.09,1.74-.42,2.39-2.17,.05-.13,.11-.32,.19-.57,.29-.93,.83-2.65,1.72-4.03,1.07-1.67,2.73-2.82,4.68-3.23,1.99-.43,4.02-.05,5.72,1.07,2.89,1.89,4.01,5.44,2.77,8.83-.64,1.75-1.68,5.1-1.45,7.85,.46,5.57,3.89,7.8,6.96,8.04,2.99,.11,5.08-1.57,5.61-2.79,.31-.73,.05-1.17-.12-1.36-.46-.58-1.23-.4-1.97-.23Z"/>
+              <path d="M236.61,165.46c-.11-.4-.86-3.11-1.87-6.38-1.02-3.27-2.07-5.57-2.07-5.57,4.09-6.12,4.16-11.59,3.62-14.69-.58-3.84-2.18-7.12-5.4-10.5-3.22-3.38-9.82-6.85-19.08-9.45-1.06-.3-4.55-1.26-4.86-1.35-.02-.2-.26-11.46-.47-16.3-.15-3.49-.45-8.95-2.15-14.32-2.02-7.27-5.53-13.64-9.92-17.71,12.11-12.55,19.67-26.38,19.65-38.24-.03-22.81-28.05-29.71-62.57-15.42-.04,.02-7.26,3.08-7.31,3.11-.03-.03-13.22-12.97-13.42-13.15C91.38-28.85-31.69,107.94,7.66,141.16l8.6,7.28c-2.23,5.78-3.11,12.4-2.39,19.52,.92,9.14,5.64,17.91,13.28,24.68,7.26,6.43,16.8,10.5,26.06,10.49,15.31,35.28,50.3,56.93,91.32,58.15,44,1.31,80.94-19.34,96.41-56.43,1.01-2.6,5.31-14.33,5.31-24.68s-5.88-14.72-9.63-14.72Zm-180.03,27.77c-1.34,.23-2.7,.32-4.08,.29-13.29-.36-27.65-12.32-29.07-26.51-1.58-15.68,6.44-27.75,20.63-30.61,1.7-.34,3.75-.54,5.96-.42,7.95,.44,19.66,6.54,22.34,23.86,2.37,15.34-1.39,30.95-15.77,33.41Zm-14.84-66.22c-8.83,1.72-16.62,6.72-21.38,13.64-2.85-2.37-8.15-6.97-9.08-8.76-7.6-14.43,8.29-42.49,19.4-58.33C58.12,34.39,101.1,4.76,121,10.13c3.23,.92,13.95,13.34,13.95,13.34,0,0-19.89,11.03-38.33,26.42-24.85,19.13-43.62,46.94-54.87,77.12Zm50.68-53.61c9.75-11.27,21.76-21.07,32.52-26.58,.37-.19,.77,.21,.56,.58-.85,1.55-2.5,4.86-3.02,7.37-.08,.39,.35,.69,.68,.46,6.69-4.56,18.34-9.45,28.55-10.08,.44-.03,.65,.54,.3,.8-1.55,1.19-3.25,2.84-4.49,4.51-.21,.28-.01,.69,.34,.69,7.17,.05,17.28,2.56,23.87,6.26,.45,.25,.13,1.11-.37,1-9.97-2.29-26.29-4.02-43.24,.12-15.13,3.69-26.68,9.39-35.11,15.52-.43,.31-.94-.25-.59-.65Zm144.64,110.29c-1.91,11.58-6.83,20.97-15.1,29.62-5.03,5.42-11.15,10.13-18.14,13.56-3.71,1.95-7.67,3.64-11.84,5-31.18,10.18-63.09-1.01-73.37-25.05-.82-1.81-1.52-3.7-2.06-5.68-4.38-15.84-.66-34.85,10.97-46.81,0,0,0,0,0,0,.72-.76,1.45-1.66,1.45-2.79,0-.94-.6-1.94-1.12-2.65-4.07-5.9-18.17-15.96-15.34-35.43,2.03-13.98,14.26-23.83,25.67-23.25,.96,.05,1.93,.11,2.89,.17,4.94,.29,9.25,.93,13.32,1.1,6.81,.29,12.93-.7,20.18-6.74,2.45-2.04,4.41-3.81,7.73-4.37,.35-.06,1.22-.37,2.95-.29,1.77,.09,3.46,.58,4.97,1.59,5.81,3.87,6.64,13.24,6.94,20.09,.17,3.91,.64,13.38,.81,16.1,.37,6.21,2,7.09,5.31,8.18,1.86,.61,3.58,1.07,6.13,1.78,7.7,2.16,12.26,4.35,15.13,7.17,1.72,1.76,2.51,3.63,2.76,5.41,.91,6.62-5.14,14.8-21.15,22.23-17.5,8.12-38.73,10.18-53.39,8.54-1.13-.13-5.12-.58-5.14-.58-11.73-1.58-18.43,13.58-11.38,23.97,4.54,6.69,16.9,11.05,29.27,11.05,28.36,0,50.15-12.11,58.26-22.56,.24-.31,.27-.35,.65-.92,.4-.6,.07-.93-.43-.59-6.62,4.53-36.05,22.53-67.52,17.11,0,0-3.82-.63-7.31-1.99-2.77-1.08-8.58-3.75-9.29-9.71,25.4,7.85,41.39,.43,41.39,.43,.29-.12,.49-.45,.45-.78-.04-.4-.4-.7-.8-.66,0,0-20.82,3.08-40.49-4.12,2.14-6.96,7.84-4.45,16.45-3.75,15.52,.92,29.43-1.34,39.71-4.29,8.91-2.56,20.61-7.6,29.69-14.77,3.06,6.73,4.15,14.14,4.15,14.14,0,0,2.37-.42,4.35,.8,1.87,1.15,3.25,3.55,2.31,9.75Zm-96.05-1.07s0,0,0,0c0,0,0,0,0,.01,0,0,0-.01,0-.02Z"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ OVERVIEW ============ -->
+    <section class="overview section--alt" aria-labelledby="h-overview">
+      <div class="wrap">
+        <span class="label kicker">Overview</span>
+        <h2 id="h-overview">A purchase flow for MailChimp inside Intuit's sales dashboard.</h2>
+        <div class="overview__grid">
+          <div>
+            <span class="label">What is MailChimp</span>
+            <h3>A marketing platform for small businesses</h3>
+            <p>Owned by Intuit. Businesses subscribe to Email Marketing and can add SMS and Transactional Email.</p>
+          </div>
+          <div>
+            <span class="label">The requirement</span>
+            <h3>Sell MailChimp through Intuit's sales agents</h3>
+            <p>MailChimp was purchased self-serve or through a separate sales tool. Intuit needed its agents to sell it from their existing dashboard, on the customer's behalf, during a live call.</p>
+          </div>
+          <div class="is-solution">
+            <span class="label">The solution</span>
+            <h3>A five-step flow, with a clear rule for SMS</h3>
+            <p>I designed the purchase flow for all three products. SMS is charged only after its application is approved, so it sits in a dedicated cart section, separate from the amount charged today.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap section">
+      <div class="cs-layout">
+        <nav class="toc" aria-label="On this page">
+          <ol>
+            <li><a href="#mailchimp"><span class="n">01</span>About MailChimp</a></li>
+            <li><a href="#today"><span class="n">02</span>Current experience</a></li>
+            <li><a href="#why"><span class="n">03</span>Why the sales channel</a></li>
+            <li><a href="#parameters"><span class="n">04</span>Order requirements</a></li>
+            <li><a href="#iterations"><span class="n">05</span>Wireframes</a></li>
+            <li><a href="#final"><span class="n">06</span>Final designs</a></li>
+            <li><a href="#team"><span class="n">07</span>Team</a></li>
+            <li><a href="#reflection"><span class="n">08</span>Reflection</a></li>
+          </ol>
+        </nav>
+
+        <article>
+          <!-- 01 -->
+          <section class="cs-section" id="mailchimp" aria-labelledby="h-mc">
+            <span class="label">01 — About MailChimp</span>
+            <h2 id="h-mc">A marketing platform for small businesses, owned by Intuit.</h2>
+            <div class="prose">
+              <p>MailChimp helps businesses reach their customers through email, SMS and websites. Restaurants, entertainment venues, non-profits and online sellers use it to run campaigns, automate communication and measure results.</p>
+              <p>Email Marketing is the core product. Additional products are purchased as add-ons to it.</p>
+            </div>
+            <div class="pmap">
+              <div class="pmap__col">
+                <span class="label">Primary product</span>
+                <div class="pcard pcard--primary"><h3>Email Marketing</h3><p>Marketing campaigns sent to a contact list, such as a seasonal sale announcement.</p><span class="tag">Core product</span></div>
+              </div>
+              <div class="pmap__col">
+                <span class="label">Add-ons</span>
+                <div class="pmap__adds">
+                  <div class="pcard"><h3>SMS</h3><p>Marketing text messages sent to customers' phone numbers.</p><span class="tag">In scope</span></div>
+                  <div class="pcard"><h3>Transactional Email</h3><p>Automated messages such as receipts and order confirmations.</p><span class="tag">In scope</span></div>
+                  <div class="pcard pcard--out"><h3>Websites</h3><p>Website creation and publishing.</p><span class="tag">Out of scope</span></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Metrics -->
+          <div class="metrics" aria-labelledby="h-metrics">
+            <span class="label" id="h-metrics">Project in numbers</span>
+            <ul class="stats stats--compact" role="list">
+              <li><span class="big">1</span><span class="term">sales dashboard</span><p>MailChimp and QuickBooks, sold from one Intuit tool.</p></li>
+              <li><span class="big">3</span><span class="term">products</span><p>Email Marketing, Transactional Email and SMS.</p></li>
+              <li><span class="big">5</span><span class="term">purchase steps</span><p>From offer selection to order confirmation.</p></li>
+              <li><span class="big">30+</span><span class="term">cart explorations</span><p>To define how SMS appears before approval.</p></li>
+            </ul>
+          </div>
+
+          <!-- 02 -->
+          <section class="cs-section" id="today" aria-labelledby="h-today">
+            <span class="label">02 — Current experience</span>
+            <h2 id="h-today">Today, businesses buy MailChimp on their own.</h2>
+            <div class="prose">
+              <p>Businesses choose a plan on MailChimp's pricing page and complete the purchase themselves. I began by mapping this experience in detail, as each pricing rule would need to carry over to the sales flow.</p>
+            </div>
+            <div class="carousel" data-carousel aria-roledescription="carousel" aria-label="Current MailChimp purchase experience">
+              <div class="carousel__track" tabindex="0">
+                <figure class="carousel__slide" aria-roledescription="slide" aria-label="1 of 4">
+                  <div class="shot"><img src="/work/mailchimp/img/current-plans.webp" width="1600" height="930" loading="lazy" alt="MailChimp pricing page showing four plans: Premium, Standard, Essentials and Free."></div>
+                  <figcaption><span class="label">Plans</span><span>Four plans, each with a different set of features and support.</span></figcaption>
+                </figure>
+                <figure class="carousel__slide" aria-roledescription="slide" aria-label="2 of 4">
+                  <div class="shot"><img src="/work/mailchimp/img/current-contacts.webp" width="1600" height="930" loading="lazy" alt="MailChimp pricing page with the contacts dropdown open, showing tiers from 0–500 up to 200,000+ contacts."></div>
+                  <figcaption><span class="label">Contacts</span><span>Pricing scales with the number of contacts, from 500 to over 200,000.</span></figcaption>
+                </figure>
+                <figure class="carousel__slide" aria-roledescription="slide" aria-label="3 of 4">
+                  <div class="shot"><img src="/work/mailchimp/img/current-transactional.webp" width="1600" height="1084" loading="lazy" alt="Transactional Email pricing: estimated monthly sends are converted into blocks of 25,000 emails."></div>
+                  <figcaption><span class="label">Transactional</span><span>Sold in blocks of 25,000 emails, recommended from estimated monthly sends.</span></figcaption>
+                </figure>
+                <figure class="carousel__slide" aria-roledescription="slide" aria-label="4 of 4">
+                  <div class="shot"><img src="/work/mailchimp/img/current-sms.webp" width="1600" height="1055" loading="lazy" alt="Email and SMS pricing page: SMS is added to a paid plan through SMS credits and is not available on the Free plan."></div>
+                  <figcaption><span class="label">SMS</span><span>An add-on for paid plans, sold as credits. <strong>It is charged only after the business's SMS application is approved.</strong></span></figcaption>
+                </figure>
+              </div>
+              <div class="carousel__nav">
+                <button type="button" class="carousel__btn" data-prev aria-label="Previous image">←</button>
+                <span class="carousel__count" aria-live="polite">1 / 4</span>
+                <button type="button" class="carousel__btn" data-next aria-label="Next image">→</button>
+                <span class="label" style="margin-left:auto">Source: mailchimp.com, early 2026</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- 03 -->
+          <section class="cs-section" id="why" aria-labelledby="h-why">
+            <span class="label">03 — Why the sales channel</span>
+            <h2 id="h-why">Intuit's sales agents already speak with small businesses every day.</h2>
+            <div class="prose">
+              <p>Agents sell QuickBooks through Intuit's sales dashboard, while MailChimp was sold through a separate tool with its own pricing. Bringing MailChimp into the same dashboard allows agents to offer it in every relevant conversation.</p>
+            </div>
+            <div class="shift">
+              <div class="panel"><span class="label">Before</span><h3>Separate tools and pricing</h3><p>QuickBooks and MailChimp were sold through different systems, with pricing managed in different places.</p></div>
+              <div class="shift__arrow" aria-hidden="true">→</div>
+              <div class="panel panel--accent"><span class="label label--accent">Goal</span><h3>One sales dashboard</h3><p>Agents purchase MailChimp on the customer's behalf in Intuit's sales tool, with pricing from a single source.</p></div>
+            </div>
+            <div class="duo">
+              <div class="panel">
+                <span class="label">Primary user</span>
+                <h3>Intuit sales agent</h3>
+                <p>Builds the order on the customer's behalf during a live call.</p>
+              </div>
+              <div class="panel">
+                <span class="label">User needs</span>
+                <ul>
+                  <li>Configure plans and add-ons quickly during the conversation</li>
+                  <li>Explain prices, discounts and the timing of each charge</li>
+                  <li>Avoid orders that fail after submission</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- 04 -->
+          <section class="cs-section" id="parameters" aria-labelledby="h-params">
+            <span class="label">04 — Order requirements</span>
+            <h2 id="h-params">The parameters every order needed to capture.</h2>
+            <div class="prose">
+              <p>Together with product, finance and legal partners, we defined each parameter the flow had to support. These requirements shaped every screen that followed.</p>
+            </div>
+            <div class="params">
+              <div class="param">
+                <span class="label label--accent">Base plan</span>
+                <h3>Email Marketing</h3>
+                <dl>
+                  <div><dt>Plan</dt><dd>Essentials, Standard, Premium and higher tiers</dd></div>
+                  <div><dt>Billing</dt><dd>Monthly or annual</dd></div>
+                  <div><dt>Contacts</dt><dd>The tier sets the price and monthly email volume</dd></div>
+                  <div><dt>Discount</dt><dd>A standard percentage for a fixed period</dd></div>
+                </dl>
+              </div>
+              <div class="param">
+                <span class="label label--accent">Add-on</span>
+                <h3>Transactional Email</h3>
+                <dl>
+                  <div><dt>Quantity</dt><dd>Blocks of 25,000 emails</dd></div>
+                  <div><dt>Pricing</dt><dd>All blocks priced within the same range</dd></div>
+                  <div><dt>Billing</dt><dd>Monthly</dd></div>
+                  <div><dt>Requires</dt><dd>An Email Marketing plan in the cart</dd></div>
+                </dl>
+              </div>
+              <div class="param param--cond">
+                <span class="label label--accent">Add-on · approval required</span>
+                <h3>SMS</h3>
+                <dl>
+                  <div><dt>Quantity</dt><dd>A monthly range of SMS credits</dd></div>
+                  <div><dt>Requires</dt><dd>An Email Marketing plan in the cart</dd></div>
+                  <div><dt>Billing</dt><dd>Charged only after the SMS application is approved</dd></div>
+                  <div><dt>Display</dt><dd>Never shown as $0, as it is not a free product</dd></div>
+                </dl>
+              </div>
+              <div class="param">
+                <span class="label label--accent">Order</span>
+                <h3>Checkout rules</h3>
+                <dl>
+                  <div><dt>Customer</dt><dd>New to both Intuit and MailChimp in phase one</dd></div>
+                  <div><dt>Region</dt><dd>United States, in USD</dd></div>
+                  <div><dt>Tax</dt><dd>Calculated from the customer's address</dd></div>
+                  <div><dt>Consent</dt><dd>Billing consent script read to the customer before submission</dd></div>
+                </dl>
+              </div>
+            </div>
+          </section>
+
+          <!-- 05 -->
+          <section class="cs-section" id="iterations" aria-labelledby="h-iter">
+            <span class="label">05 — Wireframes</span>
+            <h2 id="h-iter">From a single page to a guided flow.</h2>
+
+            <div class="round">
+              <div class="round__text">
+                <span class="label label--accent">Round 1</span>
+                <h3>All products on a single page</h3>
+                <p>The first concept placed every product on one page, with modifiers for contacts, SMS credits and add-ons alongside a running cart.</p>
+              </div>
+              <div class="carousel" data-carousel aria-roledescription="carousel" aria-label="Wireframes, round 1">
+                <div class="carousel__track" tabindex="0">
+                  <figure class="carousel__slide" aria-roledescription="slide" aria-label="1 of 2">
+                    <div class="shot"><img src="/work/mailchimp/img/wf-1-offers.webp" data-full="/work/mailchimp/img/wf-1-offers-lg.webp" width="1600" height="1004" loading="lazy" alt="Wireframe: Select offer table with MailChimp products and an empty shopping cart."></div>
+                    <figcaption><span class="label">Select offer</span><span>All MailChimp products listed in a single offer table.</span></figcaption>
+                  </figure>
+                  <figure class="carousel__slide" aria-roledescription="slide" aria-label="2 of 2">
+                    <div class="shot"><img src="/work/mailchimp/img/wf-1-modify.webp" data-full="/work/mailchimp/img/wf-1-modify-lg.webp" width="1600" height="1007" loading="lazy" alt="Wireframe: Modify step with marketing plans, an SMS credits selector with options, and the cart showing Marketing Premium and an SMS add-on."></div>
+                    <figcaption><span class="label">Modify</span><span>Contacts and SMS credits adjusted beside a running cart.</span></figcaption>
+                  </figure>
+                </div>
+                <div class="carousel__nav">
+                  <button type="button" class="carousel__btn" data-prev aria-label="Previous image">←</button>
+                  <span class="carousel__count" aria-live="polite">1 / 2</span>
+                  <button type="button" class="carousel__btn" data-next aria-label="Next image">→</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="round">
+              <div class="round__text">
+                <span class="label label--accent">Round 2</span>
+                <h3>A dedicated step for adding and modifying products</h3>
+                <p>Configuration moved to its own step, with add-ons grouped under the base plan and a rate table available on demand so agents can explain pricing to the customer.</p>
+              </div>
+              <div class="carousel" data-carousel aria-roledescription="carousel" aria-label="Wireframes, round 2">
+                <div class="carousel__track" tabindex="0">
+                  <figure class="carousel__slide" aria-roledescription="slide" aria-label="1 of 2">
+                    <div class="shot"><img src="/work/mailchimp/img/wf-2-modify.webp" data-full="/work/mailchimp/img/wf-2-modify-lg.webp" width="1600" height="1006" loading="lazy" alt="Wireframe: Modify product step for MailChimp Marketing Premium with contacts, Transactional Email and Marketing plus SMS add-ons, and the shopping cart."></div>
+                    <figcaption><span class="label">Modify product</span><span>Add-ons grouped under the base plan, with the cart alongside.</span></figcaption>
+                  </figure>
+                  <figure class="carousel__slide" aria-roledescription="slide" aria-label="2 of 2">
+                    <div class="shot"><img src="/work/mailchimp/img/wf-2-rate-table.webp" data-full="/work/mailchimp/img/wf-2-rate-table-lg.webp" width="1600" height="1001" loading="lazy" alt="Wireframe: rate table pop-up showing Transactional Email price per block across volume ranges."></div>
+                    <figcaption><span class="label">Rate table</span><span>Pricing tiers available on demand without leaving the step.</span></figcaption>
+                  </figure>
+                </div>
+                <div class="carousel__nav">
+                  <button type="button" class="carousel__btn" data-prev aria-label="Previous image">←</button>
+                  <span class="carousel__count" aria-live="polite">1 / 2</span>
+                  <button type="button" class="carousel__btn" data-next aria-label="Next image">→</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="prose">
+              <p>In high fidelity, configuration moved into a dialog over the offer table. This kept agents in the catalog with the cart in view, rather than sending them to a separate page.</p>
+            </div>
+          </section>
+
+          <!-- 06 -->
+          <section class="cs-section" id="final" aria-labelledby="h-final">
+            <span class="label">06 — Final designs</span>
+            <h2 id="h-final">Final designs and key decisions.</h2>
+            <ol class="flow" role="list">
+              <li><span class="n">01</span><strong>Select offer</strong><span class="d">Choose products, tiers and discounts.</span></li>
+              <li><span class="n">02</span><strong>Customer info</strong><span class="d">Capture business and contact details.</span></li>
+              <li><span class="n">03</span><strong>Payment</strong><span class="d">Enter the card and confirm today's total.</span></li>
+              <li><span class="n">04</span><strong>Review order</strong><span class="d">Check details and record customer consent.</span></li>
+              <li><span class="n">05</span><strong>Confirmation</strong><span class="d">Order placed; SMS awaits approval.</span></li>
+            </ol>
+
+            <div class="screens">
+              <!-- Offer selection -->
+              <div class="screen">
+                <div class="screen__head">
+                  <span class="label">Offer selection</span>
+                  <h3>A familiar catalog, with the cart always in view.</h3>
+                  <p>Offers list price ranges, discount terms and billing frequency, consistent with the existing sales flow. The cart remains visible as the order is built.</p>
+                </div>
+                <div class="shot"><img src="/work/mailchimp/img/offer-table.webp" data-full="/work/mailchimp/img/offer-table-lg.webp" width="1600" height="1000" loading="lazy" alt="Select offer step for MailChimp Email Marketing: a table of offers with price ranges, discount terms, offer type and frequency, and the shopping cart with one plan added."></div>
+              </div>
+
+              <!-- Configuration -->
+              <div class="screen">
+                <div class="screen__head">
+                  <span class="label">Configuration and pricing</span>
+                  <h3>Every price can be explained to the customer.</h3>
+                  <p>Contact tier, discount and the full price range sit in one dialog with a live estimated total. In the cart, “How is this calculated?” shows how each price was derived.</p>
+                </div>
+                <div class="figs-2 figs-2--top">
+                  <figure class="fig"><div class="shot"><img src="/work/mailchimp/img/configure-dialog.webp" width="1120" height="1107" loading="lazy" alt="Add to cart dialog for Ultimate Monthly 10X: marketing contacts selector, multiplier, marketing emails, discount selector, all price ranges and the estimated total."></div><figcaption><span>Add to cart dialog</span></figcaption></figure>
+                  <figure class="fig"><div class="shot"><img src="/work/mailchimp/img/how-calculated.webp" width="1120" height="780" loading="lazy" alt="'How is this calculated?' dialog listing monthly prices for each range of marketing contacts and the estimated total."></div><figcaption><span>Price breakdown from the cart</span></figcaption></figure>
+                </div>
+              </div>
+
+              <!-- Key challenge + explorations -->
+              <div class="screen">
+                <div class="callout-q">
+                  <span class="label">Key design challenge</span>
+                  <p class="q">How should SMS appear in the same cart as other products when it is not charged at checkout?</p>
+                </div>
+                <div class="screen__head" style="margin-top:16px">
+                  <span class="label">Cart explorations</span>
+                  <h3>Separating today's charges from charges after approval.</h3>
+                  <p>I explored several cart structures before arriving at a dedicated section for products that require approval. Scroll to see how the cart evolved.</p>
+                </div>
+                <div class="seq" data-sequence>
+                  <div class="seq__stage">
+                    <ol class="seq__list" role="list">
+                      <li class="seq__item">
+                        <figure class="seq__media"><div class="shot"><img src="/work/mailchimp/img/explore-a.webp" width="468" height="827" loading="lazy" alt="Cart exploration: SMS listed with an Approval Pending tag inside the main cart."></div></figure>
+                        <div class="seq__text"><span class="label">Exploration 1 of 3</span><h4>Inline status</h4><p>An approval tag on the SMS line kept everything in one list, but left it unclear whether SMS was part of the subtotal.</p></div>
+                      </li>
+                      <li class="seq__item">
+                        <figure class="seq__media"><div class="shot"><img src="/work/mailchimp/img/explore-b.webp" width="468" height="891" loading="lazy" alt="Cart exploration: SMS shown as $0 due today with a future price of $200 per month."></div></figure>
+                        <div class="seq__text"><span class="label">Exploration 2 of 3</span><h4>$0 due today</h4><p>Showing $0 clarified today's charge, but suggested a free product, which the requirements did not allow.</p></div>
+                      </li>
+                      <li class="seq__item">
+                        <figure class="seq__media"><div class="shot"><img src="/work/mailchimp/img/explore-c.webp" width="468" height="1090" loading="lazy" alt="Cart exploration: two separate cards, Ready for checkout and Pending for approval, each with a subtotal."></div></figure>
+                        <div class="seq__text"><span class="label">Exploration 3 of 3</span><h4>Separate carts</h4><p>Splitting the order into two carts made the distinction clear, but two subtotals for a single order added complexity.</p></div>
+                      </li>
+                      <li class="seq__item is-final">
+                        <figure class="seq__media"><div class="shot"><img src="/work/mailchimp/img/final-cart-panel.webp" data-full="/work/mailchimp/img/cover-sms-cart-lg.webp" width="740" height="1210" loading="lazy" alt="Final cart: Email Marketing and Transactional Email, then SMS under an Upon Application Approval label with its full price and discount, and the subtotal."></div></figure>
+                        <div class="seq__text"><span class="label">Final direction</span><h4>A dedicated approval section</h4><p>SMS keeps its full price and discount under “Upon Application Approval” and is excluded from today's subtotal. The team aligned on this pattern because it keeps one cart and extends to future products that need approval before billing.</p></div>
+                      </li>
+                    </ol>
+                    <div class="seq__dots" aria-hidden="true"><span class="seq__dot"></span><span class="seq__dot"></span><span class="seq__dot"></span><span class="seq__dot"></span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Guardrails -->
+              <div class="screen">
+                <div class="screen__head">
+                  <span class="label">Guardrails</span>
+                  <h3>Preventing invalid orders before submission.</h3>
+                  <p>Add-ons cannot be purchased without an Email Marketing plan, and phase one supports new customers only. Each message explains the issue and the next step.</p>
+                </div>
+                <div class="gr-list">
+                  <figure class="gr">
+                    <div class="gr__stage">
+                      <svg class="gr__dash" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><line class="soft" x1="560" y1="64" x2="1040" y2="64"/><circle class="fill" cx="560" cy="64" r="15"/><rect class="soft" x="524" y="94" width="72" height="8" rx="4"/><circle cx="680" cy="64" r="15"/><rect class="soft" x="644" y="94" width="72" height="8" rx="4"/><circle cx="800" cy="64" r="15"/><rect class="soft" x="764" y="94" width="72" height="8" rx="4"/><circle cx="920" cy="64" r="15"/><rect class="soft" x="884" y="94" width="72" height="8" rx="4"/><circle cx="1040" cy="64" r="15"/><rect class="soft" x="1004" y="94" width="72" height="8" rx="4"/><line class="soft" x1="80" y1="136" x2="1520" y2="136"/><rect x="80" y="172" width="150" height="18" rx="4"/><rect x="250" y="164" width="200" height="34" rx="6"/><line x1="80" y1="246" x2="1040" y2="246"/><rect class="soft" x="92" y="222" width="36" height="8" rx="4"/><rect class="soft" x="150" y="222" width="140" height="8" rx="4"/><rect class="soft" x="400" y="222" width="70" height="8" rx="4"/><rect class="soft" x="520" y="222" width="120" height="8" rx="4"/><rect class="soft" x="690" y="222" width="70" height="8" rx="4"/><rect class="soft" x="800" y="222" width="80" height="8" rx="4"/><rect class="soft" x="920" y="222" width="90" height="8" rx="4"/><rect x="92" y="272" width="36" height="9" rx="4.5"/><rect x="150" y="272" width="140" height="9" rx="4.5"/><rect x="400" y="272" width="70" height="9" rx="4.5"/><rect class="soft" x="520" y="272" width="120" height="9" rx="4.5"/><rect class="soft" x="690" y="272" width="70" height="9" rx="4.5"/><rect class="soft" x="800" y="272" width="80" height="9" rx="4.5"/><rect class="soft" x="920" y="272" width="90" height="9" rx="4.5"/><line class="soft" x1="80" y1="304" x2="1040" y2="304"/><rect x="92" y="330" width="29" height="9" rx="4.5"/><rect x="150" y="330" width="133" height="9" rx="4.5"/><rect x="400" y="330" width="63" height="9" rx="4.5"/><rect class="soft" x="520" y="330" width="113" height="9" rx="4.5"/><rect class="soft" x="690" y="330" width="63" height="9" rx="4.5"/><rect class="soft" x="800" y="330" width="73" height="9" rx="4.5"/><rect class="soft" x="920" y="330" width="83" height="9" rx="4.5"/><line class="soft" x1="80" y1="362" x2="1040" y2="362"/><rect x="92" y="388" width="24" height="9" rx="4.5"/><rect x="150" y="388" width="126" height="9" rx="4.5"/><rect x="400" y="388" width="56" height="9" rx="4.5"/><rect class="soft" x="520" y="388" width="106" height="9" rx="4.5"/><rect class="soft" x="690" y="388" width="56" height="9" rx="4.5"/><rect class="soft" x="800" y="388" width="66" height="9" rx="4.5"/><rect class="soft" x="920" y="388" width="76" height="9" rx="4.5"/><line class="soft" x1="80" y1="420" x2="1040" y2="420"/><rect x="92" y="446" width="24" height="9" rx="4.5"/><rect x="150" y="446" width="119" height="9" rx="4.5"/><rect x="400" y="446" width="49" height="9" rx="4.5"/><rect class="soft" x="520" y="446" width="99" height="9" rx="4.5"/><rect class="soft" x="690" y="446" width="49" height="9" rx="4.5"/><rect class="soft" x="800" y="446" width="59" height="9" rx="4.5"/><rect class="soft" x="920" y="446" width="69" height="9" rx="4.5"/><line class="soft" x1="80" y1="478" x2="1040" y2="478"/><rect x="92" y="504" width="24" height="9" rx="4.5"/><rect x="150" y="504" width="112" height="9" rx="4.5"/><rect x="400" y="504" width="42" height="9" rx="4.5"/><rect class="soft" x="520" y="504" width="92" height="9" rx="4.5"/><rect class="soft" x="690" y="504" width="42" height="9" rx="4.5"/><rect class="soft" x="800" y="504" width="52" height="9" rx="4.5"/><rect class="soft" x="920" y="504" width="62" height="9" rx="4.5"/><line class="soft" x1="80" y1="536" x2="1040" y2="536"/><rect x="92" y="562" width="31" height="9" rx="4.5"/><rect x="150" y="562" width="135" height="9" rx="4.5"/><rect x="400" y="562" width="65" height="9" rx="4.5"/><rect class="soft" x="520" y="562" width="115" height="9" rx="4.5"/><rect class="soft" x="690" y="562" width="65" height="9" rx="4.5"/><rect class="soft" x="800" y="562" width="75" height="9" rx="4.5"/><rect class="soft" x="920" y="562" width="85" height="9" rx="4.5"/><line class="soft" x1="80" y1="594" x2="1040" y2="594"/><rect x="92" y="620" width="24" height="9" rx="4.5"/><rect x="150" y="620" width="128" height="9" rx="4.5"/><rect x="400" y="620" width="58" height="9" rx="4.5"/><rect class="soft" x="520" y="620" width="108" height="9" rx="4.5"/><rect class="soft" x="690" y="620" width="58" height="9" rx="4.5"/><rect class="soft" x="800" y="620" width="68" height="9" rx="4.5"/><rect class="soft" x="920" y="620" width="78" height="9" rx="4.5"/><line class="soft" x1="80" y1="652" x2="1040" y2="652"/><rect x="1080" y="170" width="440" height="580" rx="10"/><rect x="1104" y="198" width="150" height="16" rx="4"/><line class="soft" x1="1104" y1="236" x2="1496" y2="236"/><rect class="soft" x="1200" y="450" width="200" height="8" rx="4"/><line x1="1104" y1="680" x2="1496" y2="680"/><rect x="1104" y="700" width="110" height="14" rx="5"/><rect x="1406" y="698" width="90" height="16" rx="5"/><rect class="fill" x="1380" y="776" width="140" height="44" rx="6"/></svg>
+                      <img class="gr__dialog" data-zoom src="/work/mailchimp/img/blocker-sms.webp" width="994" height="316" loading="lazy" alt="Dialog over the Select offer step: Can't add SMS. SMS can't be purchased on its own. To buy SMS, first add a MailChimp Email Marketing plan to the shopping cart.">
+                    </div>
+                    <figcaption><span class="label">Select offer</span><span>Adding SMS without a base plan.</span></figcaption>
+                  </figure>
+                  <figure class="gr">
+                    <div class="gr__stage">
+                      <svg class="gr__dash" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><line class="soft" x1="560" y1="64" x2="1040" y2="64"/><circle class="fill" cx="560" cy="64" r="15"/><rect class="soft" x="524" y="94" width="72" height="8" rx="4"/><circle class="fill" cx="680" cy="64" r="15"/><rect class="soft" x="644" y="94" width="72" height="8" rx="4"/><circle cx="800" cy="64" r="15"/><rect class="soft" x="764" y="94" width="72" height="8" rx="4"/><circle cx="920" cy="64" r="15"/><rect class="soft" x="884" y="94" width="72" height="8" rx="4"/><circle cx="1040" cy="64" r="15"/><rect class="soft" x="1004" y="94" width="72" height="8" rx="4"/><line class="soft" x1="80" y1="136" x2="1520" y2="136"/><rect x="80" y="170" width="960" height="650" rx="10"/><rect x="110" y="200" width="130" height="18" rx="4"/><rect class="soft" x="110" y="244" width="170" height="10" rx="5"/><circle cx="122" cy="290" r="9"/><rect class="soft" x="142" y="285" width="110" height="9" rx="4"/><circle class="fill" cx="122" cy="322" r="9"/><rect class="soft" x="142" y="317" width="90" height="9" rx="4"/><rect class="soft" x="110" y="360" width="90" height="8" rx="4"/><rect x="110" y="376" width="400" height="40" rx="6"/><rect class="soft" x="560" y="360" width="90" height="8" rx="4"/><rect x="560" y="376" width="400" height="40" rx="6"/><rect class="soft" x="110" y="444" width="90" height="8" rx="4"/><rect x="110" y="460" width="400" height="40" rx="6"/><rect class="soft" x="560" y="444" width="90" height="8" rx="4"/><rect x="560" y="460" width="400" height="40" rx="6"/><rect class="soft" x="110" y="528" width="90" height="8" rx="4"/><rect x="110" y="544" width="400" height="40" rx="6"/><rect class="soft" x="560" y="528" width="90" height="8" rx="4"/><rect x="560" y="544" width="400" height="40" rx="6"/><rect class="soft" x="110" y="612" width="90" height="8" rx="4"/><rect x="110" y="628" width="400" height="40" rx="6"/><rect class="soft" x="560" y="612" width="90" height="8" rx="4"/><rect x="560" y="628" width="400" height="40" rx="6"/><rect x="760" y="740" width="110" height="44" rx="6"/><rect class="fill" x="890" y="740" width="120" height="44" rx="6"/><rect x="1080" y="170" width="440" height="580" rx="10"/><rect x="1104" y="198" width="150" height="16" rx="4"/><line class="soft" x1="1104" y1="236" x2="1496" y2="236"/><rect x="1104" y="262" width="190" height="10" rx="5"/><rect class="soft" x="1104" y="284" width="140" height="8" rx="4"/><rect x="1400" y="262" width="96" height="10" rx="5"/><rect class="soft" x="1416" y="284" width="80" height="8" rx="4"/><line class="soft" x1="1104" y1="322" x2="1496" y2="322"/><rect x="1104" y="346" width="190" height="10" rx="5"/><rect class="soft" x="1104" y="368" width="140" height="8" rx="4"/><rect x="1400" y="346" width="96" height="10" rx="5"/><rect class="soft" x="1416" y="368" width="80" height="8" rx="4"/><line class="soft" x1="1104" y1="406" x2="1496" y2="406"/><line x1="1104" y1="680" x2="1496" y2="680"/><rect x="1104" y="700" width="110" height="14" rx="5"/><rect x="1406" y="698" width="90" height="16" rx="5"/><rect class="fill" x="1380" y="776" width="140" height="44" rx="6"/></svg>
+                      <img class="gr__dialog" data-zoom src="/work/mailchimp/img/blocker-account.webp" width="994" height="347" loading="lazy" alt="Dialog over the Customer info step: Account already exists. The email address belongs to an existing account, with guidance on where existing customers are handled.">
+                    </div>
+                    <figcaption><span class="label">Customer info</span><span>An existing customer is detected from the email address.</span></figcaption>
+                  </figure>
+                </div>
+              </div>
+
+              <!-- Payment and review -->
+              <div class="screen">
+                <div class="screen__head">
+                  <span class="label">Payment and review</span>
+                  <h3>Today's charges stay clearly separated through checkout.</h3>
+                  <p>Payment and review show “Today's Subtotal” and “Total Due Today”, while SMS remains visible under its approval label through to the order confirmation. Before placing the order, the agent confirms the billing consent script has been read to the customer.</p>
+                </div>
+                <div class="stack">
+                  <figure class="fig"><div class="shot"><img src="/work/mailchimp/img/payment.webp" data-full="/work/mailchimp/img/payment-lg.webp" width="1600" height="1306" loading="lazy" alt="Payment step: credit card form, and the cart with SMS under Upon Application Approval followed by Today's Subtotal, Tax and Total Due Today."></div><figcaption><span class="label">Payment</span><span>SMS stays visible but outside the total due today.</span></figcaption></figure>
+                  <figure class="fig"><div class="shot"><img src="/work/mailchimp/img/review-consent.webp" data-full="/work/mailchimp/img/review-consent-lg.webp" width="1600" height="1418" loading="lazy" alt="Review order step: customer and payment information, the cart, and a consent checkbox confirming the script was read, before Place Order."></div><figcaption><span class="label">Review order</span><span>The order can only be placed once consent is confirmed.</span></figcaption></figure>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 07 -->
+          <section class="cs-section" id="team" aria-labelledby="h-team">
+            <span class="label">07 — Team</span>
+            <h2 id="h-team">Delivered with product, engineering, legal and finance.</h2>
+            <ul class="team" role="list">
+              <li><strong>My contribution</strong><span>Research into the current experience, wireframes, cart explorations, high-fidelity flows for all three products, and handoff</span></li>
+              <li><strong>UX lead and staff product designer</strong><span>Design direction, reviews and design system consistency</span></li>
+              <li><strong>Product manager</strong><span>Requirements, scope and business goals</span></li>
+              <li><strong>Engineering</strong><span>Feasibility across order and billing systems</span></li>
+              <li><strong>Legal</strong><span>Billing consent requirements</span></li>
+              <li><strong>Finance</strong><span>Discount rules</span></li>
+            </ul>
+          </section>
+
+          <!-- 08 -->
+          <section class="cs-section" id="reflection" aria-labelledby="h-reflection">
+            <span class="label">08 — Reflection</span>
+            <h2 id="h-reflection">What this project taught me.</h2>
+            <div class="prose">
+              <p>This was my first project inside an organization of Intuit's scale, and it changed how I think about design work.</p>
+            </div>
+            <ul class="lessons" role="list">
+              <li><h3>Alignment is part of the design</h3><p>A design moves forward only when product, engineering, legal and finance agree on it. I learned to share options early, explain the reasoning behind each one, and work with PMs and product designers until we reached a decision together.</p></li>
+              <li><h3>Small decisions carry weight</h3><p>A single label in a cart affects billing, compliance and customer trust across every sale made through the channel. I now judge each detail by its effect on the business, not only on the screen.</p></li>
+              <li><h3>Design for the system, not the screen</h3><p>The approval section worked because it could hold future products as well as SMS. Asking how a decision will scale is now one of the first questions I ask.</p></li>
+            </ul>
+          </section>
+        </article>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <a class="next-cs" href="/work/quickbooks-rate-tables/">
+        <span class="label">Next case study · 02</span>
+        <h2>QuickBooks Payments and Bill Pay Rate Tables <span class="arrow" aria-hidden="true">→</span></h2>
+      </a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>© 2026 Krishna Revanth</span>
+      <span>MailChimp and QuickBooks are trademarks of Intuit Inc.</span>
+    </div>
+  </footer>
+</body>
+</html>
