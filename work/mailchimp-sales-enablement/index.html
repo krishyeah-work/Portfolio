@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Selling Mailchimp through Intuit's sales team — Krishna Revanth</title>
-  <meta name="description" content="Case study: the purchase flow Intuit sales agents use to sell Mailchimp, and how I designed a cart that separates what's charged today from what's charged only after approval.">
-  <meta property="og:title" content="Selling Mailchimp through Intuit's sales team — Krishna Revanth">
-  <meta property="og:description" content="One order, two kinds of charge: a purchase-flow case study.">
+  <title>Mailchimp Sales Enablement — Krishna Revanth</title>
+  <meta name="description" content="Case study: designing how Intuit's sales agents sell Mailchimp, Transactional Email and SMS from the same sales dashboard they use for QuickBooks.">
+  <meta property="og:title" content="Mailchimp Sales Enablement — Krishna Revanth">
+  <meta property="og:description" content="Bringing Mailchimp into Intuit's sales dashboard: context, constraints, iterations and final designs.">
   <meta property="og:type" content="article">
-  <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0f0f0e" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#0c0c0e">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300..600&display=swap">
   <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="preload" as="image" href="/assets/img/mailchimp/final-sms-cart.webp" fetchpriority="high">
   <script src="/assets/js/site.js" defer></script>
 </head>
 <body>
@@ -23,10 +23,10 @@
   <header class="site-header">
     <div class="wrap">
       <a class="brand" href="/" aria-label="Krishna Revanth, home">
-        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="5" width="26" height="9" rx="2.5" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="3" y="18" width="26" height="9" rx="2.5" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-dasharray="4 3"/></svg>
+        <span class="brand-mark" aria-hidden="true">KR</span>
         <span class="brand-name">Krishna Revanth</span>
       </a>
-      <nav class="nav mono" aria-label="Primary">
+      <nav class="nav" aria-label="Primary">
         <a href="/#work" aria-current="page">Work</a>
         <a class="nav-optional" href="/#approach">Approach</a>
         <a href="/#about">About</a>
@@ -36,252 +36,278 @@
   </header>
 
   <main id="main">
+    <!-- ============ HERO ============ -->
     <header class="cs-hero">
       <div class="wrap">
-        <a class="crumb mono" href="/#work">← All work</a>
-        <p class="mono muted" style="margin-top:28px">Case study 01 · Intuit × Mailchimp</p>
-        <h1 class="cs-title">One order. Two kinds of charge.</h1>
-        <p class="cs-lead">Intuit's sales agents needed to sell Mailchimp to new businesses. One add-on, SMS, can't be billed until it's approved, which can happen after the order is placed. I designed the purchase flow and the cart that makes that clear before anyone pays.</p>
+        <a class="crumb label" href="/#work">← All work</a>
+        <p class="label cs-eyebrow">Case study 01 · Intuit</p>
+        <h1 class="cs-title">Mailchimp Sales Enablement</h1>
+        <p class="cs-lead">Designing how Intuit's sales agents sell Mailchimp, along with its Transactional Email and SMS add-ons, from the same sales dashboard they already use for QuickBooks.</p>
 
         <dl class="meta-grid">
-          <div><dt class="mono">My role</dt><dd>UX Designer: wireframes, cart explorations, high-fidelity flows, handoff</dd></div>
-          <div><dt class="mono">Team</dt><dd>UX lead, staff product designer, PM, engineering, legal, finance</dd></div>
-          <div><dt class="mono">Timeline</dt><dd>Jan – Mar 2026 <span class="todo">confirm</span></dd></div>
-          <div><dt class="mono">Product</dt><dd>Intuit's sales tool, used by agents on live calls</dd></div>
-          <div><dt class="mono">Status</dt><dd>In launch · Oct 2026</dd></div>
+          <div><dt class="label">My role</dt><dd>UX Designer</dd></div>
+          <div><dt class="label">Team</dt><dd>UX lead, staff product designer, PM, engineering, legal, finance</dd></div>
+          <div><dt class="label">Timeline</dt><dd>Jan – Mar 2026 <span class="todo">confirm</span></dd></div>
+          <div><dt class="label">Platform</dt><dd>Intuit sales dashboard (desktop)</dd></div>
+          <div><dt class="label">Status</dt><dd>In launch · Oct 2026</dd></div>
         </dl>
+
+        <figure class="cs-cover">
+          <div class="shot"><img src="/assets/img/mailchimp/final-sms-cart.webp" width="1400" height="1008" alt="Final design: the agent's Select offer screen. The shopping cart lists Email Marketing and Transactional Email, then a highlighted 'Upon Application Approval' section holding SMS, with a tooltip explaining it is charged once the application is approved." fetchpriority="high"></div>
+          <figcaption>Final design: Mailchimp in the sales agent's cart, with SMS charged only after approval.</figcaption>
+        </figure>
       </div>
     </header>
 
-    <div class="wrap">
-      <div class="tldr" aria-label="Summary">
-        <div><span class="mono">The problem</span><p>SMS is charged only if the customer's SMS application is approved. A normal cart total would tell the agent, and the customer, the wrong number.</p></div>
-        <div><span class="mono">What I did</span><p>Explored about 40 cart variations and landed on one cart with a labelled <strong>“upon approval”</strong> section that sits outside today's total.</p></div>
-        <div><span class="mono">Where it is</span><p>Designed end to end for all three Mailchimp products and handed off. In launch as of October 2026.</p></div>
-      </div>
-    </div>
-
-    <div class="wrap">
-      <div class="cs-cover">
-        <div>
-          <p class="mono" style="color:var(--accent)">Try the idea</p>
-          <h2>Pick an approval outcome. See what the customer pays.</h2>
-          <p>Today's charge never changes. SMS is charged only if the application is approved, and the cart says so before checkout.</p>
+    <!-- ============ IMPACT ============ -->
+    <section class="impact section--alt" aria-labelledby="h-impact">
+      <div class="wrap">
+        <div class="impact__head">
+          <div>
+            <span class="label kicker">Impact</span>
+            <h2 id="h-impact">A new sales channel for Mailchimp, inside Intuit's own tools.</h2>
+          </div>
+          <p>Intuit's sales team can now offer Mailchimp in the same conversation, on the same system, with one source of truth for pricing. <span class="todo">add the PRD revenue forecast here? labelled as a forecast</span></p>
         </div>
-        <figure class="receipt" data-receipt aria-labelledby="r2-title">
-          <div class="receipt__head">
-            <span class="mono" id="r2-title">Order summary</span>
-            <span class="tag">Concept recreation</span>
-          </div>
-          <fieldset class="seg">
-            <legend class="mono">SMS application comes back…</legend>
-            <div class="seg__opts">
-              <label><input type="radio" name="r2" value="pending" checked><span>Pending</span></label>
-              <label><input type="radio" name="r2" value="approved"><span>Approved</span></label>
-              <label><input type="radio" name="r2" value="denied"><span>Denied</span></label>
-            </div>
-          </fieldset>
-          <div class="bucket bucket--now">
-            <p class="bucket__label">Charged today</p>
-            <div class="line"><span>Email Marketing</span><span class="amt">$40.00</span></div>
-          </div>
-          <div class="bucket bucket--later">
-            <p class="bucket__label"><span class="s-pending">Upon application approval</span><span class="s-approved">Approved · charged to saved card</span><span class="s-denied">Not approved · never charged</span></p>
-            <div class="line"><span>SMS add-on <small>Charged after the application is approved</small></span><span class="amt">$15.00</span></div>
-          </div>
-          <div class="receipt__total">
-            <span>Total due today</span><span class="amt amt--big">$40.00</span>
-          </div>
-          <p class="receipt__after"><span class="s-pending">+ $15.00/mo later, only if approved</span><span class="s-approved">$15.00 charged when approval landed</span><span class="s-denied">Nothing else to pay</span></p>
-          <p class="sr-only" aria-live="polite" data-receipt-live></p>
-          <figcaption>Simplified recreation with sample amounts. Not the production UI.</figcaption>
-        </figure>
+        <ul class="stats" role="list">
+          <li><span class="big">1</span><span class="term">sales dashboard</span><p>Mailchimp joins QuickBooks in Intuit's sales tool, priced from a single system.</p></li>
+          <li><span class="big">3</span><span class="term">products, end to end</span><p>Email Marketing, Transactional Email and SMS, each with its own rules.</p></li>
+          <li><span class="big">5</span><span class="term">step purchase flow</span><p>From offer selection to order confirmation, built on the existing sales flow.</p></li>
+          <li><span class="big">US</span><span class="term">phase one, in launch</span><p>For businesses new to both Intuit and Mailchimp. October 2026.</p></li>
+        </ul>
       </div>
-    </div>
+    </section>
 
-    <div class="wrap section--tight">
+    <div class="wrap section">
       <div class="cs-layout">
         <nav class="toc" aria-label="On this page">
-          <ol class="mono">
-            <li><a href="#context"><span class="mono">01</span>The project</a></li>
-            <li><a href="#problem"><span class="mono">02</span>The problem</a></li>
-            <li><a href="#explore"><span class="mono">03</span>Explorations</a></li>
-            <li><a href="#flow"><span class="mono">04</span>The full flow</a></li>
-            <li><a href="#process"><span class="mono">05</span>How I worked</a></li>
-            <li><a href="#impact"><span class="mono">06</span>Impact &amp; status</a></li>
+          <ol>
+            <li><a href="#mailchimp"><span class="n">01</span>What is Mailchimp</a></li>
+            <li><a href="#today"><span class="n">02</span>Buying it today</a></li>
+            <li><a href="#why"><span class="n">03</span>Why sales</a></li>
+            <li><a href="#parameters"><span class="n">04</span>What an order needs</a></li>
+            <li><a href="#iterations"><span class="n">05</span>Wireframes</a></li>
+            <li><a href="#final"><span class="n">06</span>Final designs</a></li>
+            <li><a href="#team"><span class="n">07</span>Team &amp; status</a></li>
           </ol>
         </nav>
 
         <article>
           <!-- 01 -->
-          <section class="cs-section" id="context" aria-labelledby="h-context">
-            <span class="mono">01 — The project</span>
-            <h2 id="h-context">Selling Mailchimp from the tool agents already use.</h2>
+          <section class="cs-section" id="mailchimp" aria-labelledby="h-mc">
+            <span class="label">01 — What is Mailchimp</span>
+            <h2 id="h-mc">An Intuit marketing platform for small businesses.</h2>
             <div class="prose">
-              <p>Intuit owns Mailchimp, but agents sold it in a separate tool from QuickBooks. This project brought Mailchimp into Intuit's own sales tool so one system, with one source of pricing, could sell both.</p>
-              <p>The first phase targets US businesses that are <strong>new to both Intuit and Mailchimp</strong>. An agent builds the order on a call and checks out on the customer's behalf.</p>
+              <p>Mailchimp helps businesses reach customers through email, SMS and their own website. Restaurants, entertainment venues, non-profits and online sellers use it to send campaigns, automate follow-ups and track results.</p>
+              <p>Email Marketing is the core product. Everything else is added on top of it.</p>
             </div>
-            <ul class="trio" role="list">
-              <li><span class="mono">Base plan</span><h3>Email Marketing</h3><p>Pick a plan and a contact tier, monthly or annual. Required before any add-on.</p></li>
-              <li><span class="mono">Add-on</span><h3>Transactional Email</h3><p>Sold in blocks of emails, billed monthly.</p></li>
-              <li class="is-cond"><span class="mono">Add-on</span><h3>SMS</h3><p>Sold as monthly credits. <span class="flag">Charged only after the SMS application is approved.</span></p></li>
-            </ul>
+            <div class="pmap">
+              <div class="pmap__col">
+                <span class="label">Primary product</span>
+                <div class="pcard pcard--primary"><h3>Email Marketing</h3><p>Campaigns to a contact list, e.g. “New Year sale is live, 50% off”.</p></div>
+              </div>
+              <div class="pmap__col">
+                <span class="label">Add-ons</span>
+                <div class="pmap__adds">
+                  <div class="pcard"><h3>SMS</h3><p>Marketing texts to customers' phone numbers.</p><span class="tag">In scope</span></div>
+                  <div class="pcard"><h3>Transactional Email</h3><p>Automatic emails like receipts and order confirmations.</p><span class="tag">In scope</span></div>
+                  <div class="pcard pcard--out"><h3>Websites</h3><p>Build and publish a site with Mailchimp.</p><span class="tag">Out of scope</span></div>
+                </div>
+              </div>
+            </div>
           </section>
 
           <!-- 02 -->
-          <section class="cs-section" id="problem" aria-labelledby="h-problem">
-            <span class="mono">02 — The problem</span>
-            <h2 id="h-problem">The cart had to tell the truth about money it can't charge yet.</h2>
+          <section class="cs-section" id="today" aria-labelledby="h-today">
+            <span class="label">02 — How businesses buy it today</span>
+            <h2 id="h-today">Self-serve, on mailchimp.com.</h2>
             <div class="prose">
-              <p>The order is paid and closed today. SMS approval comes later. If it's approved, the saved card is charged then; if it's denied, SMS is never charged.</p>
-              <p>The requirements were strict:</p>
-              <ul>
-                <li>Show what SMS <strong>will cost</strong> if approved, including its discount.</li>
-                <li><strong>Leave it out</strong> of today's total.</li>
-                <li><strong>Never show it as $0.</strong> That reads as a free product.</li>
-              </ul>
+              <p>Today a business picks a plan on Mailchimp's pricing page and checks out alone. Before designing anything, I mapped how that purchase works, because every rule here had to carry over to the sales flow.</p>
             </div>
-            <p class="pull">An agent should never have to explain away the number on their own screen.</p>
+            <div class="figs-2">
+              <figure class="fig">
+                <div class="shot"><img src="/assets/img/mailchimp/current-plans.webp" width="1600" height="930" loading="lazy" alt="Mailchimp pricing page showing four plans: Premium, Standard, Essentials and Free, with a contacts selector."></div>
+                <figcaption><span class="label">Plans</span><span>Four plans. Each sets features, automation and support.</span></figcaption>
+              </figure>
+              <figure class="fig">
+                <div class="shot"><img src="/assets/img/mailchimp/current-contacts.webp" width="1600" height="930" loading="lazy" alt="Mailchimp pricing page with the contacts dropdown open, showing tiers from 0–500 up to 200,000+ contacts."></div>
+                <figcaption><span class="label">Contacts</span><span>Price changes with the number of contacts, from 500 to 200,000+.</span></figcaption>
+              </figure>
+              <figure class="fig">
+                <div class="shot"><img src="/assets/img/mailchimp/current-transactional.webp" width="1600" height="1084" loading="lazy" alt="Transactional Email pricing: enter estimated monthly sends and get a plan suggestion in blocks of 25,000 emails."></div>
+                <figcaption><span class="label">Transactional</span><span>Sold in blocks. One block is 25,000 emails, suggested from estimated sends.</span></figcaption>
+              </figure>
+              <figure class="fig">
+                <div class="shot"><img src="/assets/img/mailchimp/current-sms.webp" width="1600" height="1055" loading="lazy" alt="Email and SMS pricing page: SMS is added to a paid plan with SMS credits, and is not available on the Free plan."></div>
+                <figcaption><span class="label">SMS</span><span>An add-on to paid plans, sold as credits. <strong>Not charged until the business's SMS application is approved</strong> by carriers.</span></figcaption>
+              </figure>
+            </div>
+            <p class="fig" style="margin-top:16px"><span class="label">Screens from mailchimp.com, captured early 2026 for my research</span></p>
           </section>
 
           <!-- 03 -->
-          <section class="cs-section" id="explore" aria-labelledby="h-explore">
-            <span class="mono">03 — Explorations</span>
-            <h2 id="h-explore">Four ways to show a charge that hasn't happened yet.</h2>
+          <section class="cs-section" id="why" aria-labelledby="h-why">
+            <span class="label">03 — Why the sales side</span>
+            <h2 id="h-why">Intuit already has salespeople talking to small businesses every day.</h2>
             <div class="prose">
-              <p>I worked through about 40 cart frames. These are the four directions that mattered, in the order I explored them.</p>
+              <p>Intuit's sales agents sell QuickBooks from a sales dashboard. Mailchimp was sold separately, in its own tool with its own pricing. Bringing Mailchimp into the Intuit dashboard turns every sales conversation into a chance to sell it too.</p>
             </div>
-
-            <div class="explore">
-              <figure class="option">
-                <div class="option__head"><span class="mono">A · Inline tag</span><span class="verdict">Dropped</span></div>
-                <div class="mini" aria-hidden="true">
-                  <div class="mini__title">Shopping cart</div>
-                  <div class="mini__row"><span>Email Marketing</span><span class="amt">$40</span></div>
-                  <div class="mini__row"><span>Transactional Email</span><span class="amt">$20</span></div>
-                  <div class="mini__row"><span>SMS<br><span class="mini__tag">Approval pending</span></span><span class="amt">$15</span></div>
-                  <div class="mini__sum"><span>Subtotal</span><span>$60 <span class="q-mark">?</span></span></div>
-                </div>
-                <figcaption><strong>Ambiguous.</strong> Is SMS inside the $60? The agent has to do the maths on a live call.</figcaption>
-              </figure>
-
-              <figure class="option">
-                <div class="option__head"><span class="mono">B · $0 today</span><span class="verdict">Dropped</span></div>
-                <div class="mini" aria-hidden="true">
-                  <div class="mini__title">Shopping cart</div>
-                  <div class="mini__row"><span>Email Marketing</span><span class="amt">$40</span></div>
-                  <div class="mini__row"><span>Transactional Email</span><span class="amt">$20</span></div>
-                  <div class="mini__row"><span>SMS</span><span class="amt">$0 due today<small>Future price $15/mo</small></span></div>
-                  <div class="mini__sum"><span>Subtotal<small>Pending: $15/mo after approval</small></span><span>$60</span></div>
-                </div>
-                <figcaption><strong>Reads as free.</strong> Clear about today, but a $0 line looks like a free product, which the requirements ruled out.</figcaption>
-              </figure>
-
-              <figure class="option">
-                <div class="option__head"><span class="mono">C · Two carts</span><span class="verdict">Dropped</span></div>
-                <div class="mini-stack" aria-hidden="true">
-                  <div class="mini">
-                    <div class="mini__title">Ready for checkout</div>
-                    <div class="mini__row"><span>Email Marketing</span><span class="amt">$40</span></div>
-                    <div class="mini__row"><span>Transactional Email</span><span class="amt">$20</span></div>
-                    <div class="mini__sum"><span>Subtotal</span><span>$60</span></div>
-                  </div>
-                  <div class="mini">
-                    <div class="mini__title">Pending approval</div>
-                    <div class="mini__row"><span>SMS</span><span class="amt">$15/mo</span></div>
-                    <div class="mini__sum"><span>Later</span><span>$15/mo</span></div>
-                  </div>
-                </div>
-                <figcaption><strong>Clear, but heavy.</strong> Two boxes and two subtotals split what the customer sees as one purchase.</figcaption>
-              </figure>
-
-              <figure class="option option--final">
-                <div class="option__head"><span class="mono">D · One divider</span><span class="verdict">Final</span></div>
-                <div class="mini" aria-hidden="true">
-                  <div class="mini__title">Shopping cart</div>
-                  <div class="mini__row"><span>Email Marketing</span><span class="amt">$40</span></div>
-                  <div class="mini__row"><span>Transactional Email</span><span class="amt">$20</span></div>
-                  <div class="mini__divider">Upon application approval</div>
-                  <div class="mini__cond">
-                    <div class="mini__row"><span>SMS</span><span class="amt"><span class="was">$30</span>$15/mo</span></div>
-                  </div>
-                  <div class="mini__sum"><span>Today's subtotal<small>SMS charged after approval</small></span><span>$60</span></div>
-                </div>
-                <figcaption><strong>One order, one cart.</strong> A labelled divider holds anything waiting on approval. Its real price stays visible but outside today's total, and the pattern fits future approval-based products too.</figcaption>
-              </figure>
+            <div class="shift">
+              <div class="panel"><span class="label">Before</span><h3>Two tools, two price lists</h3><p>QuickBooks and Mailchimp sold in separate systems, with pricing managed in different places.</p></div>
+              <div class="shift__arrow" aria-hidden="true">→</div>
+              <div class="panel panel--accent"><span class="label label--accent">Goal</span><h3>One dashboard</h3><p>Agents buy Mailchimp on the customer's behalf in Intuit's sales tool, priced from one source of truth.</p></div>
             </div>
-            <p class="figure" style="margin-top:16px"><span class="mono muted">Simplified recreations with sample amounts. Not production screens.</span></p>
+            <div class="duo">
+              <div class="panel">
+                <span class="label">Who I designed for</span>
+                <h3>Intuit sales agent</h3>
+                <p>On a live call with a business owner, building the order for them, step by step.</p>
+              </div>
+              <div class="panel">
+                <span class="label">What they need</span>
+                <ul>
+                  <li>Configure plans and add-ons quickly, mid-conversation</li>
+                  <li>Explain prices, discounts and what's charged when</li>
+                  <li>Avoid orders that fail later</li>
+                </ul>
+              </div>
+            </div>
           </section>
 
           <!-- 04 -->
-          <section class="cs-section" id="flow" aria-labelledby="h-flow">
-            <span class="mono">04 — The full flow</span>
-            <h2 id="h-flow">Carrying the idea through checkout.</h2>
+          <section class="cs-section" id="parameters" aria-labelledby="h-params">
+            <span class="label">04 — What an order needs</span>
+            <h2 id="h-params">Every choice an agent makes, and the rules behind it.</h2>
             <div class="prose">
-              <p>A clear cart isn't enough if checkout contradicts it. I designed the full five-step flow for each product, so the “upon approval” idea holds all the way to confirmation.</p>
+              <p>With product, finance and legal, we pinned down every parameter the flow had to capture. These became the backbone of the design.</p>
             </div>
-            <ol class="stepper" role="list">
-              <li class="is-key"><span class="mono">1</span><strong>Select offer</strong><span class="d">Pick products, tiers and discounts. The cart builds as you go.</span></li>
-              <li><span class="mono">2</span><strong>Customer info</strong><span class="d">Business details for a brand-new customer.</span></li>
-              <li class="is-key"><span class="mono">3</span><strong>Payment</strong><span class="d">Card details, plus a note on taxes that apply after approval.</span></li>
-              <li class="is-key"><span class="mono">4</span><strong>Review order</strong><span class="d">“Total due today”, then the consent step.</span></li>
-              <li><span class="mono">5</span><strong>Confirmation</strong><span class="d">The order is placed and summarised for the agent.</span></li>
-            </ol>
-
-            <div class="callouts">
-              <div class="callout"><span class="mono">Payment</span><strong>Taxes upon approval</strong><span class="d">SMS is prorated from its approval date, so its tax can't be known today. The payment step says so instead of showing a wrong number.</span></div>
-              <div class="callout"><span class="mono">Review</span><strong>Consent before submit</strong><span class="d">The agent reads a billing consent script to the customer and confirms it before the order can go through, as legal required.</span></div>
-              <div class="callout"><span class="mono">Blocker</span><strong>“Can't add SMS”</strong><span class="d">Add-ons can't be bought alone. If an agent tries, the message says exactly what to add first.</span></div>
-              <div class="callout"><span class="mono">Blocker</span><strong>Existing customers</strong><span class="d">Phase one is for new customers only. The customer info step catches existing accounts early.</span></div>
+            <div class="params">
+              <div class="param">
+                <span class="label label--accent">Base plan</span>
+                <h3>Email Marketing</h3>
+                <dl>
+                  <div><dt>Plan</dt><dd>Essentials, Standard, Premium and higher tiers</dd></div>
+                  <div><dt>Billing</dt><dd>Monthly or annual</dd></div>
+                  <div><dt>Contacts</dt><dd>Tier sets the price and monthly email sends</dd></div>
+                  <div><dt>Discount</dt><dd>Standard percentage for a set period</dd></div>
+                </dl>
+              </div>
+              <div class="param">
+                <span class="label label--accent">Add-on</span>
+                <h3>Transactional Email</h3>
+                <dl>
+                  <div><dt>Quantity</dt><dd>Blocks of 25,000 emails</dd></div>
+                  <div><dt>Pricing</dt><dd>All blocks priced in the same range</dd></div>
+                  <div><dt>Billing</dt><dd>Monthly</dd></div>
+                  <div><dt>Requires</dt><dd>An Email Marketing plan in the cart</dd></div>
+                </dl>
+              </div>
+              <div class="param param--cond">
+                <span class="label label--accent">Add-on · conditional</span>
+                <h3>SMS</h3>
+                <dl>
+                  <div><dt>Quantity</dt><dd>A monthly range of SMS credits</dd></div>
+                  <div><dt>Requires</dt><dd>An Email Marketing plan in the cart</dd></div>
+                  <div><dt>Charged</dt><dd>Only after the SMS application is approved</dd></div>
+                  <div><dt>Never</dt><dd>Shown as $0. It isn't free.</dd></div>
+                </dl>
+              </div>
+              <div class="param">
+                <span class="label label--accent">The order</span>
+                <h3>Checkout rules</h3>
+                <dl>
+                  <div><dt>Customer</dt><dd>New to Intuit and Mailchimp (phase one)</dd></div>
+                  <div><dt>Region</dt><dd>US, in USD</dd></div>
+                  <div><dt>Tax</dt><dd>Calculated from the customer's address</dd></div>
+                  <div><dt>Consent</dt><dd>Billing script read to the customer before submitting</dd></div>
+                </dl>
+              </div>
             </div>
           </section>
 
           <!-- 05 -->
-          <section class="cs-section" id="process" aria-labelledby="h-process">
-            <span class="mono">05 — How I worked</span>
-            <h2 id="h-process">Three rounds of wireframes, then high fidelity.</h2>
-            <ol class="iters" role="list">
-              <li><span class="mono">Round 1</span><strong>Initial wireframes</strong><span class="d">Mapped Mailchimp onto the existing sales flow: offer table, modify product, cart.</span></li>
-              <li><span class="mono">Round 2</span><strong>Product selection variants</strong><span class="d">Compared offer-table layouts and added a read-only rate-card pop-up so agents can explain pricing.</span></li>
-              <li><span class="mono">Round 3</span><strong>Final wireframe flow</strong><span class="d">End-to-end flow with discount selection, then reviewed with the team before high fidelity.</span></li>
-            </ol>
-            <div class="prose" style="margin-top:32px">
-              <p>I worked closely with my <strong>UX lead</strong> and <strong>PM</strong>, sharing changes after each review. A few that came out of those rounds:</p>
-              <ul>
-                <li>Show the <strong>discount range</strong> up front, with the maximum discount as a variation.</li>
-                <li>Make prices link to a <strong>rate card</strong> instead of crowding the table.</li>
-                <li>Keep a <strong>subtotal visible until payment</strong>, because tax depends on the customer's location.</li>
-              </ul>
-              <p><strong>Legal</strong> shaped the consent step, <strong>finance</strong> set the discount rules, and <strong>engineering</strong> confirmed what the order and billing systems could support.</p>
+          <section class="cs-section" id="iterations" aria-labelledby="h-iter">
+            <span class="label">05 — Design iterations</span>
+            <h2 id="h-iter">Three rounds of wireframes before high fidelity.</h2>
+            <div class="iters">
+              <div class="iter">
+                <div class="iter__text"><span class="label label--accent">Round 1</span><h3>Fit Mailchimp into the existing flow</h3><p>Mapped Mailchimp onto the sales flow agents already know: offer table, modify product, cart.</p></div>
+                <div class="shot"><img src="/assets/img/mailchimp/wireframe-initial.webp" width="690" height="150" loading="lazy" alt="Initial wireframes: offer selection table, modify product and shopping cart screens."></div>
+              </div>
+              <div class="iter">
+                <div class="iter__text"><span class="label label--accent">Round 2</span><h3>Product selection and pricing</h3><p>Compared offer-table layouts and added a read-only rate-card pop-up, so agents can explain prices without leaving the screen.</p></div>
+                <div class="shot" style="max-width:640px"><img src="/assets/img/mailchimp/wireframe-2.webp" width="570" height="496" loading="lazy" alt="Second-round wireframes: three product selection variants, a modify product screen and a rate table pop-up."></div>
+              </div>
+              <div class="iter">
+                <div class="iter__text"><span class="label label--accent">Round 3</span><h3>The full flow, reviewed</h3><p>Product selection to order confirmation, including discount selection. The numbered pins are review comments I worked through with the team.</p></div>
+                <div class="shot"><img src="/assets/img/mailchimp/wireframe-final.webp" width="1487" height="795" loading="lazy" alt="Final wireframe board: Product selection, Modify pop-up, Discount selection, Shopping cart, Customer info, Payment, Review order and Order confirmation, with numbered review comments."></div>
+              </div>
             </div>
+            <p class="fig" style="margin-top:20px"><span class="todo">higher-resolution wireframe exports coming</span></p>
           </section>
 
           <!-- 06 -->
-          <section class="cs-section" id="impact" aria-labelledby="h-impact">
-            <span class="mono">06 — Impact &amp; status</span>
-            <h2 id="h-impact">Built to grow Mailchimp through Intuit's sales team.</h2>
-            <div class="status">
-              <div class="panel panel--good">
-                <h3>Why it matters</h3>
-                <ul>
-                  <li>A new sales channel for Mailchimp, part of Intuit's FY26 plan to grow it.</li>
-                  <li>Mailchimp and QuickBooks sold from one system, with one source of truth for pricing.</li>
-                  <li>A cart pattern that works for any product that needs approval before billing.</li>
-                </ul>
+          <section class="cs-section" id="final" aria-labelledby="h-final">
+            <span class="label">06 — Final designs</span>
+            <h2 id="h-final">Five steps, three products, one cart.</h2>
+            <ol class="flow" role="list">
+              <li><span class="n">01</span><strong>Select offer</strong></li>
+              <li><span class="n">02</span><strong>Customer info</strong></li>
+              <li><span class="n">03</span><strong>Payment</strong></li>
+              <li><span class="n">04</span><strong>Review order</strong></li>
+              <li><span class="n">05</span><strong>Confirmation</strong></li>
+            </ol>
+
+            <div class="callout-q">
+              <span class="label">The hardest question</span>
+              <p class="q">How do we show SMS in the same cart as everything else when we aren't charging for it yet?</p>
+            </div>
+
+            <div class="screens">
+              <div class="screen">
+                <div class="screen__head">
+                  <span class="label">Step 1 · Select offer</span>
+                  <h3>Approval-based products get their own place in the cart.</h3>
+                  <p>SMS sits under an <strong>“Upon Application Approval”</strong> label with its real price and discount, outside the subtotal paid today. A tooltip tells the agent exactly when it's charged.</p>
+                </div>
+                <div class="shot"><img src="/assets/img/mailchimp/final-sms-cart.webp" width="1400" height="1008" loading="lazy" alt="Select offer screen with Email Marketing, Transactional Email and SMS in the cart. SMS is grouped under 'Upon Application Approval'."></div>
               </div>
-              <div class="panel">
-                <h3>How success will be measured</h3>
-                <ul>
-                  <li>Share of agent-led Mailchimp sales going through the new flow</li>
-                  <li>Revenue gain from agent sales</li>
-                  <li>Time saved per sale</li>
-                  <li>Agent feedback and adoption</li>
-                </ul>
+
+              <div class="screen">
+                <div class="screen__head">
+                  <span class="label">Step 1 · Guardrail</span>
+                  <h3>Stop invalid orders before they happen.</h3>
+                  <p>Add-ons can't be bought alone. If an agent tries to add SMS first, the message says exactly what to do instead.</p>
+                </div>
+                <div class="shot"><img src="/assets/img/mailchimp/final-blocker.webp" width="1400" height="875" loading="lazy" alt="Modal reading 'Can't add SMS. SMS can't be purchased on its own. To buy SMS, first add a Mailchimp Email Marketing plan to the shopping cart.'"></div>
+              </div>
+
+              <div class="screen">
+                <div class="screen__head">
+                  <span class="label">Step 3 · Payment</span>
+                  <h3>“Total due today” means exactly that.</h3>
+                  <p>The cart follows the agent through checkout. Today's subtotal and tax cover only what's charged now. SMS stays visible, clearly marked for later.</p>
+                </div>
+                <div class="shot"><img src="/assets/img/mailchimp/final-payment.webp" width="1400" height="1143" loading="lazy" alt="Payment step: card form on the left; on the right the cart with SMS under 'Upon Application Approval', then Today's Subtotal, Tax and Total Due Today."></div>
               </div>
             </div>
-            <div class="prose" style="margin-top:24px">
-              <p><strong>Status:</strong> in launch as of October 2026. I'll add results here once they're real and cleared to share.</p>
-              <p><span class="todo">Sales forecast from the PRD: keep private, or publish as a labelled forecast?</span></p>
+            <p class="fig" style="margin-top:28px"><span class="todo">more final screens coming: offer selection, modify plan, customer info, review &amp; consent, confirmation</span></p>
+          </section>
+
+          <!-- 07 -->
+          <section class="cs-section" id="team" aria-labelledby="h-team">
+            <span class="label">07 — Team &amp; status</span>
+            <h2 id="h-team">Designed with product, engineering, legal and finance.</h2>
+            <ul class="team" role="list">
+              <li><strong>Me</strong><span>Research of the current experience, wireframes, iterations, high-fidelity flows for all three products, handoff</span></li>
+              <li><strong>UX lead &amp; staff product designer</strong><span>Direction, reviews, design-system consistency</span></li>
+              <li><strong>Product manager</strong><span>Requirements, scope and business goals</span></li>
+              <li><strong>Engineering</strong><span>Feasibility across order and billing systems</span></li>
+              <li><strong>Legal</strong><span>The billing consent step</span></li>
+              <li><strong>Finance</strong><span>Discount rules</span></li>
+            </ul>
+            <div class="prose" style="margin-top:28px">
+              <p><strong>Status:</strong> in launch as of October 2026. Results will be added here once they're available and cleared to share.</p>
             </div>
           </section>
         </article>
@@ -290,16 +316,16 @@
 
     <div class="wrap">
       <a class="next-cs" href="/work/quickbooks-rate-tables/">
-        <span class="mono">Next case study · 02</span>
+        <span class="label">Next case study · 02</span>
         <h2>QuickBooks fee tables <span class="arrow" aria-hidden="true">→</span></h2>
       </a>
     </div>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap mono">
+    <div class="wrap">
       <span>© 2026 Krishna Revanth</span>
-      <span>Product names belong to Intuit. Visuals are recreations.</span>
+      <span>Mailchimp and QuickBooks are trademarks of Intuit Inc.</span>
     </div>
   </footer>
 </body>

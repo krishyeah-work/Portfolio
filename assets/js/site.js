@@ -1,18 +1,5 @@
 // Progressive enhancement only. Every page works without this file.
 
-// Receipt demo: visuals switch via CSS :has(); this announces the outcome to screen readers.
-document.querySelectorAll("[data-receipt]").forEach((receipt) => {
-  const live = receipt.querySelector("[data-receipt-live]");
-  const messages = {
-    pending: "Approval pending. Due today: Email Marketing only. SMS is charged later, only if approved.",
-    approved: "SMS approved. The saved card is charged for SMS. Today's charge is unchanged.",
-    denied: "SMS not approved. SMS is never charged. Only Email Marketing was paid.",
-  };
-  receipt.addEventListener("change", (e) => {
-    if (live && e.target.name && messages[e.target.value]) live.textContent = messages[e.target.value];
-  });
-});
-
 // Case-study contents: highlight the section in view.
 const tocLinks = document.querySelectorAll(".toc a[href^='#']");
 if (tocLinks.length && "IntersectionObserver" in window) {

@@ -8,12 +8,11 @@
   <meta property="og:title" content="QuickBooks fee tables — Krishna Revanth">
   <meta property="og:description" content="Making payment fees findable for two audiences.">
   <meta property="og:type" content="article">
-  <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0f0f0e" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#0c0c0e">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300..600&display=swap">
   <link rel="stylesheet" href="/assets/css/site.css">
   <script src="/assets/js/site.js" defer></script>
 </head>
@@ -23,10 +22,10 @@
   <header class="site-header">
     <div class="wrap">
       <a class="brand" href="/" aria-label="Krishna Revanth, home">
-        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="5" width="26" height="9" rx="2.5" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="3" y="18" width="26" height="9" rx="2.5" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-dasharray="4 3"/></svg>
+        <span class="brand-mark" aria-hidden="true">KR</span>
         <span class="brand-name">Krishna Revanth</span>
       </a>
-      <nav class="nav mono" aria-label="Primary">
+      <nav class="nav" aria-label="Primary">
         <a href="/#work" aria-current="page">Work</a>
         <a class="nav-optional" href="/#approach">Approach</a>
         <a href="/#about">About</a>
@@ -38,18 +37,18 @@
   <main id="main">
     <header class="cs-hero">
       <div class="wrap">
-        <a class="crumb mono" href="/#work">← All work</a>
-        <p class="mono muted" style="margin-top:28px">Case study 02 · Intuit × QuickBooks</p>
+        <a class="crumb label" href="/#work">← All work</a>
+        <p class="label cs-eyebrow">Case study 02 · Intuit × QuickBooks</p>
         <h1 class="cs-title">Find the fee that applies to <em>you</em>.</h1>
         <p class="cs-lead">Payment fees change with the payment method, the network and the type of transaction. I designed rate tables for QuickBooks Payments and QuickBooks Bill Pay so sales agents and customers can find the charge that applies to them without decoding a pricing page.</p>
-        <p class="banner"><span class="mono">In progress</span><span>This write-up is still being built. The structure below is real; the decisions, visuals and outcomes are coming next.</span></p>
+        <p class="banner"><span class="label">In progress</span><span>This write-up is still being built. The structure below is real; the decisions, visuals and outcomes are coming next.</span></p>
 
         <dl class="meta-grid">
-          <div><dt class="mono">My role</dt><dd>UX Designer</dd></div>
-          <div><dt class="mono">Team</dt><dd>UX, PM, <span class="todo">Kumar's role</span></dd></div>
-          <div><dt class="mono">Timeline</dt><dd>June 2026</dd></div>
-          <div><dt class="mono">Audiences</dt><dd>Intuit sales agents and end customers</dd></div>
-          <div><dt class="mono">Status</dt><dd><span class="todo">delivered / live?</span></dd></div>
+          <div><dt class="label">My role</dt><dd>UX Designer</dd></div>
+          <div><dt class="label">Team</dt><dd>UX, PM, <span class="todo">Kumar's role</span></dd></div>
+          <div><dt class="label">Timeline</dt><dd>June 2026</dd></div>
+          <div><dt class="label">Audiences</dt><dd>Intuit sales agents and end customers</dd></div>
+          <div><dt class="label">Status</dt><dd><span class="todo">delivered / live?</span></dd></div>
         </dl>
       </div>
     </header>
@@ -57,17 +56,17 @@
     <div class="wrap section--tight">
       <div class="cs-layout">
         <nav class="toc" aria-label="On this page">
-          <ol class="mono">
-            <li><a href="#problem"><span class="mono">01</span>Problem</a></li>
-            <li><a href="#structure"><span class="mono">02</span>Structure</a></li>
-            <li><a href="#decisions"><span class="mono">03</span>Decisions</a></li>
-            <li><a href="#outcome"><span class="mono">04</span>Outcome</a></li>
+          <ol>
+            <li><a href="#problem"><span class="n">01</span>Problem</a></li>
+            <li><a href="#structure"><span class="n">02</span>Structure</a></li>
+            <li><a href="#decisions"><span class="n">03</span>Decisions</a></li>
+            <li><a href="#outcome"><span class="n">04</span>Outcome</a></li>
           </ol>
         </nav>
 
         <article>
           <section class="cs-section" id="problem" aria-labelledby="h-problem">
-            <span class="mono">01 — Problem</span>
+            <span class="label">01 — Problem</span>
             <h2 id="h-problem">Two products, two audiences, a lot of variables.</h2>
             <div class="prose">
               <p>A QuickBooks Payments fee can depend on how a customer pays, which card network it runs on, what kind of transaction it is, whether the charge is range-based, and which offers apply. Bill Pay has its own logic: how a bill is paid and how the vendor receives it.</p>
@@ -77,12 +76,12 @@
           </section>
 
           <section class="cs-section" id="structure" aria-labelledby="h-structure">
-            <span class="mono">02 — Structure</span>
+            <span class="label">02 — Structure</span>
             <h2 id="h-structure">What each table had to hold.</h2>
             <figure class="figure">
               <div class="rt-wrap">
                 <table class="rt">
-                  <caption class="mono">QuickBooks Payments · schematic</caption>
+                  <caption class="label">QuickBooks Payments · schematic</caption>
                   <thead><tr><th scope="col">Payment method</th><th scope="col">Network</th><th scope="col">Transaction type</th><th scope="col">Range-based?</th><th scope="col">Offer</th><th scope="col" class="num">Fee</th></tr></thead>
                   <tbody>
                     <tr><th scope="row">Method A</th><td class="ghost">Network</td><td class="ghost">Type</td><td class="ghost">Yes / No</td><td class="ghost">—</td><td class="num ghost">x.x%</td></tr>
@@ -91,12 +90,12 @@
                   </tbody>
                 </table>
               </div>
-              <figcaption><span class="mono">Fig. 1</span>Columns are from the real table. Rows and values are placeholders; no Intuit rates are shown.</figcaption>
+              <figcaption><span class="label">Fig. 1</span>Columns are from the real table. Rows and values are placeholders; no Intuit rates are shown.</figcaption>
             </figure>
             <figure class="figure">
               <div class="rt-wrap">
                 <table class="rt">
-                  <caption class="mono">QuickBooks Bill Pay · schematic</caption>
+                  <caption class="label">QuickBooks Bill Pay · schematic</caption>
                   <thead><tr><th scope="col">Payment method</th><th scope="col">Receiving method</th><th scope="col" class="num">Fee</th></tr></thead>
                   <tbody>
                     <tr><th scope="row">Method A</th><td class="ghost">Receiving method</td><td class="num ghost">$x.xx</td></tr>
@@ -104,12 +103,12 @@
                   </tbody>
                 </table>
               </div>
-              <figcaption><span class="mono">Fig. 2</span>Schematic. Values withheld.</figcaption>
+              <figcaption><span class="label">Fig. 2</span>Schematic. Values withheld.</figcaption>
             </figure>
           </section>
 
           <section class="cs-section" id="decisions" aria-labelledby="h-decisions">
-            <span class="mono">03 — Decisions</span>
+            <span class="label">03 — Decisions</span>
             <h2 id="h-decisions">Coming next.</h2>
             <div class="prose">
               <p><span class="todo">Hierarchy, grouping and labelling decisions you made</span></p>
@@ -119,7 +118,7 @@
           </section>
 
           <section class="cs-section" id="outcome" aria-labelledby="h-outcome">
-            <span class="mono">04 — Outcome</span>
+            <span class="label">04 — Outcome</span>
             <h2 id="h-outcome">Status and intended impact.</h2>
             <div class="prose">
               <p><span class="todo">What shipped, current status, and any PRD target labelled as a target</span></p>
@@ -131,16 +130,16 @@
 
     <div class="wrap">
       <a class="next-cs" href="/work/mailchimp-sales-enablement/">
-        <span class="mono">Next case study · 01</span>
+        <span class="label">Next case study · 01</span>
         <h2>Selling Mailchimp through Intuit's sales team <span class="arrow" aria-hidden="true">→</span></h2>
       </a>
     </div>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap mono">
+    <div class="wrap">
       <span>© 2026 Krishna Revanth</span>
-      <span>Product names belong to Intuit. Visuals are recreations.</span>
+      <span>Mailchimp and QuickBooks are trademarks of Intuit Inc.</span>
     </div>
   </footer>
 </body>
