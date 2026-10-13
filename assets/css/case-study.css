@@ -269,3 +269,21 @@ html.lb-open { overflow: hidden; }
 .measures-band__list li { display: grid; gap: 6px; align-content: start; border-left: 2px solid var(--accent); padding-left: 14px; }
 .measures-band__list strong { font-weight: 500; }
 .measures-band__list span { color: var(--muted); font-size: var(--fs-small); line-height: 1.5; }
+
+/* title text effect (reveal.js): characters fade in one by one */
+.js [data-text-fade]:not(.tf-ready) { opacity: 0; animation: tf-failsafe 0s linear 2.5s forwards; }
+[data-text-fade] .tf-word { white-space: nowrap; }
+[data-text-fade].tf-ready .tf-char { opacity: 0; }
+[data-text-fade].tf-run .tf-char { animation: tf-fade 0.5s ease forwards; animation-delay: calc(var(--i) * 30ms); }
+@keyframes tf-fade { to { opacity: 1; } }
+@keyframes tf-failsafe { to { opacity: 1; } }
+
+/* in-view reveal (reveal.js): images scale up from a soft blur, text rises gently */
+[data-reveal] { transition: opacity 0.6s ease, transform 0.75s cubic-bezier(0.2, 0.7, 0.1, 1), filter 0.6s ease; }
+[data-reveal="visual"]:not(.is-in) { opacity: 0; transform: scale(0.92); filter: blur(10px); }
+[data-reveal="text"]:not(.is-in) { opacity: 0; transform: translateY(14px); filter: blur(6px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-text-fade] { opacity: 1; animation: none; }
+  [data-text-fade] .tf-char { opacity: 1 !important; animation: none !important; }
+}

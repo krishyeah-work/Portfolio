@@ -104,10 +104,17 @@ a:hover { color: var(--accent); }
 .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
 .brand { display: inline-flex; align-items: center; text-decoration: none; font-weight: 500; font-size: 0.95rem; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
 .brand:hover { color: var(--accent); }
-.nav { display: flex; gap: clamp(16px, 2.6vw, 34px); font-size: 0.92rem; }
-.nav a { text-decoration: none; color: var(--muted); font-weight: 400; }
+.nav { position: relative; display: flex; gap: clamp(0px, 0.8vw, 12px); font-size: 0.92rem; }
+.nav a { position: relative; z-index: 1; padding: 5px 10px; border-radius: 8px; text-decoration: none; color: var(--muted); font-weight: 400; transition: color 0.3s var(--ease); }
+.nav__pill {
+  position: absolute; left: 0; top: 0; z-index: 0; border-radius: 8px; background: rgba(255, 255, 255, 0.08);
+  opacity: 0; pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.34, 1.26, 0.64, 1), width 0.3s cubic-bezier(0.34, 1.26, 0.64, 1), opacity 0.2s var(--ease);
+}
+.nav__pill.is-on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .nav__pill { transition: opacity 0.2s; } }
 .nav a:hover, .nav a[aria-current="page"] { color: var(--ink); }
-@media (max-width: 520px) { .brand { font-size: 0.82rem; letter-spacing: 0.1em; } .nav .nav-optional { display: none; } }
+@media (max-width: 520px) { .brand { font-size: 0.82rem; letter-spacing: 0.1em; } .nav .nav-optional { display: none; } .nav a { padding: 5px 7px; } }
 
 /* ---------- buttons ---------- */
 .btn {
@@ -146,7 +153,7 @@ a:hover { color: var(--accent); }
 
 /* ---------- footer ---------- */
 .site-footer { border-top: 1px solid var(--line); padding-block: 28px 40px; color: var(--muted); font-size: 0.85rem; }
-.site-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+.site-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
 
 
 /* ---------- motion ---------- */
@@ -176,9 +183,9 @@ body::after {
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   font: inherit; font-size: 0.88rem; font-weight: 400; cursor: pointer; white-space: nowrap;
   opacity: 0; transform: translateY(12px); pointer-events: none;
-  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease);
+  transition: opacity 0.25s var(--ease), transform 0.12s linear, border-color 0.2s var(--ease), color 0.2s var(--ease);
 }
-.to-top.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+.to-top.is-visible { opacity: 1; transform: translateY(calc(-1 * var(--lift, 0px))); pointer-events: auto; }
 .to-top:hover { border-color: var(--accent); color: var(--accent); }
 
 main:focus { outline: none; }

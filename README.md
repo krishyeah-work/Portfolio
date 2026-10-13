@@ -12,16 +12,24 @@ index.html                     Home (hero, work list, approach, about, contact)
 assets/
   css/base.css                 Shared: tokens, type, header, footer, buttons, screenshot frame
   css/home.css                 Home page only
-  css/case-study.css           Shared case-study layout and components (carousel, lightbox, toc…)
+  css/case-study.css           Shared case-study layout and components (carousel, lightbox, toc, reveal…)
+  css/footer-live.css          Footer clock and Pal
+  js/site.js                   Every page: name scramble, nav hover pill, scroll-to-top
+  js/clock.js                  Live Bengaluru clock with sliding digits ([data-clock])
+  js/pal.js                    Pal: asleep 11:00 PM–6:30 AM IST, local-language hello ([data-pal]); ?pal=awake|asleep to preview
+  js/reveal.js                 Case studies: title text effect ([data-text-fade]) and in-view reveal
   js/toc.js                    Highlights the case-study contents link in view
   js/carousel.js               Scroll-snap carousel  ([data-carousel])
   js/lightbox.js               Click any screen to enlarge and zoom (.shot img, img[data-zoom])
   favicon.svg
+api/
+  geo.js                       Vercel function: returns only the visitor's country/state code for Pal's hello
 work/
   mailchimp/                   Case study 01, everything for it lives here
     index.html
     mailchimp.css              Styles used only by this case study
-    mailchimp.js               Logo dust hero + cart-explorations scroll sequence
+    cover.css / cover.js       Logo-in-pixel-dust cover, shared with the homepage card
+    mailchimp.js               Cart-explorations scroll sequence
     img/                       Optimized WebP; *-lg.webp are the sharper lightbox versions
   quickbooks-rate-tables/      Case study 02 (in progress)
 portfolio-context/             Brief, case-study notes, decisions log (local only, not pushed)
@@ -35,6 +43,8 @@ portfolio-context/             Brief, case-study notes, decisions log (local onl
 | MailChimp-only visuals (hero dust, sequence, guardrails) | `work/mailchimp/mailchimp.css` / `.js` |
 | Anything shared by all case studies | `assets/css/case-study.css` |
 | Colours, fonts, header, footer | `assets/css/base.css` |
+| Pal's lines, greetings or sleep hours | `assets/js/pal.js` |
+| Clock | `assets/js/clock.js` + `assets/css/footer-live.css` |
 | Home page | `index.html` + `assets/css/home.css` |
 
 ### Adding a new case study
@@ -58,4 +68,4 @@ Then open http://localhost:4321.
 
 ## Deploy
 
-Not deployed yet. On Vercel: import the repo, framework preset **Other**, no build command, output directory `.`.
+Connected to Vercel: every push to `main` deploys to production. Framework preset **Other**, no build command. Bump the `?v=` version on CSS/JS links whenever those files change.

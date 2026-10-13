@@ -1,6 +1,7 @@
 // site.js — small enhancements used on every page.
-// 1. Text scramble: the name in the header (on hover) and case-study titles (on load).
-// 2. Back-to-top button.
+// 1. Text scramble on the name in the header (on hover).
+// 2. Animated tabs hover on the top navigation.
+// 3. Back-to-top button.
 
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&*+=/<>";
@@ -52,16 +53,36 @@ document.querySelectorAll("[data-scramble-hover]").forEach((el) => {
   link.addEventListener("blur", () => show(full, 550));
 });
 
-// Case-study titles: shown scrambled straight away, then resolved once fonts are ready and the
-// page has painted, so the effect is visible even on slower connections.
-document.querySelectorAll("[data-scramble-load]").forEach((el) => {
-  const text = el.textContent.trim();
-  el.setAttribute("aria-label", text);
-  if (reduce) return;
-  el.textContent = [...text].map((c) => (c === " " ? " " : GLYPHS[(Math.random() * GLYPHS.length) | 0].toLowerCase())).join("");
-  const fontsReady = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 1500))]);
-  const start = () => requestAnimationFrame(() => setTimeout(() => scramble(el, text, { duration: 1400, upper: false }), 150));
-  fontsReady.then(() => (document.hidden ? document.addEventListener("visibilitychange", start, { once: true }) : start()));
+// Animated tabs hover: a pill slides between nav links (vanilla take on motion-primitives' AnimatedBackground).
+// It rests on the current page's link, if any, and hides when the pointer leaves the nav.
+document.querySelectorAll(".nav").forEach((nav) => {
+  const links = [...nav.querySelectorAll("a")];
+  if (!links.length) return;
+  const pill = document.createElement("span");
+  pill.className = "nav__pill";
+  pill.setAttribute("aria-hidden", "true");
+  nav.prepend(pill);
+  let hovered = null;
+  const rest = () => links.find((a) => a.getAttribute("aria-current") === "page" && a.offsetParent);
+  const moveTo = (a, instant) => {
+    if (!a) { pill.classList.remove("is-on"); return; }
+    if (instant) pill.style.transition = "none";
+    pill.style.width = `${a.offsetWidth}px`;
+    pill.style.height = `${a.offsetHeight}px`;
+    pill.style.transform = `translate(${a.offsetLeft}px, ${a.offsetTop}px)`;
+    pill.classList.add("is-on");
+    if (instant) { pill.offsetWidth; pill.style.transition = ""; }
+  };
+  links.forEach((a) => {
+    a.addEventListener("pointerenter", () => { hovered = a; moveTo(a, !pill.classList.contains("is-on")); });
+    a.addEventListener("focus", () => { hovered = a; moveTo(a, !pill.classList.contains("is-on")); });
+  });
+  nav.addEventListener("pointerleave", () => { hovered = null; moveTo(rest()); });
+  nav.addEventListener("focusout", (e) => { if (!nav.contains(e.relatedTarget)) { hovered = null; moveTo(rest()); } });
+  const settle = () => moveTo(hovered || rest(), true); // re-measure after fonts load or resize, keeping the hovered tab
+  document.fonts?.ready.then(settle);
+  window.addEventListener("resize", settle);
+  settle();
 });
 
 // Back to top.
@@ -71,7 +92,13 @@ document.querySelectorAll("[data-scramble-load]").forEach((el) => {
   btn.className = "to-top";
   btn.innerHTML = '<span class="to-top__icon" aria-hidden="true">↑</span><span class="to-top__text">Scroll to top</span>';
   document.body.append(btn);
-  const update = () => btn.classList.toggle("is-visible", window.scrollY > 600);
+  const footer = document.querySelector(".site-footer");
+  const update = () => {
+    btn.classList.toggle("is-visible", window.scrollY > 600);
+    // lift the button above the footer so it never covers the clock or Pal
+    const overlap = footer ? Math.max(0, window.innerHeight - footer.getBoundingClientRect().top) : 0;
+    btn.style.setProperty("--lift", `${overlap}px`);
+  };
   window.addEventListener("scroll", update, { passive: true });
   update();
   btn.addEventListener("click", () => {
