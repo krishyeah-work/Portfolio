@@ -29,8 +29,10 @@ work/
     index.html
     mailchimp.css              Styles used only by this case study
     cover.css / cover.js       Logo-in-pixel-dust cover, shared with the homepage card
-    mailchimp.js               Cart-explorations scroll sequence
-    img/                       Optimized WebP; *-lg.webp are the sharper lightbox versions
+    mailchimp.js               Cart-explorations scroll sequence (carts land in the dashboard's cart slot)
+    img/                       Optimized WebP; *-lg.webp are the sharper lightbox versions;
+                               sales-dash*.svg are Krishna's yellow-line dashboards; cart-*/dlg-* are
+                               transparent crops placed on them at true scale
   quickbooks-rate-tables/      Case study 02 (in progress)
 portfolio-context/             Brief, case-study notes, decisions log (local only, not pushed)
 ```
@@ -40,7 +42,7 @@ portfolio-context/             Brief, case-study notes, decisions log (local onl
 | To change… | Open only… |
 |---|---|
 | MailChimp case study text or images | `work/mailchimp/index.html` (+ `img/`) |
-| MailChimp-only visuals (hero dust, sequence, guardrails) | `work/mailchimp/mailchimp.css` / `.js` |
+| MailChimp-only visuals (hero dust, channels figure, cart sequence, dialogs on the dashboard) | `work/mailchimp/mailchimp.css` / `.js` |
 | Anything shared by all case studies | `assets/css/case-study.css` |
 | Colours, fonts, header, footer | `assets/css/base.css` |
 | Pal's lines, greetings or sleep hours | `assets/js/pal.js` |

@@ -1,29 +1,69 @@
 /* mailchimp.css — styles used only by the MailChimp case study.
    Shared case-study styles live in /assets/css/case-study.css. */
 
+/* ---------- 03: how customers buy (three channels) ---------- */
+.channels { list-style: none; display: grid; gap: 14px; margin-top: clamp(24px, 3vw, 36px); }
+@media (min-width: 760px) { .channels { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.channel {
+  position: relative; display: grid; gap: 8px; align-content: start;
+  border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface);
+  padding: clamp(18px, 2.2vw, 24px);
+}
+.channel--focus {
+  border-color: rgba(255, 224, 27, 0.45);
+  background: radial-gradient(90% 70% at 50% 0%, rgba(255, 224, 27, 0.08), transparent 70%), var(--surface);
+}
+.channel__tag { position: absolute; top: 14px; right: 16px; color: var(--accent); }
+.channel__art {
+  width: 100%; max-width: 240px; height: auto; margin: 0 0 8px; overflow: visible;
+  fill: none; stroke: #ffe01b; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.channel__art * { vector-effect: non-scaling-stroke; }
+.channel__art .f { fill: rgba(255, 224, 27, 0.07); }
+.channel__art .f2 { fill: rgba(255, 224, 27, 0.2); }
+.channel__art .dot { fill: #ffe01b; stroke: none; }
+.channel__art .logo { fill: #ffe01b; stroke: none; }
+.channel:not(.channel--focus) .channel__art { opacity: 0.62; }
+.channel h3 { font-size: var(--fs-h3); }
+.channel > p { color: var(--ink-2); }
+.channel__who { list-style: none; display: grid; gap: 6px; margin-top: 8px; padding-top: 14px; border-top: 1px solid var(--line); font-size: var(--fs-small); }
+.channel__who li { display: flex; align-items: center; gap: 10px; color: var(--ink-2); }
+.channel__who li::before { content: ""; flex: none; width: 16px; height: 16px; border-radius: 50%; background: center / 10px no-repeat; }
+.channel__who .is-yes::before { background-color: var(--accent-soft); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 5.2 4.1 7.3 8 3' fill='none' stroke='%23f5c451' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.channel__who .is-no { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(255, 255, 255, 0.25); }
+.channel__who .is-no::before { background-color: rgba(255, 255, 255, 0.05); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M3 5h4' fill='none' stroke='%23a09fa6' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E"); }
+
 /* ---------- cart explorations: scroll sequence ---------- */
+/* Without JS (or with reduced motion) the carts are a simple list. */
 .seq { margin-top: clamp(28px, 4vw, 44px); }
 .seq__list { list-style: none; display: grid; gap: clamp(48px, 6vw, 72px); }
 .seq__item { display: grid; gap: 20px; align-items: center; }
 @media (min-width: 860px) { .seq__item { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px; } }
-/* every cart sits in the same fixed frame, top-aligned, so each one lands in exactly the same spot */
 .seq__media { margin: 0; display: grid; place-items: center; }
-.seq__media .shot {
-  width: min(100%, calc(min(64vh, 620px) * 0.58)); aspect-ratio: 0.58;
-  display: flex; align-items: flex-start; justify-content: center; background: #fff;
-}
-.seq__media .shot img { width: 100%; height: 100%; object-fit: contain; object-position: top center; }
-.seq__item.is-final .shot { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 30px 60px -30px rgba(0, 0, 0, 0.8); }
+.seq__cart { display: block; width: min(100%, 360px); height: auto; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.55)); cursor: zoom-in; }
+.seq__item.is-final .seq__cart { filter: drop-shadow(0 0 1px rgba(255, 224, 27, 0.9)) drop-shadow(0 30px 40px rgba(0, 0, 0, 0.55)); }
 .seq__text { display: grid; gap: 10px; max-width: 30em; }
 .seq__text h4 { font-size: var(--fs-h3); font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; margin: 0; }
 .seq__text p { color: var(--ink-2); }
 .seq__text .label { color: var(--muted); }
 .seq__item.is-final .seq__text .label { color: var(--accent); }
-.seq__dots { display: none; }
+.seq__backdrop, .seq__dots { display: none; }
 
-/* live (JS) mode: pinned stage, one cart at a time */
-.seq.is-live { height: calc(100vh - 120px + var(--n) * 62vh); }
-.seq.is-live .seq__stage { position: sticky; top: 96px; height: calc(100vh - 128px); }
+/* Live (JS) mode: the stage pins just below the header and each cart lands in the cart slot of the
+   dashboard. mailchimp.js measures the stage and sets the geometry in px:
+   --s (dashboard scale), --bx/--by (dashboard position), --cx/--cy (cart slot), --tw/--ty (text),
+   --al/--ar (how far the backdrop reaches past the column), --f0..--f2 (left fade), --bo (backdrop opacity). */
+.seq.is-live { --pin: 77px; height: calc(100vh - var(--pin) - 12px + var(--n) * 62vh); }
+.seq.is-live .seq__stage { position: sticky; top: var(--pin); height: calc(100vh - var(--pin) - 12px); }
+.seq.is-live .seq__backdrop {
+  display: block; position: absolute; top: 0; bottom: 0; left: calc(-1 * var(--al, 0px)); right: calc(-1 * var(--ar, 0px));
+  overflow: hidden; pointer-events: none; opacity: var(--bo, 1);
+  -webkit-mask-image: linear-gradient(to right, transparent var(--f0, 0px), rgba(0, 0, 0, 0.5) var(--f1, 20%), #000 var(--f2, 60%)), linear-gradient(to bottom, transparent var(--v0, 0px), #000 var(--v1, 9%), #000 80%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent var(--f0, 0px), rgba(0, 0, 0, 0.5) var(--f1, 20%), #000 var(--f2, 60%)), linear-gradient(to bottom, transparent var(--v0, 0px), #000 var(--v1, 9%), #000 80%, transparent 100%);
+  mask-composite: intersect;
+}
+.seq.is-live .seq__board { position: absolute; left: calc(var(--al, 0px) + var(--bx, 0px)); top: var(--by, 0px); width: calc(1600px * var(--s, 0.6)); max-width: none; height: auto; }
 .seq.is-live .seq__list { position: relative; height: 100%; display: block; }
 .seq.is-live .seq__item {
   position: absolute; inset: 0; opacity: 0; pointer-events: none;
@@ -32,31 +72,45 @@
 }
 .seq.is-live .seq__item.is-past { transform: translateY(-40px) scale(0.97); }
 .seq.is-live .seq__item.is-active { opacity: 1; transform: none; pointer-events: auto; }
-.seq.is-live .seq__text { opacity: 0; transform: translateX(18px); transition: opacity 0.5s var(--ease) 0.15s, transform 0.6s var(--ease) 0.15s; }
+.seq.is-live .seq__media { position: absolute; left: var(--cx, 0px); top: var(--cy, 0px); width: calc(468px * var(--s, 0.6)); display: block; }
+.seq.is-live .seq__cart { width: 100%; }
+.seq.is-live .seq__text {
+  position: absolute; left: 0; top: var(--ty, 50%); width: var(--tw, 40%); translate: 0 -50%;
+  opacity: 0; transform: translateX(18px); transition: opacity 0.5s var(--ease) 0.15s, transform 0.6s var(--ease) 0.15s;
+}
 .seq.is-live .seq__item.is-active .seq__text { opacity: 1; transform: none; }
-.seq.is-live .seq__dots { display: flex; gap: 8px; position: absolute; left: 0; bottom: 0; }
+.seq.is-live .seq__dots { display: flex; gap: 8px; position: absolute; left: 0; bottom: 4px; }
 .seq__dot { width: 22px; height: 3px; border-radius: 2px; background: var(--line-strong); transition: background-color 0.3s var(--ease), width 0.3s var(--ease); }
 .seq__dot.is-active { background: var(--accent); width: 36px; }
 @media (max-width: 859px) {
-  .seq.is-live .seq__stage { top: 76px; height: calc(100vh - 96px); }
-  .seq.is-live .seq__item { align-content: center; }
-  .seq.is-live .seq__media .shot { width: min(100%, calc(46vh * 0.58)); }
+  .seq.is-live { --pin: 72px; }
+  .seq.is-live .seq__text { translate: none; }
+  .seq.is-live .seq__dots { left: 50%; translate: -50% 0; }
 }
 
-/* ---------- guardrails: dialogs over the real dashboard, traced in yellow lines ---------- */
+/* ---------- dialogs over the dashboard (configuration and guardrails) ---------- */
 .gr-list { display: grid; gap: clamp(28px, 4vw, 44px); margin-top: clamp(24px, 3vw, 36px); }
 .gr { margin: 0; display: grid; gap: 12px; }
-.gr__stage {
-  position: relative; aspect-ratio: 16 / 10; overflow: hidden; border-radius: var(--radius);
-  border: 1px solid var(--line);
-  background: radial-gradient(60% 70% at 50% 55%, rgba(245, 196, 81, 0.05), transparent 70%), var(--bg-2);
+/* The stage is Krishna's 1600 x 1151 dashboard. Each dialog keeps its real size and position on that
+   screen: --x, --y and --w are px of the 1600-wide frame, taken from the final designs. */
+.gr__stage { position: relative; aspect-ratio: 1600 / 1151; container-type: inline-size; }
+.gr__dash { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* modal backdrop: a light dim with a soft blur around the dialog, clearing to a sharp dashboard at the edges */
+.gr__veil {
+  position: absolute; inset: 0; border-radius: calc(12 / 1600 * 100cqw);
+  background: radial-gradient(62% 68% at 50% 44%, rgba(12, 12, 14, 0.38), rgba(12, 12, 14, 0) 88%);
+  -webkit-backdrop-filter: blur(1.2px); backdrop-filter: blur(1.2px);
+  -webkit-mask-image: radial-gradient(62% 68% at 50% 44%, #000 30%, transparent 92%);
+  mask-image: radial-gradient(62% 68% at 50% 44%, #000 30%, transparent 92%);
 }
-.gr__dash { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-/* dialog width matches its real size on the 1600px-wide screen (994 / 2400 of the 1.5x export) */
+@media (max-width: 599px) { .gr__dialog { scale: 1.35; } }
 .gr__dialog {
-  position: absolute; left: 50%; top: 50%; width: 41.4%; height: auto;
-  transform: translate(-50%, -50%); border-radius: 8px;
-  box-shadow: 0 0 0 1px rgba(245, 196, 81, 0.75), 0 30px 60px -20px rgba(0, 0, 0, 0.95);
+  position: absolute; left: calc(var(--x) / 1600 * 100%); top: calc(var(--y) / 1151 * 100%); width: calc(var(--w) / 1600 * 100%); height: auto;
+  border-radius: calc(8 / 1600 * 100cqw); cursor: zoom-in;
+  box-shadow: 0 0 0 1px rgba(255, 224, 27, 0.7), 0 30px 60px -20px rgba(0, 0, 0, 0.95);
 }
 .gr figcaption { display: flex; gap: 12px; align-items: baseline; color: var(--muted); font-size: var(--fs-small); }
 .gr figcaption .label { color: var(--ink-2); flex: none; }
+
+/* the floating "Scroll to top" button steps aside while the cart explorations are pinned */
+.seq-pinned .to-top.is-visible { opacity: 0; pointer-events: none; }
