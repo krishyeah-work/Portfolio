@@ -43,11 +43,11 @@
   const main = document.querySelector("main");
   if (!main) return;
 
-  const GROUPS = ".overview__grid, .measures-band__list, .pmap__adds, .stats, .params, .figs-2, .flow, .team, .lessons, .duo, .shift, .gr-list, .stack";
+  const GROUPS = ".overview__grid, .measures-band__list, .pmap__adds, .stats, .params, .figs-2, .flow, .team, .lessons, .duo, .shift, .gr-list, .stack, .copy-list, .channels, .sms-flow";
   const SINGLES = [
     ".cs-section > .label", ".cs-section > h2", ".prose", ".screen__head", ".callout-q", ".carousel", ".round__text",
     ".screen > .shot", ".metrics > .label", ".pmap__col > .label", ".pmap__col > .pcard", ".measures-band__head",
-    ".overview > .wrap > .label", ".overview > .wrap > h2", ".next-cs",
+    ".overview > .wrap > .label", ".overview > .wrap > h2", ".next-cs", ".decision", ".outcome__label", ".callout-q",
   ].join(", ");
   const isVisual = (el) => el.matches(".shot, .carousel, .fig, .gr, .param, .pcard, .callout-q") || !!el.querySelector("img");
   const skip = (el) => el.closest(".seq, .toc");

@@ -189,3 +189,91 @@
 .cs-section { padding-block: clamp(48px, 6vw, 80px); }
 .metrics { padding-bottom: clamp(48px, 6vw, 80px); }
 .screens { gap: clamp(44px, 6vw, 72px); margin-top: clamp(32px, 4.5vw, 56px); }
+
+/* ---------- 04: process strip (tool logos, arrows, a left-to-right reveal when it arrives) ---------- */
+.process { list-style: none; display: grid; gap: 14px; margin-top: clamp(22px, 3vw, 32px); }
+@media (min-width: 760px) { .process { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
+.process li { position: relative; z-index: calc(10 - var(--i, 0)); display: grid; gap: 4px; align-content: start; padding: 16px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.process__icon { display: grid; place-items: center; width: 32px; height: 32px; margin-bottom: 8px; border: 1px solid var(--line-strong); border-radius: 9px; background: #1c1c20; }
+.process__icon img, .process__icon svg { display: block; width: 18px; height: 18px; object-fit: contain; }
+.process__icon--moqups { overflow: hidden; border-color: transparent; }
+.process__icon--moqups img { width: 100%; height: 100%; }
+.process__icon--handoff svg { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linejoin: round; }
+.process__tool { color: var(--ink); font-weight: 500; }
+.process li > span:last-child { color: var(--muted); font-size: var(--fs-small); line-height: 1.45; }
+.process__note { margin-top: 12px; color: var(--muted); font-size: var(--fs-small); max-width: 44em; }
+/* arrow in the gap between steps: down on phones, right on wider screens */
+.process li:not(:last-child)::after { content: "↓"; position: absolute; left: 27px; bottom: -15px; width: 14px; height: 16px; display: grid; place-items: center; color: var(--accent); font-size: 0.85rem; line-height: 1; }
+@media (min-width: 760px) { .process li:not(:last-child)::after { content: "→"; left: auto; right: -24px; bottom: auto; top: 24px; width: 24px; } }
+@media (max-width: 759px) {
+  /* phones: logo beside the text, so each step stays one compact row */
+  .process li { grid-template-columns: 32px minmax(0, 1fr); column-gap: 14px; }
+  .process__icon { grid-row: 1 / span 2; margin: 2px 0 0; }
+}
+/* the reveal: steps fade in from the left one after another, then each arrow appears */
+.js .process[data-process]:not(.is-in) li { opacity: 0; }
+.js .process[data-process]:not(.is-in) li::after { opacity: 0; }
+.process.is-in li { animation: proc-in 0.6s var(--ease) both; animation-delay: calc(var(--i) * 180ms); }
+.process.is-in li:not(:last-child)::after { animation: proc-arrow 0.4s var(--ease) both; animation-delay: calc(var(--i) * 180ms + 260ms); }
+@keyframes proc-in { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: none; } }
+@keyframes proc-arrow { from { opacity: 0; transform: translateX(-6px) scale(0.7); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .js .process[data-process]:not(.is-in) li, .js .process[data-process]:not(.is-in) li::after { opacity: 1; }
+  .process.is-in li, .process.is-in li::after { animation: none; }
+}
+
+/* ---------- decision cards: chose / over / why ---------- */
+.decision { display: grid; gap: 10px; margin-top: clamp(24px, 3vw, 32px); padding: clamp(18px, 2.4vw, 26px); border: 1px solid rgba(245, 196, 81, 0.35); border-radius: var(--radius); background: var(--surface); }
+.decision h4 { margin: 0; font-size: var(--fs-h3); font-weight: 500; letter-spacing: -0.02em; line-height: 1.25; }
+.decision dl { display: grid; gap: 8px; margin: 4px 0 0; }
+.decision dl > div { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 12px; padding-top: 8px; border-top: 1px solid var(--line); }
+.decision dt { padding-top: 3px; color: var(--muted); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.decision dd { margin: 0; color: var(--ink-2); }
+
+/* ---------- copy ---------- */
+.copy-list { list-style: none; display: grid; gap: 12px; }
+@media (min-width: 760px) { .copy-list { grid-template-columns: 1fr 1fr; } }
+.copy-list li { display: flex; flex-wrap: wrap; gap: 8px; align-content: start; padding: 16px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.copy-list q { display: inline-block; padding: 4px 10px; border-radius: 8px; background: rgba(255, 255, 255, 0.06); color: var(--ink); font-weight: 500; line-height: 1.4; quotes: none; }
+.copy-list q.is-never { color: var(--muted); text-decoration: line-through; }
+.copy-list li > span { flex-basis: 100%; color: var(--muted); font-size: var(--fs-small); line-height: 1.45; }
+
+/* ---------- 05: reflection (team + lessons) ---------- */
+.outcome__label { display: block; margin-top: clamp(28px, 3.5vw, 40px); }
+.outcome__label + .team, .outcome__label + .lessons { margin-top: 12px; }
+
+/* ---------- final cart: guidance tooltip on the "!" icon, and the phone version of the leader ---------- */
+/* positions are px of the 702 x 1284 final-cart export: the icon sits at (180-209, 701-729) */
+.seq__cartbox { position: relative; width: min(100%, 360px); }
+.seq__cartbox .seq__cart { width: 100%; }
+.seq.is-live .seq__cartbox { width: 100%; }
+.seq__tip-btn {
+  position: absolute; z-index: 2; left: calc(176 / 702 * 100%); top: calc(697 / 1284 * 100%); width: calc(37 / 702 * 100%); aspect-ratio: 1;
+  padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: help;
+}
+.seq__tip-btn::after { content: ""; position: absolute; inset: -1px; border: 1.5px solid var(--accent); border-radius: 50%; opacity: 0; animation: tip-pulse 2.4s var(--ease) infinite; }
+@keyframes tip-pulse { 0% { opacity: 0.9; transform: scale(0.7); } 70%, 100% { opacity: 0; transform: scale(1.6); } }
+.seq__tip-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.seq__tip {
+  position: absolute; z-index: 3; left: calc(141 / 702 * 100%); top: calc(562.5 / 1284 * 100%); width: calc(552 / 702 * 100%); height: auto;
+  pointer-events: none; opacity: 0; translate: 0 6px; transition: opacity 0.25s var(--ease), translate 0.25s var(--ease);
+}
+.seq__tip-btn:hover + .seq__tip, .seq__tip-btn:focus-visible + .seq__tip, .seq__cartbox.is-tip-open .seq__tip { opacity: 1; translate: 0 0; }
+.seq__status.is-cycling ~ .seq__tip-btn, .seq__status.is-cycling ~ .seq__tip { visibility: hidden; opacity: 0; }
+.seq.is-live .seq__item.is-active .seq__tip-btn { pointer-events: auto; }
+.seq__hint { color: var(--muted); font-size: var(--fs-small); }
+.seq__hint-icon { display: inline-block; width: 1.1em; height: 1.1em; margin: 0 1px; vertical-align: -0.2em; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; }
+.seq__hint-icon .dot { fill: currentColor; stroke: none; }
+.seq__hint-tap { display: none; }
+@media (hover: none) { .seq__hint-hover { display: none; } .seq__hint-tap { display: inline; } }
+.seq__note { display: none; }
+@media (max-width: 859px) {
+  .seq.is-live .seq__note { display: flex; align-items: center; gap: 8px; color: var(--accent); font-size: var(--fs-small); opacity: 0; transition: opacity 0.4s var(--ease); }
+  .seq.is-live .seq__note::before { content: ""; flex: none; width: 18px; height: 1px; background: var(--accent); }
+  .seq__item.is-leader .seq__note { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .seq__tip-btn::after { animation: none; opacity: 0.6; } }
+.cs-section > .sms-flow, .cs-section > .callout-q { margin-top: clamp(20px, 2.6vw, 28px); }
+
+/* dashboard stages in a carousel: no rounded clipping, so the dashboard's own yellow corners stay visible */
+.carousel--stage .carousel__track { border-radius: 0; }

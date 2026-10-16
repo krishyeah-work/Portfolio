@@ -36,6 +36,26 @@ document.querySelectorAll("[data-tabs]").forEach((root) => {
   select(0);
 });
 
+/* ---------- Process strip: the steps reveal left to right once, when the strip comes into view ---------- */
+document.querySelectorAll("[data-process]").forEach((el) => {
+  if (reduceMotion || !("IntersectionObserver" in window)) { el.classList.add("is-in"); return; }
+  const io = new IntersectionObserver((entries) => {
+    if (!entries.some((e) => e.isIntersecting)) return;
+    el.classList.add("is-in");
+    io.disconnect();
+  }, { rootMargin: "0px 0px -15% 0px" });
+  io.observe(el);
+});
+
+/* ---------- Guidance tooltip on the final cart's "!" icon (hover, focus, or tap) ---------- */
+document.querySelectorAll(".seq__tip-btn").forEach((btn) => {
+  const box = btn.closest(".seq__cartbox");
+  const open = (on) => { box.classList.toggle("is-tip-open", on); btn.setAttribute("aria-expanded", String(on)); };
+  btn.addEventListener("click", (e) => { e.stopPropagation(); open(!box.classList.contains("is-tip-open")); });
+  document.addEventListener("click", (e) => { if (!box.contains(e.target)) open(false); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") open(false); });
+});
+
 /* ---------- Cart explorations sequence ---------- */
 (() => {
   const root = document.querySelector("[data-sequence]");
@@ -90,7 +110,8 @@ document.querySelectorAll("[data-tabs]").forEach((root) => {
       tw = clamp(W * 0.4, 240, 360);
       set("--tw", tw);
       const textH = Math.max(...texts.map((t) => t.offsetHeight));
-      s = Math.min((H - padT - padB) / maxH, (W - tw - 40) / SLOT_W, 1);
+      // keep 170px between the text and the cart, so the leader always has room
+      s = Math.min((H - padT - padB) / maxH, (W - tw - 170) / SLOT_W, 1);
       cx = W - SLOT_W * s;
       cy = padT + Math.max(0, (H - padT - padB - maxH * s) / 2);
       // texts share one top edge (the tallest is centred on the carts), with the stepper just above
@@ -141,6 +162,7 @@ document.querySelectorAll("[data-tabs]").forEach((root) => {
     if (k === statusOn) return;
     statusOn = k;
     status?.classList.toggle("is-cycling", k >= 0);
+    if (k >= 0) final.querySelector(".seq__cartbox")?.classList.remove("is-tip-open");
     statusImgs.forEach((img, j) => img.classList.toggle("is-on", j === k));
   };
   const setLeader = (on) => {
