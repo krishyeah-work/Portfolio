@@ -353,3 +353,7 @@ html.lb-open { overflow: hidden; }
 .tabs:not(.is-ready) .tabs__list { display: none; }
 .tabs:not(.is-ready) .tabs__panel + .tabs__panel { margin-top: clamp(32px, 4.5vw, 48px); }
 .tabs.is-ready .tabs__fallback { display: none; }
+
+/* ---------- spacing hygiene: blocks that follow text get room to breathe ---------- */
+.cs-section > .callout-q { margin-top: clamp(20px, 2.6vw, 28px); }
+.screen__head + .figs-2--top { margin-top: clamp(18px, 2.4vw, 24px); }

@@ -1,23 +1,23 @@
 // quickbooks.js — interactions used only by the QuickBooks rate tables case study.
-// 1. In-view triggers for the fee anatomy, money flow, parameter map and column grammar.
-// 2. The live rate table: a recreated accountant dashboard with the final pop-up on top.
-//    Icons, jump links and collapsible sections (open by default), for QuickBooks Payments and Bill Pay,
-//    on desktop or as a mobile bottom sheet. All fees are the illustrative values from the Figma finals.
+// 1. In-view triggers for the fee anatomy, money flow and parameter map.
+// 2. The column grammar: Tier, then Qual, push the table past the 752px modal; a shared column brings it back.
+// 3. The live rate table: a recreated accountant dashboard with the final 752px pop-up on top, drawn at real size
+//    and scaled to the stage. Icons, jump links and collapsible sections (open by default), for QuickBooks Payments
+//    and Bill Pay, on desktop or as a mobile bottom sheet. All fees are the illustrative values from the Figma finals.
 
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ---------- 1. play each animation once its block comes into view ---------- */
 (() => {
-  const blocks = document.querySelectorAll("[data-anatomy], [data-money], [data-map], [data-grammar]");
+  const blocks = document.querySelectorAll("[data-anatomy], [data-money], [data-map]");
   if (reduceMotion || !("IntersectionObserver" in window)) { blocks.forEach((b) => b.classList.add("is-in")); return; }
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
       const el = e.target;
-      // looping pieces (money, grammar) pause while off screen; the rest play once
-      if (el.matches("[data-money], [data-grammar]")) {
+      // the money flow loops, so it pauses while off screen; the rest play once
+      if (el.matches("[data-money]")) {
         if (e.isIntersecting) el.classList.add("is-in");
-        el.style.setProperty("--play", e.isIntersecting ? "running" : "paused");
-        el.querySelectorAll(".money__wire i, .gcol--new").forEach((n) => { n.style.animationPlayState = e.isIntersecting ? "running" : "paused"; });
+        el.querySelectorAll(".money__wire i").forEach((n) => { n.style.animationPlayState = e.isIntersecting ? "running" : "paused"; });
         return;
       }
       if (!e.isIntersecting) return;
@@ -28,7 +28,47 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   blocks.forEach((b) => io.observe(b));
 })();
 
-/* ---------- 2. live rate table ---------- */
+/* ---------- 2. column grammar inside the 752px modal ---------- */
+(() => {
+  const root = document.querySelector("[data-grammar]");
+  if (!root) return;
+  const chip = (k) => root.querySelector(`[data-g="${k}"]`);
+  const caption = root.querySelector(".grammar__caption");
+  // which optional columns show at each step, and what the step says
+  const STEPS = [
+    { on: ["net", "txn"], text: "Payment method first, fee last." },
+    { on: ["net", "txn", "tier"], text: "Tier slots in before the fee." },
+    { on: ["net", "txn", "tier", "qual"], text: "Qual pushes the table past the 752px modal.", over: true },
+    { on: ["merged", "tier", "qual"], text: "Network and transaction type share a column, and it fits again." },
+  ];
+  const ALL = ["net", "txn", "merged", "tier", "qual"];
+  const show = (i) => {
+    const st = STEPS[i];
+    ALL.forEach((k) => chip(k).classList.toggle("is-off", !st.on.includes(k)));
+    root.classList.toggle("is-over", !!st.over);
+    root.dataset.step = String(i + 1);
+    caption.classList.add("is-swap");
+    setTimeout(() => { caption.textContent = st.text; caption.classList.remove("is-swap"); }, reduceMotion ? 0 : 200);
+  };
+  if (reduceMotion || !("IntersectionObserver" in window)) { show(STEPS.length - 1); return; }
+  show(0);
+  // slow enough to read each caption; hovering pauses the steps, leaving resumes them
+  let i = 0, timer = 0, inView = false, hovered = false;
+  const wait = () => (i === STEPS.length - 1 ? 6000 : 4200);
+  const tick = () => { i = (i + 1) % STEPS.length; show(i); schedule(); };
+  const schedule = () => { clearTimeout(timer); if (inView && !hovered) timer = setTimeout(tick, wait()); };
+  root.addEventListener("mouseenter", () => { hovered = true; clearTimeout(timer); root.classList.add("is-paused"); });
+  root.addEventListener("mouseleave", () => { hovered = false; root.classList.remove("is-paused"); schedule(); });
+  new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      inView = e.isIntersecting;
+      if (inView) schedule();
+      else { clearTimeout(timer); i = 0; show(0); }
+    });
+  }, { threshold: 0.4 }).observe(root);
+})();
+
+/* ---------- 3. live rate table ---------- */
 (() => {
   const root = document.querySelector("[data-rt-demo]");
   if (!root) return;
@@ -46,39 +86,36 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const svg = (k) => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICON[k]}</svg>`;
   const CHEV = '<svg class="rt-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
 
-  // fee: { v, pre?, was?, cap?, offer? }
+  // fee: { v, pre?, was?, cap?, offer? }; caps sit under the fee, as in the final design
   const F = (v, extra) => Object.assign({ v }, extra);
-  const CAPPED = { cap: "Min $10 · Max $100", offer: "25% off for 3 months" };
+  const CAP = { cap: "(Min $10 and Max $100)" };
+  const OFFER = { offer: "25% off for 3 months" };
 
   const DATA = {
     payments: {
       title: "Fees for QuickBooks Online Payments",
       sections: [
-        { id: "card", icon: "card", title: "Card payments transaction fees", jump: "Card payments", keys: 3,
-          cols: ["Payment method", "Network type", "Transaction type", "Tier", "Fees", "Min cap", "Max cap"],
+        // keys: how many leading columns repeat within a group (shown once, then left blank)
+        { id: "card", icon: "card", title: "Card payments transaction fees", jump: "Card payments", keys: 2, wide: true,
+          cols: ["Payment method", "Network type, Transaction type", "Transaction range", "Fee"],
           rows: [
-            ["Keyed", "PayPal", "Sale", "$0 to $150", F("$10 + 0.75%"), "–", "–"],
-            ["Keyed", "PayPal", "Sale", "$150 to $300", F("0.75%"), "$10", "$100"],
-            ["Keyed", "PayPal", "Sale", "Above $500", F("0.75%", { offer: "25% off for 3 months" }), "$10", "$100"],
-            ["Keyed", "Non-Amex", "Refund", "All amounts", F("$10 + 0.75%"), "–", "–"],
-            ["E-invoice", "Amex", "Sale", "$0 to $150", F("0.75%"), "$10", "$100"],
-            ["E-invoice", "Amex", "Sale", "Above $500", F("0.75%"), "$10", "$100"],
-            ["E-invoice", "Amex", "Refund", "All amounts", F("$10 + 0.75%"), "–", "–"],
-            ["Swiped", "Non-Amex", "Sale", "All amounts", F("$10 + 0.75%"), "–", "–"],
-            ["Swiped", "PayPal", "Sale", "All amounts", F("$10 + 0.75%"), "–", "–"],
+            ["Keyed", ["PayPal, Non-Amex", "Sale, Refund"], "$0 – $150", F("$10 + 0.75%", CAP)],
+            ["Keyed", ["PayPal, Non-Amex", "Sale, Refund"], "$150 – $300", F("$10 + 0.75%", CAP)],
+            ["Keyed", ["PayPal, Non-Amex", "Sale, Refund"], "Above $500", F("$5 + 0.75%", Object.assign({}, CAP, OFFER))],
+            ["E-invoice", ["Amex", "Sale, Refund"], "$0 – $150", F("$10 + 0.75%", CAP)],
+            ["E-invoice", ["Amex", "Sale, Refund"], "$150 – $300", F("$10 + 0.75%", CAP)],
+            ["E-invoice", ["Amex", "Sale, Refund"], "Above $500", F("$5 + 0.75%", CAP)],
+            ["Swiped", ["Non-Amex, PayPal", "Sale, Refund"], "All ranges", F("$10 + 0.75%", CAP)],
           ] },
         { id: "bank", icon: "bank", title: "Bank payments transaction fees", jump: "Bank payments", keys: 1,
-          cols: ["Transfer type", "Fees", "Min cap", "Max cap"],
-          rows: [["Bank transfer", F("$10 + 0.75%"), "–", "–"]] },
+          cols: ["Payment method", "Fee"], rows: [["Bank transfers", F("$10 + 0.75%")]] },
         { id: "bnpl", icon: "calendar", title: "Buy now, pay later", jump: "Buy now, pay later", keys: 1,
-          cols: ["Price plan", "Fees", "Min cap", "Max cap"],
-          rows: [["Plan A", F("$10 + 0.75%"), "–", "–"], ["Plan B", F("$15 + 0.25%"), "–", "–"]] },
+          cols: ["Plan", "Fee"], rows: [["Plan A", F("$10 + 0.75%")], ["Plan B", F("$15 + 0.25%")]] },
         { id: "deposit", icon: "bolt", title: "Instant deposit fee", jump: "Instant deposit", keys: 1,
-          cols: ["Deposit destination", "Fees", "Min cap", "Max cap"],
-          rows: [["QuickBooks Checking", F("$2.50 + 0.75%"), "–", "–"], ["External bank account", F("$10 + 0.75%"), "–", "–"]] },
+          cols: ["Deposit destination", "Fee"], rows: [["QuickBooks Checking", F("$2.50 + 0.75%")], ["External bank account", F("$10 + 0.75%")]] },
         { id: "returns", icon: "refund", title: "Return charges", jump: "Return charges", keys: 1,
-          cols: ["Return type", "Fees", "Min cap", "Max cap"],
-          rows: [["Rejected ACH payment", F("0.75%"), "$10", "$100"], ["Bounced or returned check", F("$8 + 0.75%"), "–", "–"], ["Dispute or chargeback", F("$10 + 0.75%"), "–", "–"]] },
+          cols: ["Return type", "Fee"],
+          rows: [["Rejected ACH payment", F("0.75%", Object.assign({ pre: "$10 + ", was: "1%", cap: "(Min $10 – Max $100)" }, OFFER))], ["Bounced or returned check", F("$8 + 0.75%")], ["Dispute or chargeback", F("$10 + 0.75%")]] },
         { id: "other", icon: "other", title: "Other fees", jump: "Other fees", note: "Not condition based",
           items: [["International card fee, all networks", "$10 per transaction"], ["ACH convenience fee", "$10 + $0.75 per transaction"]] },
       ],
@@ -88,11 +125,11 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
       title: "Fees for QuickBooks Bill Pay",
       sections: [
         { id: "bp-ach", icon: "bank", title: "Paying by ACH", jump: "ACH", keys: 1, cols: ["Receiving method", "Fee"],
-          rows: [["ACH", F("No fee")], ["Check", F("$1.50")], ["Faster ACH", F("$10")], ["RTP", F("0.75%", Object.assign({ was: "1%" }, CAPPED))], ["SUVC", F("No fee")]] },
+          rows: [["ACH", F("No fee")], ["Check", F("$1.50")], ["Faster ACH", F("$10")], ["RTP", F("0.75%", Object.assign({ was: "1%", cap: "(Min $10 – Max $100)" }, OFFER))], ["SUVC", F("No fee")]] },
         { id: "bp-card", icon: "card", title: "Paying by credit card", jump: "Credit card", keys: 1, cols: ["Receiving method", "Fee"],
-          rows: [["ACH", F("2.9%")], ["Check", F("$1.50")], ["RTP", F("0.75%", Object.assign({ was: "1%" }, CAPPED))]] },
+          rows: [["ACH", F("2.9%")], ["Check", F("$1.50")], ["RTP", F("0.75%", Object.assign({ was: "1%", cap: "(Min $10 – Max $100)" }, OFFER))]] },
         { id: "bp-biz", icon: "bizcard", title: "Paying by Intuit Business Credit Card", jump: "Intuit Business Credit Card", keys: 1, cols: ["Receiving method", "Fee"],
-          rows: [["ACH", F("2.9%")], ["Check", F("2.9%")], ["RTP", F("0.75%", Object.assign({ pre: "2.7% + ", was: "1%" }, CAPPED))]] },
+          rows: [["ACH", F("2.9%")], ["Check", F("2.9%")], ["RTP", F("0.75%", Object.assign({ pre: "2.7% + ", was: "1%", cap: "(Min $10 – Max $100)" }, OFFER))]] },
       ],
     },
   };
@@ -102,53 +139,38 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
     `<span class="fee">${f.pre ? esc(f.pre) : ""}${f.was ? `<s aria-label="was ${esc(f.was)}">${esc(f.was)}</s>` : ""}${esc(f.v)}</span>` +
     (f.cap ? `<span class="fee__cap">${esc(f.cap)}</span>` : "") +
     (f.offer ? `<span class="fee__offer">${esc(f.offer)}</span>` : "");
-  const isFee = (c) => typeof c === "object";
+  const cellHtml = (c) => (Array.isArray(c) ? `${esc(c[0])}<span class="sub">${esc(c[1])}</span>` : typeof c === "object" ? feeHtml(c) : esc(c));
+  const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
   const count = (s) => { const n = s.rows ? s.rows.length : s.items.length; return `${n} ${n === 1 ? "rate" : "rates"}`; };
 
   let r = 0; // running row index for the staggered entrance
   const anim = () => `class="rt-anim" style="--r: ${r++}"`;
 
-  function tableDesktop(s) {
-    let h = `<div class="rt-scroll"><table class="rt-table"><thead><tr>${s.cols.map((c, i) => `<th scope="col"${i >= s.cols.length - 2 && s.cols.length > 3 ? ' class="num"' : ""}>${c}</th>`).join("")}</tr></thead><tbody>`;
+  function table(s, mobile) {
+    let h = "";
+    if (mobile && s.wide) h += '<p class="rt-swipe" aria-hidden="true">Swipe to see more</p>';
+    h += `<div class="rt-scroll"><table class="rt-table${s.wide ? " rt-table--wide" : ""}"><thead><tr>${s.cols.map((c) => `<th scope="col">${c}</th>`).join("")}</tr></thead><tbody>`;
     s.rows.forEach((row, i) => {
       const prev = s.rows[i - 1];
-      const newGroup = !prev || prev[0] !== row[0];
-      h += `<tr ${anim()}${newGroup && i ? ' data-grp' : ""}>`;
+      const newGroup = i && prev[0] !== row[0];
+      h += `<tr ${anim()}${newGroup ? " data-grp" : ""}>`;
       row.forEach((cell, c) => {
-        // repeated key cells are left blank so each group reads once (method, then network and type)
-        const same = prev && c < s.keys && row.slice(0, c + 1).every((v, k) => v === prev[k]);
-        const cls = [c === 0 ? "k" : "", same ? "blank" : "", c >= row.length - 2 && row.length > 3 ? "num" : ""].filter(Boolean).join(" ");
-        h += `<td${cls ? ` class="${cls}"` : ""}>${same ? "" : isFee(cell) ? feeHtml(cell) : esc(cell)}</td>`;
+        // repeated key cells read once per group (the method, then network and transaction type)
+        const blank = prev && c < s.keys && row.slice(0, c + 1).every((v, k) => same(v, prev[k]));
+        // on mobile the pinned payment method repeats on every row, so it stays readable while the rest swipes
+        const keep = mobile && s.wide && c === 0;
+        const cls = [c === 0 ? "k" : "", blank && !keep ? "blank" : ""].filter(Boolean).join(" ");
+        h += `<td${cls ? ` class="${cls}"` : ""}>${blank && !keep ? "" : cellHtml(cell)}</td>`;
       });
       h += "</tr>";
     });
     return h + "</tbody></table></div>";
   }
 
-  function tableMobile(s) {
-    if (s.cols.length > 4) {
-      // many attributes: one small card per rate, with only the values that apply
-      return s.rows.map((row) => {
-        let h = `<div ${anim()}><div class="m-card">`;
-        row.forEach((cell, c) => {
-          if (isFee(cell)) h += `<div class="m-fee"><span>${s.cols[c]}</span><b>${feeHtml(cell)}</b></div>`;
-          else if (cell !== "–") h += `<div><span>${s.cols[c]}</span><b>${esc(cell)}</b></div>`;
-        });
-        return h + "</div></div>";
-      }).join("");
-    }
-    return s.rows.map((row) => {
-      const fee = row.find(isFee);
-      const caps = row.length > 3 && row[2] !== "–" ? `<span class="fee__cap">Min ${row[2]} · Max ${row[3]}</span>` : "";
-      return `<div class="m-row" ${anim()}><span>${esc(row[0])}</span><span class="r">${feeHtml(fee)}${caps}</span></div>`;
-    }).join("");
-  }
-
   function sectionHtml(s, mobile) {
-    let inner;
-    if (s.items) {
-      inner = `<div class="rt-other"><p>${s.note}</p>${s.items.map(([k, v]) => `<div ${anim()}><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join("")}</div>`;
-    } else inner = mobile ? tableMobile(s) : tableDesktop(s);
+    const inner = s.items
+      ? `<div class="rt-other"><p>${s.note}</p>${s.items.map(([k, v]) => `<div ${anim()}><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join("")}</div>`
+      : table(s, mobile);
     return `<div class="rt-sec" id="rt-${s.id}">
       <button type="button" class="rt-sec__head" aria-expanded="true" aria-controls="rt-p-${s.id}" ${anim()}>
         <span class="rt-ico">${svg(s.icon)}</span><span class="rt-sec__title">${s.title}</span><span class="rt-sec__count">${count(s)}</span>${CHEV}
@@ -194,10 +216,11 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   function render() {
     const mobile = device === "mobile";
     const body = bodyHtml(DATA[product], mobile);
+    stage.classList.toggle("is-mobile", mobile);
     stage.querySelectorAll(":scope > :not(.rt-fallback)").forEach((n) => n.remove());
     stage.insertAdjacentHTML("beforeend", mobile
       ? `<div class="phone"><div class="phone__page" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="rt-scrim"></div>${popup(body)}</div>`
-      : `${DASH}<div class="rt-scrim"></div>${popup(body)}`);
+      : `<div class="canvas">${DASH}<div class="rt-scrim"></div>${popup(body)}</div>`);
     fit();
   }
   function renderBody() {
@@ -205,7 +228,7 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
     b.innerHTML = bodyHtml(DATA[product], device === "mobile");
     b.scrollTop = 0;
   }
-  // the live table breaks out of the text column and spans the viewport, so the table reads at full size
+  // the live table breaks out of the text column and spans the viewport
   function bleed() {
     const vw = document.documentElement.clientWidth;
     const gutter = vw < 760 ? 16 : 32;
@@ -214,9 +237,16 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
     root.style.width = `${w}px`;
     root.style.marginLeft = `${Math.round((vw - w) / 2 - col.left)}px`;
   }
+  // the desktop screen is drawn at real size (at least 1100px wide, so the 752px modal keeps its proportion) and scaled down to fit
   function fit() {
-    const dash = stage.querySelector(".dash");
-    if (dash) dash.style.setProperty("--k", Math.max(stage.clientWidth / 1200, stage.clientHeight / 760).toFixed(4));
+    const canvas = stage.querySelector(".canvas");
+    if (!canvas) { stage.style.height = ""; return; }
+    const w = stage.clientWidth;
+    const vw = Math.max(1100, Math.min(1440, w));
+    const k = w / vw;
+    canvas.style.setProperty("--vw", vw);
+    canvas.style.setProperty("--k", k.toFixed(4));
+    stage.style.height = `${Math.round(860 * k)}px`;
   }
   function swap(fn) {
     if (reduceMotion) { fn(); return; }

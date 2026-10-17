@@ -14,19 +14,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300..600&display=swap">
-  <link rel="stylesheet" href="/assets/css/base.css?v=20261017c">
-  <link rel="stylesheet" href="/assets/css/footer-live.css?v=20261017c">
-  <link rel="stylesheet" href="/assets/css/case-study.css?v=20261017c">
-  <link rel="stylesheet" href="/work/quickbooks-rate-tables/quickbooks.css?v=20261017c">
-  <script src="/assets/js/site.js?v=20261017c" defer></script>
-  <script src="/assets/js/clock.js?v=20261017c" defer></script>
-  <script src="/assets/js/pal.js?v=20261017c" defer></script>
-  <script src="/assets/js/reveal.js?v=20261017c" defer></script>
-  <script src="/assets/js/toc.js?v=20261017c" defer></script>
-  <script src="/assets/js/carousel.js?v=20261017c" defer></script>
-  <script src="/assets/js/tabs.js?v=20261017c" defer></script>
-  <script src="/assets/js/lightbox.js?v=20261017c" defer></script>
-  <script src="/work/quickbooks-rate-tables/quickbooks.js?v=20261017c" defer></script>
+  <link rel="stylesheet" href="/assets/css/base.css?v=20261018b">
+  <link rel="stylesheet" href="/assets/css/footer-live.css?v=20261018b">
+  <link rel="stylesheet" href="/assets/css/case-study.css?v=20261018b">
+  <link rel="stylesheet" href="/work/quickbooks-rate-tables/quickbooks.css?v=20261018b">
+  <script src="/assets/js/site.js?v=20261018b" defer></script>
+  <script src="/assets/js/clock.js?v=20261018b" defer></script>
+  <script src="/assets/js/pal.js?v=20261018b" defer></script>
+  <script src="/assets/js/reveal.js?v=20261018b" defer></script>
+  <script src="/assets/js/toc.js?v=20261018b" defer></script>
+  <script src="/assets/js/carousel.js?v=20261018b" defer></script>
+  <script src="/assets/js/tabs.js?v=20261018b" defer></script>
+  <script src="/assets/js/lightbox.js?v=20261018b" defer></script>
+  <script src="/work/quickbooks-rate-tables/quickbooks.js?v=20261018b" defer></script>
 </head>
 <body class="cs-qb">
   <a class="skip" href="#main">Skip to content</a>
@@ -52,7 +52,7 @@
         <a class="crumb label" href="/#work">← All work</a>
         <p class="label cs-eyebrow">Case study 02 · Intuit</p>
         <h1 class="cs-title" data-text-fade>QuickBooks Payments and Bill Pay Rate Tables</h1>
-        <p class="cs-lead">Turning a pricing system with dozens of parameters into one fee table that merchants can read in seconds, on desktop and mobile.</p>
+        <p class="cs-lead">Turning a pricing system with dozens of parameters into a fee table that merchants can read in seconds, on desktop and mobile.</p>
 
         <dl class="meta-grid">
           <div><dt class="label">My role</dt><dd>UX Designer</dd></div>
@@ -70,7 +70,7 @@
             <span class="fa fa--cap" style="--i: 3"><b>Min $10 · Max $100</b><em>Caps</em></span>
             <span class="fa fa--offer" style="--i: 4"><b>25% off for 3 months</b><em>Offer</em></span>
           </div>
-          <p class="fee-cover__caption" aria-hidden="true">One fee. Now multiply it by every payment method, network, transaction type and amount.</p>
+          <p class="fee-cover__caption" aria-hidden="true">Each part can change with the payment method, network, transaction type and amount.</p>
         </div>
       </div>
     </header>
@@ -79,7 +79,7 @@
     <section class="overview section--alt" aria-labelledby="h-overview">
       <div class="wrap">
         <span class="label kicker">Overview</span>
-        <h2 id="h-overview">One table for every fee a merchant pays.</h2>
+        <h2 id="h-overview">Every fee a merchant pays, in a readable table.</h2>
         <div class="overview__grid">
           <div>
             <span class="label">The products</span>
@@ -116,13 +116,13 @@
           <!-- 01 -->
           <section class="cs-section" id="challenge" aria-labelledby="h-challenge">
             <span class="label">01 — The challenge</span>
-            <h2 id="h-challenge">One fee, many moving parts.</h2>
+            <h2 id="h-challenge">Simple parts, many combinations.</h2>
             <div class="prose">
               <p>Every fee is built from the same parts: a flat amount, a percentage, minimum and maximum caps, and sometimes an offer. Which parts apply changes with how the customer pays, the card network, the transaction type and its amount.</p>
             </div>
             <div class="callout-q">
               <span class="label">Key design challenge</span>
-              <p class="q">How might a merchant find the one fee that applies to them, among dozens of combinations, in seconds?</p>
+              <p class="q">How might a merchant find the fee that applies to them, among dozens of combinations, in seconds?</p>
             </div>
           </section>
 
@@ -135,11 +135,11 @@
             </div>
             <figure class="money" data-money aria-label="Customers pay the florist through QuickBooks Payments; the florist pays suppliers through Bill Pay.">
               <div class="money__track" aria-hidden="true">
-                <div class="money__node"><span class="money__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-6.5 7-6.5s7 2.6 7 6.5"/></svg></span><strong>Customer</strong><span>Buys a bouquet</span></div>
-                <div class="money__link"><span class="money__product">QuickBooks Payments</span><span class="money__wire"><i></i><i></i><i></i></span><span class="money__how">Card, bank transfer, buy now pay later</span></div>
-                <div class="money__node money__node--me"><span class="money__icon"><svg viewBox="0 0 24 24"><path d="M12 21c-4-2-7-5-7-9a7 7 0 0 1 14 0c0 4-3 7-7 9z"/><circle cx="12" cy="11" r="2.5"/></svg></span><strong>Florist</strong><span>The merchant</span></div>
-                <div class="money__link"><span class="money__product">Bill Pay</span><span class="money__wire"><i></i><i></i><i></i></span><span class="money__how">ACH or card, to ACH, check or RTP</span></div>
-                <div class="money__node"><span class="money__icon"><svg viewBox="0 0 24 24"><path d="M3 10h18l-2-5H5zM5 10v10h14V10M10 20v-5h4v5"/></svg></span><strong>Supplier</strong><span>Sells the flowers</span></div>
+                <div class="money__node"><span class="money__icon"><svg viewBox="0 0 32 32"><circle cx="13" cy="9" r="4.5"/><path d="M4.5 27c.8-5.6 4.2-9 8.5-9 2 0 3.8.7 5.2 2"/><rect x="18" y="19.5" width="10" height="7" rx="1.6"/><path d="M18 22.5h10"/></svg></span><strong>Customer</strong><span>Buys a bouquet</span></div>
+                <div class="money__link"><span class="money__product">QuickBooks Payments</span><span class="money__wire"><i>$</i><i>$</i></span><span class="money__how">Card, bank transfer, buy now pay later</span></div>
+                <div class="money__node money__node--me"><span class="money__icon"><svg viewBox="0 0 32 32"><path d="M5 13 6.8 6h18.4L27 13"/><path d="M5 13a2.75 2.75 0 0 0 5.5 0 2.75 2.75 0 0 0 5.5 0 2.75 2.75 0 0 0 5.5 0 2.75 2.75 0 0 0 5.5 0"/><path d="M6.5 15v12h19V15"/><path d="M13 27v-6h6v6"/><circle cx="22" cy="19.2" r="1.6"/><path d="M22 20.8v2.4"/></svg></span><strong>Florist</strong><span>The merchant</span></div>
+                <div class="money__link"><span class="money__product">Bill Pay</span><span class="money__wire"><i>$</i><i>$</i></span><span class="money__how">ACH or card, to ACH, check or RTP</span></div>
+                <div class="money__node"><span class="money__icon"><svg viewBox="0 0 32 32"><path d="M3 9h15v13H3z"/><path d="M18 13h5.5l4.5 5v4h-10"/><circle cx="8.5" cy="23.5" r="2.3"/><circle cx="22.5" cy="23.5" r="2.3"/><path d="M8.5 18c0-3 2-4.6 4.4-4.6 0 3-2 4.6-4.4 4.6zM8.5 18v-2"/></svg></span><strong>Supplier</strong><span>Sells the flowers</span></div>
               </div>
             </figure>
             <ul class="where" role="list" aria-label="Where the rate table appears">
@@ -169,14 +169,21 @@
               <div class="map__head" aria-hidden="true"><span>In the pricing tool</span><span>In the rate table</span></div>
               <ol class="map__list" role="list">
                 <li style="--i: 0"><span class="map__from">Payment mode</span><span class="map__to">Payment method column</span></li>
-                <li style="--i: 1"><span class="map__from">Network type</span><span class="map__to">Network type column</span></li>
-                <li style="--i: 2"><span class="map__from">Transaction type</span><span class="map__to">Transaction type column</span></li>
-                <li style="--i: 3"><span class="map__from">Transaction range</span><span class="map__to">Tier column</span></li>
-                <li style="--i: 4"><span class="map__from">List price + % fee</span><span class="map__to">Fee, such as “$10 + 0.75%”</span></li>
-                <li style="--i: 5"><span class="map__from">Strikethrough price, % and discount</span><span class="map__to">Old price struck through, with an offer badge</span></li>
-                <li style="--i: 6"><span class="map__from">Cap</span><span class="map__to">Min cap and Max cap columns</span></li>
+                <li style="--i: 1"><span class="map__from">Network type + transaction type</span><span class="map__to">One shared column</span></li>
+                <li style="--i: 2"><span class="map__from">Transaction range</span><span class="map__to">Transaction range column</span></li>
+                <li style="--i: 3"><span class="map__from">List price + % fee</span><span class="map__to">Fee, such as “$10 + 0.75%”</span></li>
+                <li style="--i: 4"><span class="map__from">Strikethrough price, % and discount</span><span class="map__to">Old price struck through, with an offer badge</span></li>
+                <li style="--i: 5"><span class="map__from">Cap</span><span class="map__to">Under the fee, such as “(Min $10 and Max $100)”</span></li>
               </ol>
               <p class="map__note"><span class="label">Bill Pay</span>Payment method, receiving method and fee, grouped by how the merchant pays.</p>
+            </div>
+            <div class="limit">
+              <div class="limit__num"><b>752</b><span>px</span></div>
+              <div class="limit__text">
+                <span class="label label--accent">Constraint</span>
+                <h3>Every table had to fit Intuit's standard modal.</h3>
+                <p>The rate table opens in a modal 752 pixels wide. Each extra column squeezes the others and hurts readability, so the number of columns shaped every iteration and decision.</p>
+              </div>
             </div>
             <div class="screen__head cs-subhead">
               <span class="label">Market review</span>
@@ -186,23 +193,23 @@
             <div class="carousel" data-carousel aria-roledescription="carousel" aria-label="Market review">
               <div class="carousel__track" tabindex="0">
                 <figure class="carousel__slide" aria-roledescription="slide" aria-label="1 of 5">
-                  <div class="shot shot--review"><img src="/work/quickbooks-rate-tables/img/bench-stripe.webp" width="725" height="749" loading="lazy" alt="Stripe fee page reviewed for the market review."></div>
+                  <div class="shot shot--review"><img data-zoom src="/work/quickbooks-rate-tables/img/review-stripe.webp" data-full="/work/quickbooks-rate-tables/img/bench-stripe.webp" width="725" height="453" loading="lazy" alt="Stripe fee page reviewed for the market review."></div>
                   <figcaption><span class="label">Stripe</span><span>Processing fees by payment method.</span></figcaption>
                 </figure>
                 <figure class="carousel__slide" aria-roledescription="slide" aria-label="2 of 5">
-                  <div class="shot shot--review"><img src="/work/quickbooks-rate-tables/img/bench-paypal.webp" width="1100" height="627" loading="lazy" alt="PayPal fee tables reviewed for the market review."></div>
+                  <div class="shot shot--review"><img data-zoom src="/work/quickbooks-rate-tables/img/review-paypal.webp" data-full="/work/quickbooks-rate-tables/img/bench-paypal.webp" width="1100" height="688" loading="lazy" alt="PayPal fee tables reviewed for the market review."></div>
                   <figcaption><span class="label">PayPal</span><span>Fees grouped in tables by product.</span></figcaption>
                 </figure>
                 <figure class="carousel__slide" aria-roledescription="slide" aria-label="3 of 5">
-                  <div class="shot shot--review"><img src="/work/quickbooks-rate-tables/img/bench-square.webp" width="565" height="848" loading="lazy" alt="Square fee page reviewed for the market review."></div>
+                  <div class="shot shot--review"><img data-zoom src="/work/quickbooks-rate-tables/img/review-square.webp" data-full="/work/quickbooks-rate-tables/img/bench-square.webp" width="565" height="353" loading="lazy" alt="Square fee page reviewed for the market review."></div>
                   <figcaption><span class="label">Square</span><span>Fees described in running text.</span></figcaption>
                 </figure>
                 <figure class="carousel__slide" aria-roledescription="slide" aria-label="4 of 5">
-                  <div class="shot shot--review"><img src="/work/quickbooks-rate-tables/img/bench-melio.webp" width="1012" height="644" loading="lazy" alt="Melio bill pay fees reviewed for the market review."></div>
+                  <div class="shot shot--review"><img data-zoom src="/work/quickbooks-rate-tables/img/review-melio.webp" data-full="/work/quickbooks-rate-tables/img/bench-melio.webp" width="1012" height="632" loading="lazy" alt="Melio bill pay fees reviewed for the market review."></div>
                   <figcaption><span class="label">Melio</span><span>Bill pay fees by payment and delivery method.</span></figcaption>
                 </figure>
                 <figure class="carousel__slide" aria-roledescription="slide" aria-label="5 of 5">
-                  <div class="shot shot--review"><img src="/work/quickbooks-rate-tables/img/bench-billcom.webp" width="695" height="436" loading="lazy" alt="Bill.com bill pay fees reviewed for the market review."></div>
+                  <div class="shot shot--review"><img data-zoom src="/work/quickbooks-rate-tables/img/review-billcom.webp" data-full="/work/quickbooks-rate-tables/img/bench-billcom.webp" width="695" height="434" loading="lazy" alt="Bill.com bill pay fees reviewed for the market review."></div>
                   <figcaption><span class="label">Bill.com</span><span>Bill pay fees by payment type.</span></figcaption>
                 </figure>
               </div>
@@ -240,7 +247,7 @@
             <!-- Iterations -->
             <div class="screen__head cs-subhead">
               <span class="label">Iterations</span>
-              <h3>Four rounds, each shorter and clearer.</h3>
+              <h3>Four rounds of structure, each within the modal.</h3>
             </div>
             <div class="tabs" data-tabs>
               <div class="tabs__list" role="tablist" aria-label="Iterations">
@@ -257,9 +264,8 @@
                     <h4>Mirror the pricing tool</h4>
                     <p>Every parameter for every charge, laid out as it is set up. Accurate, but very long.</p>
                   </div>
-                  <div class="ver__len" aria-label="Length: 100% of version 1"><span>Length vs V1</span><i style="--len: 100%"></i><b>100%</b></div>
                 </div>
-                <figure class="ver__shot"><img data-zoom src="/work/quickbooks-rate-tables/img/ver-v1.webp" data-full="/work/quickbooks-rate-tables/img/evo-v1-lg.webp" width="1400" height="1007" loading="lazy" alt="Version 1: card payment fees with every pricing attribute listed beside fixed and percentage fees for each transaction range."><figcaption>Top of the table · click to see the full version</figcaption></figure>
+                <div class="ver__scroll" tabindex="0" aria-label="Version 1: card payment fees with every pricing attribute listed beside fixed and percentage fees for each transaction range. Scroll to read, or click to expand."><img data-zoom src="/work/quickbooks-rate-tables/img/evo-v1-lg.webp" width="1100" height="5335" loading="lazy" alt="Version 1: card payment fees with every pricing attribute listed beside fixed and percentage fees for each transaction range."></div>
               </div>
               <div class="tabs__panel" role="tabpanel" id="panel-v2" aria-labelledby="tab-v2">
                 <div class="ver">
@@ -268,9 +274,8 @@
                     <h4>Minimal styling</h4>
                     <p>Lighter type and spacing on the same structure. Easier on the eye, but just as long.</p>
                   </div>
-                  <div class="ver__len" aria-label="Length: 100% of version 1"><span>Length vs V1</span><i style="--len: 100%"></i><b>100%</b></div>
                 </div>
-                <figure class="ver__shot"><img data-zoom src="/work/quickbooks-rate-tables/img/ver-v2.webp" data-full="/work/quickbooks-rate-tables/img/evo-v2-lg.webp" width="1132" height="815" loading="lazy" alt="Version 2: the same breakdown with lighter, minimal styling."><figcaption>Top of the table · click to see the full version</figcaption></figure>
+                <div class="ver__scroll" tabindex="0" aria-label="Version 2: the same breakdown with lighter, minimal styling. Scroll to read, or click to expand."><img data-zoom src="/work/quickbooks-rate-tables/img/evo-v2-lg.webp" width="1100" height="5335" loading="lazy" alt="Version 2: the same breakdown with lighter, minimal styling."></div>
               </div>
               <div class="tabs__panel" role="tabpanel" id="panel-v3" aria-labelledby="tab-v3">
                 <div class="ver">
@@ -279,9 +284,8 @@
                     <h4>A column grammar</h4>
                     <p>One table per charge type, with the payment method first and the fee last.</p>
                   </div>
-                  <div class="ver__len" aria-label="Length: 58% of version 1"><span>Length vs V1</span><i style="--len: 58%"></i><b>58%</b></div>
                 </div>
-                <figure class="ver__shot"><img data-zoom src="/work/quickbooks-rate-tables/img/ver-v3.webp" data-full="/work/quickbooks-rate-tables/img/evo-v3-lg.webp" width="940" height="676" loading="lazy" alt="Version 3: card payments table with payment method, network type, transaction type and fee columns."><figcaption>Top of the table · click to see the full version</figcaption></figure>
+                <div class="ver__scroll" tabindex="0" aria-label="Version 3: card payments table with payment method, network type, transaction type and fee columns. Scroll to read, or click to expand."><img data-zoom src="/work/quickbooks-rate-tables/img/evo-v3-lg.webp" width="940" height="2659" loading="lazy" alt="Version 3: card payments table with payment method, network type, transaction type and fee columns."></div>
               </div>
               <div class="tabs__panel" role="tabpanel" id="panel-v4" aria-labelledby="tab-v4">
                 <div class="ver">
@@ -290,20 +294,18 @@
                     <h4>Separate columns</h4>
                     <p>Each attribute in its own column, tested with flat and tiered card fees.</p>
                   </div>
-                  <div class="ver__len" aria-label="Length: 73% of version 1"><span>Length vs V1</span><i style="--len: 73%"></i><b>73%</b></div>
                 </div>
-                <figure class="ver__shot"><img data-zoom src="/work/quickbooks-rate-tables/img/ver-v4.webp" data-full="/work/quickbooks-rate-tables/img/evo-v4-lg.webp" width="1400" height="1007" loading="lazy" alt="Version 4: card payments with separate columns for network type, transaction type and transaction range."><figcaption>Top of the table · click to see the full version</figcaption></figure>
+                <div class="ver__scroll" tabindex="0" aria-label="Version 4: card payments with separate columns for network type, transaction type and transaction range. Scroll to read, or click to expand."><img data-zoom src="/work/quickbooks-rate-tables/img/evo-v4-lg.webp" width="1100" height="3885" loading="lazy" alt="Version 4: card payments with separate columns for network type, transaction type and transaction range."></div>
               </div>
               <div class="tabs__panel" role="tabpanel" id="panel-final" aria-labelledby="tab-final">
                 <div class="ver">
                   <div class="ver__text">
                     <span class="label label--accent tabs__fallback">Final</span>
-                    <h4>Jump links and caps</h4>
-                    <p>Jump links, min and max caps in their own columns, and other fees grouped at the end.</p>
+                    <h4>Fewer, clearer columns</h4>
+                    <p>Network and transaction type share a column, and caps sit under the fee, so four columns fit the modal.</p>
                   </div>
-                  <div class="ver__len" aria-label="Length: 47% of version 1"><span>Length vs V1</span><i style="--len: 47%"></i><b>47%</b></div>
                 </div>
-                <figure class="ver__shot"><img data-zoom src="/work/quickbooks-rate-tables/img/ver-final.webp" data-full="/work/quickbooks-rate-tables/img/evo-final-lg.webp" width="800" height="576" loading="lazy" alt="Final: fees for QuickBooks Online Payments with jump links and the card payments table."><figcaption>Top of the table · click to see the full version</figcaption></figure>
+                <div class="ver__scroll" tabindex="0" aria-label="Final version. Scroll to read, or click to expand."><img data-zoom style="--mw: 752px" src="/work/quickbooks-rate-tables/img/final-all-attributes.webp" width="752" height="2674" loading="lazy" alt="Final: card payments with payment method, network and transaction type together, transaction range, and the fee with caps underneath."></div>
               </div>
             </div>
 
@@ -311,23 +313,31 @@
             <div class="screen__head cs-subhead">
               <span class="label">Structure</span>
               <h3>The method stays first and the fee stays last.</h3>
-              <p>Any new attribute slots in between, so the table grows without a redesign.</p>
+              <p>New attributes slot in between. When they no longer fit the modal, related attributes share a column.</p>
             </div>
-            <div class="grammar" data-grammar aria-label="Column order: payment method first, then attributes such as network type, transaction type and tier, then the fee last.">
-              <span class="gcol gcol--fixed">Payment method</span>
-              <span class="gcol">Network type</span>
-              <span class="gcol">Transaction type</span>
-              <span class="gcol gcol--new" data-new>Tier</span>
-              <span class="gcol gcol--fixed gcol--fee">Fee</span>
+            <div class="grammar" data-grammar data-step="1" aria-label="Column order inside the 752px modal: payment method first and the fee last. Tier and Qual slot in before the fee and push the table past the modal; merging network type and transaction type into one column brings it back inside.">
+              <div class="grammar__frame" aria-hidden="true">
+                <div class="grammar__row">
+                  <span class="gcol gcol--fixed" style="--w: 120">Payment method</span>
+                  <span class="gcol" data-g="net" style="--w: 116">Network type</span>
+                  <span class="gcol" data-g="txn" style="--w: 130">Transaction type</span>
+                  <span class="gcol gcol--merged" data-g="merged" style="--w: 192">Network type, Transaction type</span>
+                  <span class="gcol gcol--new" data-g="tier" style="--w: 92">Tier</span>
+                  <span class="gcol gcol--new" data-g="qual" style="--w: 92">Qual</span>
+                  <span class="gcol gcol--fixed gcol--fee" style="--w: 200">Fee</span>
+                </div>
+                <span class="grammar__limit"><b>752px</b></span>
+              </div>
+              <p class="grammar__caption" aria-hidden="true"></p>
             </div>
 
             <div class="decision">
               <span class="label label--accent">Decision 1</span>
-              <h4>Separate columns, over combined attributes</h4>
+              <h4>Fewer, wider columns, within a 752px modal</h4>
               <dl>
-                <div><dt>Chose</dt><dd>One column per attribute, with the fee and caps on the right.</dd></div>
-                <div><dt>Over</dt><dd>All attributes combined under the payment method.</dd></div>
-                <div><dt>Why</dt><dd>Engineering could build columns straight from attribute names, with no per-product setup, and new attributes slot in without a redesign.</dd></div>
+                <div><dt>Chose</dt><dd>Four columns: payment method, network and transaction type together, transaction range, and the fee last, with caps under the fee.</dd></div>
+                <div><dt>Over</dt><dd>One column per attribute, or every attribute combined under the payment method.</dd></div>
+                <div><dt>Why</dt><dd>The standard modal is 752px wide. One column per attribute crowded it and hurt readability, while combining everything hid the structure.</dd></div>
               </dl>
             </div>
             <div class="decision">
@@ -343,8 +353,8 @@
             <!-- Final, live -->
             <div class="screen__head cs-subhead" id="live">
               <span class="label">Final design</span>
-              <h3>Icons, jump links and collapsible sections.</h3>
-              <p>Sections start open and can be collapsed. Switch products, or see it on mobile. All fees are illustrative.</p>
+              <h3>Four columns in a 752px modal, with icons and collapsible sections.</h3>
+              <p>Sections start open and can be collapsed. Switch products, or see it on mobile, where the table swipes sideways with the payment method pinned.</p>
             </div>
             <div class="rt-demo" data-rt-demo>
               <div class="rt-demo__bar">
@@ -359,8 +369,9 @@
               </div>
               <div class="rt-stage" data-stage>
                 <!-- static fallback until the script builds the live table -->
-                <img class="rt-fallback" src="/work/quickbooks-rate-tables/img/evo-final-lg.webp" width="800" height="1823" loading="lazy" alt="Final rate table for QuickBooks Payments: jump links, card payment fees by method, network, transaction type and tier, then bank, buy now pay later, instant deposit, return charges and other fees.">
+                <img class="rt-fallback" src="/work/quickbooks-rate-tables/img/final-all-attributes.webp" width="752" height="2674" loading="lazy" alt="Final rate table for QuickBooks Payments: card fees by payment method, network and transaction type, and transaction range, with caps under each fee, then other charges.">
               </div>
+              <p class="rt-note">A representation of the real work, rebuilt for this portfolio with illustrative fees.</p>
             </div>
           </section>
 
