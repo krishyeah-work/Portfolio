@@ -35,7 +35,8 @@ work/
     img/                       Optimized WebP; *-lg.webp are the sharper lightbox versions;
                                sales-dash*.svg are Krishna's yellow-line dashboards; cart-*/dlg-* are
                                transparent crops placed on them at true scale
-  quickbooks-rate-tables/      Case study 02 (in progress)
+  quickbooks-rate-tables/      Case study 02: index.html, quickbooks.css (green accent, diagrams, live table),
+                               quickbooks.js (in-view motion + live rate table), img/
 portfolio-context/             Brief, case-study notes, decisions log (local only, not pushed)
 ```
 

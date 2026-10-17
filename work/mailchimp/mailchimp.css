@@ -32,28 +32,6 @@
 }
 .channel__who .is-no::before { background-color: rgba(255, 255, 255, 0.05); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M3 5h4' fill='none' stroke='%23a09fa6' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E"); }
 
-/* ---------- 05: sub-sections and the early-explorations tabs ---------- */
-.cs-subhead { margin-top: clamp(48px, 6vw, 72px); }
-.cs-section > h2 + .cs-subhead { margin-top: clamp(28px, 3.5vw, 40px); }
-.cs-subhead h3 { font-size: clamp(1.3rem, 1.05rem + 0.9vw, 1.7rem); letter-spacing: -0.02em; line-height: 1.2; }
-.tabs { margin-top: clamp(18px, 2.4vw, 24px); }
-.tabs__list { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
-.tabs__tab {
-  appearance: none; border: 0; border-radius: 999px; padding: 7px 16px; background: transparent; cursor: pointer;
-  color: var(--muted); font: inherit; font-size: 0.92rem; transition: color 0.25s var(--ease), background-color 0.25s var(--ease);
-}
-.tabs__tab:hover { color: var(--ink); }
-.tabs__tab[aria-selected="true"] { background: rgba(255, 255, 255, 0.09); color: var(--ink); }
-.tabs__panel { margin-top: 20px; }
-.tabs__panel[hidden] { display: none; }
-.tabs__panel .carousel { margin-top: 18px; }
-.tabs__panel .round__text h4 { font-size: var(--fs-h3); font-weight: 500; letter-spacing: -0.02em; line-height: 1.25; margin: 0; }
-.tabs__panel.is-entering { animation: tab-in 0.45s var(--ease); }
-@keyframes tab-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-.tabs:not(.is-ready) .tabs__list { display: none; }
-.tabs:not(.is-ready) .tabs__panel + .tabs__panel { margin-top: clamp(32px, 4.5vw, 48px); }
-.tabs.is-ready .tabs__fallback { display: none; }
-
 /* ---------- why SMS is different ---------- */
 .sms-why { display: grid; gap: 20px; margin-bottom: clamp(32px, 4vw, 44px); }
 .sms-flow { list-style: none; display: grid; gap: 30px; }
@@ -183,53 +161,6 @@
 .gr figcaption { display: flex; gap: 12px; align-items: baseline; color: var(--muted); font-size: var(--fs-small); }
 .gr figcaption .label { color: var(--ink-2); flex: none; }
 
-/* ---------- spacing: one steady rhythm between sections (about 160px on desktop) ---------- */
-.overview { padding-block: clamp(48px, 6vw, 80px); }
-.wrap.section:has(> .cs-layout) { padding-block: clamp(48px, 6vw, 80px); }
-.cs-section { padding-block: clamp(48px, 6vw, 80px); }
-.metrics { padding-bottom: clamp(48px, 6vw, 80px); }
-.screens { gap: clamp(44px, 6vw, 72px); margin-top: clamp(32px, 4.5vw, 56px); }
-
-/* ---------- 04: process strip (tool logos, arrows, a left-to-right reveal when it arrives) ---------- */
-.process { list-style: none; display: grid; gap: 14px; margin-top: clamp(22px, 3vw, 32px); }
-@media (min-width: 760px) { .process { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
-.process li { position: relative; z-index: calc(10 - var(--i, 0)); display: grid; gap: 4px; align-content: start; padding: 16px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
-.process__icon { display: grid; place-items: center; width: 32px; height: 32px; margin-bottom: 8px; border: 1px solid var(--line-strong); border-radius: 9px; background: #1c1c20; }
-.process__icon img, .process__icon svg { display: block; width: 18px; height: 18px; object-fit: contain; }
-.process__icon--moqups { overflow: hidden; border-color: transparent; }
-.process__icon--moqups img { width: 100%; height: 100%; }
-.process__icon--handoff svg { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linejoin: round; }
-.process__tool { color: var(--ink); font-weight: 500; }
-.process li > span:last-child { color: var(--muted); font-size: var(--fs-small); line-height: 1.45; }
-.process__note { margin-top: 12px; color: var(--muted); font-size: var(--fs-small); max-width: 44em; }
-/* arrow in the gap between steps: down on phones, right on wider screens */
-.process li:not(:last-child)::after { content: "↓"; position: absolute; left: 27px; bottom: -15px; width: 14px; height: 16px; display: grid; place-items: center; color: var(--accent); font-size: 0.85rem; line-height: 1; }
-@media (min-width: 760px) { .process li:not(:last-child)::after { content: "→"; left: auto; right: -24px; bottom: auto; top: 24px; width: 24px; } }
-@media (max-width: 759px) {
-  /* phones: logo beside the text, so each step stays one compact row */
-  .process li { grid-template-columns: 32px minmax(0, 1fr); column-gap: 14px; }
-  .process__icon { grid-row: 1 / span 2; margin: 2px 0 0; }
-}
-/* the reveal: steps fade in from the left one after another, then each arrow appears */
-.js .process[data-process]:not(.is-in) li { opacity: 0; }
-.js .process[data-process]:not(.is-in) li::after { opacity: 0; }
-.process.is-in li { animation: proc-in 0.6s var(--ease) both; animation-delay: calc(var(--i) * 180ms); }
-.process.is-in li:not(:last-child)::after { animation: proc-arrow 0.4s var(--ease) both; animation-delay: calc(var(--i) * 180ms + 260ms); }
-@keyframes proc-in { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: none; } }
-@keyframes proc-arrow { from { opacity: 0; transform: translateX(-6px) scale(0.7); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) {
-  .js .process[data-process]:not(.is-in) li, .js .process[data-process]:not(.is-in) li::after { opacity: 1; }
-  .process.is-in li, .process.is-in li::after { animation: none; }
-}
-
-/* ---------- decision cards: chose / over / why ---------- */
-.decision { display: grid; gap: 10px; margin-top: clamp(24px, 3vw, 32px); padding: clamp(18px, 2.4vw, 26px); border: 1px solid rgba(245, 196, 81, 0.35); border-radius: var(--radius); background: var(--surface); }
-.decision h4 { margin: 0; font-size: var(--fs-h3); font-weight: 500; letter-spacing: -0.02em; line-height: 1.25; }
-.decision dl { display: grid; gap: 8px; margin: 4px 0 0; }
-.decision dl > div { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 12px; padding-top: 8px; border-top: 1px solid var(--line); }
-.decision dt { padding-top: 3px; color: var(--muted); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; }
-.decision dd { margin: 0; color: var(--ink-2); }
-
 /* ---------- copy ---------- */
 .copy-list { list-style: none; display: grid; gap: 12px; }
 @media (min-width: 760px) { .copy-list { grid-template-columns: 1fr 1fr; } }
@@ -237,10 +168,6 @@
 .copy-list q { display: inline-block; padding: 4px 10px; border-radius: 8px; background: rgba(255, 255, 255, 0.06); color: var(--ink); font-weight: 500; line-height: 1.4; quotes: none; }
 .copy-list q.is-never { color: var(--muted); text-decoration: line-through; }
 .copy-list li > span { flex-basis: 100%; color: var(--muted); font-size: var(--fs-small); line-height: 1.45; }
-
-/* ---------- 05: reflection (team + lessons) ---------- */
-.outcome__label { display: block; margin-top: clamp(28px, 3.5vw, 40px); }
-.outcome__label + .team, .outcome__label + .lessons { margin-top: 12px; }
 
 /* ---------- final cart: guidance tooltip on the "!" icon, and the phone version of the leader ---------- */
 /* positions are px of the 702 x 1284 final-cart export: the icon sits at (180-209, 701-729) */

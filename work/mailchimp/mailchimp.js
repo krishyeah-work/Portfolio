@@ -1,51 +1,9 @@
 // mailchimp.js — interactions used only by the MailChimp case study.
-// 1. Early explorations: tabs that switch between option 1 and option 2.
 // 2. Cart explorations: a pinned stage where each cart lands, in turn, in the cart slot of the dashboard,
 //    with a minimal stepper, and a final cart whose status header cycles through other information types.
 // (The logo cover lives in cover.js, shared with the homepage card.)
 
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-/* ---------- Tabs ---------- */
-document.querySelectorAll("[data-tabs]").forEach((root) => {
-  const tabs = [...root.querySelectorAll('[role="tab"]')];
-  const panels = tabs.map((t) => document.getElementById(t.getAttribute("aria-controls")));
-  const select = (i, focus) => {
-    tabs.forEach((t, k) => {
-      const on = k === i;
-      t.setAttribute("aria-selected", String(on));
-      t.tabIndex = on ? 0 : -1;
-      panels[k].hidden = !on;
-    });
-    const panel = panels[i];
-    panel.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("is-in"));
-    if (!reduceMotion) { panel.classList.remove("is-entering"); void panel.offsetWidth; panel.classList.add("is-entering"); }
-    window.dispatchEvent(new Event("resize")); // the carousel in the panel re-measures
-    if (focus) tabs[i].focus();
-  };
-  tabs.forEach((t, i) => {
-    t.addEventListener("click", () => select(i));
-    t.addEventListener("keydown", (e) => {
-      const to = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
-      if (to === undefined) return;
-      e.preventDefault();
-      select((to + tabs.length) % tabs.length, true);
-    });
-  });
-  root.classList.add("is-ready");
-  select(0);
-});
-
-/* ---------- Process strip: the steps reveal left to right once, when the strip comes into view ---------- */
-document.querySelectorAll("[data-process]").forEach((el) => {
-  if (reduceMotion || !("IntersectionObserver" in window)) { el.classList.add("is-in"); return; }
-  const io = new IntersectionObserver((entries) => {
-    if (!entries.some((e) => e.isIntersecting)) return;
-    el.classList.add("is-in");
-    io.disconnect();
-  }, { rootMargin: "0px 0px -15% 0px" });
-  io.observe(el);
-});
 
 /* ---------- Guidance tooltip on the final cart's "!" icon (hover, focus, or tap) ---------- */
 document.querySelectorAll(".seq__tip-btn").forEach((btn) => {

@@ -88,3 +88,14 @@
     }
   }, { passive: true });
 })();
+
+/* ---------- Process strip: the steps reveal left to right once, when the strip comes into view ---------- */
+document.querySelectorAll("[data-process]").forEach((el) => {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) { el.classList.add("is-in"); return; }
+  const io = new IntersectionObserver((entries) => {
+    if (!entries.some((e) => e.isIntersecting)) return;
+    el.classList.add("is-in");
+    io.disconnect();
+  }, { rootMargin: "0px 0px -15% 0px" });
+  io.observe(el);
+});
