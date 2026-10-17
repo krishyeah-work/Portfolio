@@ -99,8 +99,8 @@ body.cs-qb {
 
 /* the modal-width constraint */
 .limit { display: flex; align-items: center; gap: clamp(18px, 3vw, 36px); margin-top: clamp(20px, 2.6vw, 28px); padding: clamp(18px, 2.6vw, 28px); border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: var(--radius); background: linear-gradient(120deg, var(--accent-soft), transparent 60%), var(--surface); }
-.limit__num { display: flex; align-items: baseline; gap: 2px; flex: none; color: var(--accent); }
-.limit__num b { font-size: clamp(2.6rem, 2rem + 2.4vw, 3.8rem); font-weight: 500; letter-spacing: -0.04em; line-height: 1; }
+.limit__num { display: flex; align-items: baseline; gap: 6px; flex: none; color: var(--accent); }
+.limit__num b { font-size: clamp(2.6rem, 2rem + 2.4vw, 3.8rem); font-weight: 500; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; }
 .limit__num span { font-size: 1.1rem; }
 .limit__text { display: grid; gap: 6px; }
 .limit__text h3 { font-size: var(--fs-h3); }
@@ -148,7 +148,9 @@ body.cs-qb {
 .grammar.is-over .grammar__limit b { color: #f0a02c; }
 .grammar.is-over .gcol--fee { box-shadow: 0 0 0 2px #f0a02c; }
 .grammar { cursor: default; }
-.grammar.is-paused .grammar__limit b::after { content: " · paused"; }
+.grammar { position: relative; }
+.grammar__paused { position: absolute; right: 16px; bottom: 14px; color: var(--muted); font-size: 0.72rem; font-weight: 500; opacity: 0; transition: opacity 0.25s var(--ease); }
+.grammar.is-paused .grammar__paused { opacity: 1; }
 .grammar__caption { min-height: 1.5em; margin: 14px 0 0; color: var(--ink-2); font-size: var(--fs-small); transition: opacity 0.3s var(--ease); }
 .grammar__caption.is-swap { opacity: 0; }
 @media (max-width: 599px) { .gcol { font-size: 0.6rem; padding-inline: 3px; height: 56px; } .grammar__frame { width: 84%; } }

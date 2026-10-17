@@ -28,6 +28,28 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   blocks.forEach((b) => io.observe(b));
 })();
 
+/* ---------- 752: digits scramble once when the constraint card arrives, then settle left to right ---------- */
+(() => {
+  const el = document.querySelector("[data-scramble-num]");
+  if (!el || reduceMotion || !("IntersectionObserver" in window)) return;
+  const final = el.textContent;
+  const run = () => {
+    const start = performance.now(), dur = 1100;
+    const frame = (now) => {
+      const p = Math.min(1, (now - start) / dur);
+      el.textContent = [...final].map((d, i) => (p >= 0.35 + (i / final.length) * 0.65 ? d : Math.floor(Math.random() * 10))).join("");
+      if (p < 1) requestAnimationFrame(frame); else el.textContent = final;
+    };
+    requestAnimationFrame(frame);
+    setTimeout(() => { el.textContent = final; }, dur + 200);
+  };
+  const io = new IntersectionObserver((entries) => {
+    if (!entries.some((e) => e.isIntersecting)) return;
+    io.disconnect(); run();
+  }, { rootMargin: "0px 0px -15% 0px" });
+  io.observe(el);
+})();
+
 /* ---------- 2. column grammar inside the 752px modal ---------- */
 (() => {
   const root = document.querySelector("[data-grammar]");
