@@ -63,6 +63,33 @@
 .art-table .hl td { color: var(--accent); }
 .art-table .bar { display: inline-block; height: 6px; border-radius: 3px; background: var(--line-strong); vertical-align: middle; }
 
+/* schematic payment widget (Net Terms card art): Immediate, then Net Terms and a 30-day rail, on a loop */
+.card__art--nt { background: radial-gradient(120% 90% at 20% 0%, rgba(35, 108, 255, 0.2), transparent 60%), var(--surface); }
+.art-nt { width: min(100%, 400px); display: grid; gap: 14px; font-size: clamp(0.78rem, 0.66rem + 0.4vw, 0.95rem); color: var(--ink-2); }
+.art-nt__q { color: var(--ink); font-weight: 500; }
+.art-nt__opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 6px; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--bg-2); }
+.art-nt__opt { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; }
+.art-nt__opt i { width: 14px; height: 14px; border: 1.5px solid var(--muted); border-radius: 50%; }
+.art-nt__opt--imm { animation: nt-imm 8s var(--ease) infinite; }
+.art-nt__opt--net { animation: nt-net 8s var(--ease) infinite; }
+.art-nt__opt--imm i { animation: nt-dot-imm 8s var(--ease) infinite; }
+.art-nt__opt--net i { animation: nt-dot-net 8s var(--ease) infinite; }
+.art-nt__rail { position: relative; height: 6px; margin-top: 10px; border-radius: 6px; background: rgba(255, 255, 255, 0.08); }
+.art-nt__rail b { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 6px; background: linear-gradient(90deg, rgba(35, 108, 255, 0.35), #236cff); animation: nt-fill 8s var(--ease) infinite; }
+.art-nt__rail i { position: absolute; top: 50%; left: 0; width: 14px; height: 14px; translate: -50% -50%; border-radius: 50%; background: #fff; animation: nt-move 8s var(--ease) infinite; }
+.art-nt__ends { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.85em; }
+@keyframes nt-imm { 0%, 38%, 100% { background: rgba(255, 255, 255, 0.07); color: var(--ink); } 45%, 92% { background: transparent; color: var(--muted); } }
+@keyframes nt-net { 0%, 38%, 100% { background: transparent; color: var(--muted); } 45%, 92% { background: rgba(35, 108, 255, 0.18); color: var(--ink); } }
+@keyframes nt-dot-imm { 0%, 38%, 100% { border-color: #fff; box-shadow: inset 0 0 0 3px var(--bg-2), inset 0 0 0 8px #fff; } 45%, 92% { border-color: var(--muted); box-shadow: none; } }
+@keyframes nt-dot-net { 0%, 38%, 100% { border-color: var(--muted); box-shadow: none; } 45%, 92% { border-color: #236cff; box-shadow: inset 0 0 0 3px var(--bg-2), inset 0 0 0 8px #236cff; } }
+@keyframes nt-fill { 0%, 45% { width: 0; } 75%, 92% { width: 100%; } 100% { width: 0; } }
+@keyframes nt-move { 0%, 45% { left: 0; background: #fff; } 75%, 92% { left: 100%; background: #236cff; box-shadow: 0 0 16px rgba(35, 108, 255, 0.8); } 100% { left: 0; background: #fff; } }
+@media (prefers-reduced-motion: reduce) {
+  .art-nt * { animation: none !important; }
+  .art-nt__opt--net { background: rgba(35, 108, 255, 0.18); color: var(--ink); }
+  .art-nt__rail b { width: 100%; } .art-nt__rail i { left: 100%; background: #236cff; }
+}
+
 .more { margin-top: clamp(56px, 7vw, 96px); border-top: 1px solid var(--line-strong); list-style: none; }
 .more li { display: grid; gap: 4px 24px; padding: 18px 0; border-bottom: 1px solid var(--line); }
 @media (min-width: 720px) { .more li { grid-template-columns: 1fr auto; align-items: baseline; } }

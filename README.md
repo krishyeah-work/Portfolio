@@ -37,6 +37,10 @@ work/
                                transparent crops placed on them at true scale
   quickbooks-rate-tables/      Case study 02: index.html, quickbooks.css (green accent, diagrams, live table),
                                quickbooks.js (in-view motion + live rate table), img/
+  net-terms/                   Case study 03: index.html, net-terms.css (Intuit blue #236CFF, hero, lifecycle,
+                               recreated payment widget, email inbox), net-terms.js (hero toggle, apply stepper,
+                               widget states, email player), img/ (cleaned Figma exports: prototype buttons and
+                               connector arrows removed)
 portfolio-context/             Brief, case-study notes, decisions log (local only, not pushed)
 ```
 
