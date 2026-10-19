@@ -1,6 +1,6 @@
 // cover.js — MailChimp cover: logo floating in pixel dust with subtle cursor parallax.
 // Shared by the homepage card and the case-study hero, so both stay in sync.
-// Markup: [data-dust] > canvas + .mc-stage__float > svg. Respects prefers-reduced-motion.
+// Markup: [data-dust] > canvas + .mc-stage__float > svg; data-dust="hover" animates only on hover. Respects prefers-reduced-motion.
 
 (() => {
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -74,8 +74,17 @@ document.querySelectorAll("[data-dust]").forEach((stage) => {
   });
   stage.addEventListener("pointerleave", () => { mouse.tx = 0; mouse.ty = 0; });
 
-  new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop())).observe(stage);
-  document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+  // data-dust="hover" (homepage card): still until the card is hovered or focused; otherwise it runs while on screen
+  if (stage.dataset.dust === "hover") {
+    const card = stage.closest(".card") || stage;
+    card.addEventListener("pointerenter", start);
+    card.addEventListener("pointerleave", stop);
+    card.addEventListener("focus", start);
+    card.addEventListener("blur", stop);
+  } else {
+    new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop())).observe(stage);
+    document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+  }
   new ResizeObserver(resize).observe(stage);
 });
 })();

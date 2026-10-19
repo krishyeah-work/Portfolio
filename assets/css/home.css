@@ -46,48 +46,62 @@
 .card__art--mc { background: radial-gradient(120% 90% at 80% 0%, rgba(245, 196, 81, 0.18), transparent 60%), var(--surface); }
 .card__body { display: grid; gap: 14px; align-content: start; }
 .card__meta { display: flex; flex-wrap: wrap; gap: 8px 18px; }
-.card__title { font-size: clamp(1.7rem, 1.2rem + 1.6vw, 2.4rem); letter-spacing: -0.025em; }
-.card__title .arrow { display: inline-block; color: var(--accent); transition: transform 0.25s var(--ease); }
-.card:hover .card__title .arrow { transform: translateX(6px); }
+.card__title { font-size: clamp(1.7rem, 1.2rem + 1.6vw, 2.4rem); letter-spacing: -0.025em; transition: color 0.3s var(--ease); }
+.card__title .arrow { display: inline-block; color: inherit; transition: transform 0.25s var(--ease); }
+.card:hover .card__title .arrow, .card:focus-visible .card__title .arrow { transform: translateX(6px); }
+/* each project takes its own colour on hover: MailChimp yellow, QuickBooks green, Intuit blue */
+.card--mc { --proj: #f5c451; } .card--qb { --proj: #2ca01c; } .card--nt { --proj: #236cff; }
+.card:hover .card__title, .card:focus-visible .card__title { color: var(--proj, var(--accent)); }
+.card:hover .card__art, .card:focus-visible .card__art { border-color: color-mix(in srgb, var(--proj, var(--accent)) 40%, transparent); }
 .card__desc { color: var(--muted); max-width: 32em; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
 .chip { font-size: 0.78rem; font-weight: 400; border: 1px solid var(--line-strong); border-radius: 999px; padding: 5px 12px; color: var(--ink-2); }
 .chip--status { border-color: rgba(245, 196, 81, 0.5); color: var(--accent); background: var(--accent-soft); }
 .chip--status::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 8px; vertical-align: 2px; }
 
-/* schematic rate table (QuickBooks card art) */
+/* schematic rate table (QuickBooks card art): muted gray at rest; on hover a green highlight scans the rows */
 .art-table { width: min(100%, 460px); border-collapse: collapse; font-size: clamp(0.66rem, 0.55rem + 0.4vw, 0.82rem); color: var(--ink-2); }
-.art-table th, .art-table td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.art-table th, .art-table td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; transition: color 0.3s var(--ease); }
 .art-table th { color: var(--muted); font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.85em; border-bottom-color: var(--line-strong); }
 .art-table td:last-child { text-align: right; }
-.art-table .hl td { color: var(--accent); }
-.art-table .bar { display: inline-block; height: 6px; border-radius: 3px; background: var(--line-strong); vertical-align: middle; }
+.art-table .bar { display: inline-block; height: 6px; border-radius: 3px; background: var(--line-strong); vertical-align: middle; transform-origin: right center; }
+.card--qb:hover .art-table tbody td, .card--qb:focus-visible .art-table tbody td { animation: qb-row 3.2s var(--ease) infinite; animation-delay: calc(var(--r) * 0.8s); }
+.card--qb:hover .art-table .bar, .card--qb:focus-visible .art-table .bar { animation: qb-bar 3.2s var(--ease) infinite; animation-delay: calc(var(--r) * 0.8s); }
+.card--qb:hover .art-table th:last-child, .card--qb:focus-visible .art-table th:last-child { color: #6fd65c; }
+@keyframes qb-row { 0% { background: transparent; color: var(--ink-2); } 6%, 22% { background: rgba(44, 160, 28, 0.14); color: #8be27a; } 30%, 100% { background: transparent; color: var(--ink-2); } }
+@keyframes qb-bar { 0% { transform: scaleX(0.35); background: var(--line-strong); } 8%, 22% { transform: none; background: #2ca01c; } 30%, 100% { transform: none; background: var(--line-strong); } }
 
-/* schematic payment widget (Net Terms card art): Immediate, then Net Terms and a 30-day rail, on a loop */
+/* schematic payment widget (Net Terms card art): Immediate at rest; on hover, Net Terms and the dot steps to Net 30, 60, 90 */
 .card__art--nt { background: radial-gradient(120% 90% at 20% 0%, rgba(35, 108, 255, 0.2), transparent 60%), var(--surface); }
 .art-nt { width: min(100%, 400px); display: grid; gap: 14px; font-size: clamp(0.78rem, 0.66rem + 0.4vw, 0.95rem); color: var(--ink-2); }
 .art-nt__q { color: var(--ink); font-weight: 500; }
 .art-nt__opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 6px; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--bg-2); }
-.art-nt__opt { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; }
+.art-nt__opt { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; color: var(--muted); }
 .art-nt__opt i { width: 14px; height: 14px; border: 1.5px solid var(--muted); border-radius: 50%; }
-.art-nt__opt--imm { animation: nt-imm 8s var(--ease) infinite; }
-.art-nt__opt--net { animation: nt-net 8s var(--ease) infinite; }
-.art-nt__opt--imm i { animation: nt-dot-imm 8s var(--ease) infinite; }
-.art-nt__opt--net i { animation: nt-dot-net 8s var(--ease) infinite; }
+.art-nt__opt--imm { background: rgba(255, 255, 255, 0.07); color: var(--ink); }
+.art-nt__opt--imm i { border-color: #fff; box-shadow: inset 0 0 0 3px var(--bg-2), inset 0 0 0 8px #fff; }
 .art-nt__rail { position: relative; height: 6px; margin-top: 10px; border-radius: 6px; background: rgba(255, 255, 255, 0.08); }
-.art-nt__rail b { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 6px; background: linear-gradient(90deg, rgba(35, 108, 255, 0.35), #236cff); animation: nt-fill 8s var(--ease) infinite; }
-.art-nt__rail i { position: absolute; top: 50%; left: 0; width: 14px; height: 14px; translate: -50% -50%; border-radius: 50%; background: #fff; animation: nt-move 8s var(--ease) infinite; }
-.art-nt__ends { display: flex; justify-content: space-between; color: var(--muted); font-size: 0.85em; }
-@keyframes nt-imm { 0%, 38%, 100% { background: rgba(255, 255, 255, 0.07); color: var(--ink); } 45%, 92% { background: transparent; color: var(--muted); } }
-@keyframes nt-net { 0%, 38%, 100% { background: transparent; color: var(--muted); } 45%, 92% { background: rgba(35, 108, 255, 0.18); color: var(--ink); } }
-@keyframes nt-dot-imm { 0%, 38%, 100% { border-color: #fff; box-shadow: inset 0 0 0 3px var(--bg-2), inset 0 0 0 8px #fff; } 45%, 92% { border-color: var(--muted); box-shadow: none; } }
-@keyframes nt-dot-net { 0%, 38%, 100% { border-color: var(--muted); box-shadow: none; } 45%, 92% { border-color: #236cff; box-shadow: inset 0 0 0 3px var(--bg-2), inset 0 0 0 8px #236cff; } }
-@keyframes nt-fill { 0%, 45% { width: 0; } 75%, 92% { width: 100%; } 100% { width: 0; } }
-@keyframes nt-move { 0%, 45% { left: 0; background: #fff; } 75%, 92% { left: 100%; background: #236cff; box-shadow: 0 0 16px rgba(35, 108, 255, 0.8); } 100% { left: 0; background: #fff; } }
+.art-nt__rail u { position: absolute; left: var(--at); top: -4px; bottom: -4px; width: 2px; translate: -50% 0; background: rgba(255, 255, 255, 0.2); }
+.art-nt__rail b { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 6px; background: linear-gradient(90deg, rgba(35, 108, 255, 0.35), #236cff); }
+.art-nt__rail i { position: absolute; top: 50%; left: 0; width: 14px; height: 14px; translate: -50% -50%; border-radius: 50%; background: #fff; }
+.art-nt__ends { display: grid; grid-template-columns: repeat(4, 1fr); color: var(--muted); font-size: 0.85em; }
+.art-nt__ends span:nth-child(2), .art-nt__ends span:nth-child(3) { text-align: center; }
+.art-nt__ends span:nth-child(2) { translate: -12% 0; } .art-nt__ends span:nth-child(3) { translate: 12% 0; }
+.art-nt__ends span:last-child { text-align: right; }
+.card--nt:hover .art-nt__opt--imm, .card--nt:focus-visible .art-nt__opt--imm { animation: nt-imm 7s var(--ease) infinite; }
+.card--nt:hover .art-nt__opt--net, .card--nt:focus-visible .art-nt__opt--net { animation: nt-net 7s var(--ease) infinite; }
+.card--nt:hover .art-nt__opt--imm i, .card--nt:focus-visible .art-nt__opt--imm i { animation: nt-dot-imm 7s var(--ease) infinite; }
+.card--nt:hover .art-nt__opt--net i, .card--nt:focus-visible .art-nt__opt--net i { animation: nt-dot-net 7s var(--ease) infinite; }
+.card--nt:hover .art-nt__rail b, .card--nt:focus-visible .art-nt__rail b { animation: nt-fill 7s var(--ease) infinite; }
+.card--nt:hover .art-nt__rail i, .card--nt:focus-visible .art-nt__rail i { animation: nt-move 7s var(--ease) infinite; }
+@keyframes nt-imm { 0%, 10%, 100% { background: rgba(255, 255, 255, 0.07); color: var(--ink); } 16%, 92% { background: transparent; color: var(--muted); } }
+@keyframes nt-net { 0%, 10%, 100% { background: transparent; color: var(--muted); } 16%, 92% { background: rgba(35, 108, 255, 0.18); color: var(--ink); } }
+@keyframes nt-dot-imm { 0%, 10%, 100% { border-color: #fff; box-shadow: inset 0 0 0 3px var(--bg-2), inset 0 0 0 8px #fff; } 16%, 92% { border-color: var(--muted); box-shadow: none; } }
+@keyframes nt-dot-net { 0%, 10%, 100% { border-color: var(--muted); box-shadow: none; } 16%, 92% { border-color: #236cff; box-shadow: inset 0 0 0 3px var(--bg-2), inset 0 0 0 8px #236cff; } }
+@keyframes nt-fill { 0%, 18% { width: 0; } 30%, 42% { width: 33.333%; } 54%, 66% { width: 66.667%; } 78%, 94% { width: 100%; } 100% { width: 0; } }
+@keyframes nt-move { 0%, 18% { left: 0; background: #fff; } 30%, 42% { left: 33.333%; background: #236cff; } 54%, 66% { left: 66.667%; background: #236cff; } 78%, 94% { left: 100%; background: #236cff; box-shadow: 0 0 16px rgba(35, 108, 255, 0.8); } 100% { left: 0; background: #fff; } }
 @media (prefers-reduced-motion: reduce) {
-  .art-nt * { animation: none !important; }
-  .art-nt__opt--net { background: rgba(35, 108, 255, 0.18); color: var(--ink); }
-  .art-nt__rail b { width: 100%; } .art-nt__rail i { left: 100%; background: #236cff; }
+  .art-nt *, .art-table * { animation: none !important; }
 }
 
 .more { margin-top: clamp(56px, 7vw, 96px); border-top: 1px solid var(--line-strong); list-style: none; }

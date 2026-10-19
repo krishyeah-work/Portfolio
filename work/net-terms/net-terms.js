@@ -1,15 +1,16 @@
 // net-terms.js — interactions used only by the Net Terms case study.
-// 1. In-view triggers for one-off reveals (hero, payment gap, modes, the approved-screen spotlight).
-// 2. Hero: Immediate and Net Terms swap, the dot travels to day 30 and the day count follows.
-// 3. Counters: the $1.50 fact counts up; the 11 scrambles once.
+// 1. In-view triggers for one-off reveals (origin, payment gap, modes, the approved-screen spotlight, overview art).
+// 2. Hero: Immediate holds, then Net Terms steps the dot through Net 30, 60 and 90 while the day count follows. Replayable.
+// 3. Counters: launch targets count up, the $1.50 fact counts up, the 11 scrambles once.
 // 4. Lifecycle: the active step walks from eligible to monitor.
-// 5. Applying: a stepper over Krishna's QuickBooks Accountant screens, auto-advancing while in view.
-// 6. Status: the QuickBooks Online payment widget recreated in each state, with the shipped copy.
+// 5. Applying: a stepper over Krishna's QuickBooks Accountant screens; every screen shares one cell, so the height never changes.
+// 6. Status: the QuickBooks Online page and payment widget drawn at true scale (1440 x 900), spanning the viewport.
 // 7. Emails: an inbox with a credit meter for the limit alerts.
 // Every player pauses on hover or focus, stops off screen, and respects prefers-reduced-motion.
 
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const hasIO = "IntersectionObserver" in window;
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* ---------- helpers ---------- */
 const onceInView = (el, fn, margin = "0px 0px -12% 0px") => {
@@ -23,11 +24,11 @@ const onceInView = (el, fn, margin = "0px 0px -12% 0px") => {
 };
 
 // a looping player: advances while the block is on screen and not hovered or focused
-function player(root, { count, wait, show }) {
+function player(root, { count, wait: ms, show }) {
   let i = 0, timer = 0, inView = false, held = false;
-  const ms = typeof wait === "function" ? wait : () => wait;
-  const schedule = () => { clearTimeout(timer); if (inView && !held && !reduceMotion) timer = setTimeout(() => go(i + 1, true), ms(i)); };
-  const go = (n, auto) => { i = (n + count) % count; show(i, auto); schedule(); };
+  const delay = typeof ms === "function" ? ms : () => ms;
+  const schedule = () => { clearTimeout(timer); if (inView && !held && !reduceMotion) timer = setTimeout(() => go(i + 1), delay(i)); };
+  const go = (n) => { i = (n + count) % count; show(i); schedule(); };
   const hold = (on) => { held = on; root.classList.toggle("is-paused", on); if (on) clearTimeout(timer); else schedule(); };
   root.addEventListener("mouseenter", () => hold(true));
   root.addEventListener("mouseleave", () => hold(false));
@@ -40,7 +41,7 @@ function player(root, { count, wait, show }) {
       if (inView) schedule(); else clearTimeout(timer);
     }), { threshold: 0.35 }).observe(root);
   }
-  return { go, get index() { return i; } };
+  return { go };
 }
 
 // arrow keys, Home and End across a set of tabs
@@ -60,16 +61,37 @@ const keepInStrip = (el, strip) => {
   const left = strip.scrollLeft + el.getBoundingClientRect().left - strip.getBoundingClientRect().left - 12;
   strip.scrollTo({ left, behavior: reduceMotion ? "auto" : "smooth" });
 };
+// count a number up with an ease-out
+const countUp = (el, to, { dur = 1100, decimals = 0, suffix = "" } = {}) => {
+  if (reduceMotion) { el.textContent = to.toFixed(decimals) + suffix; return; }
+  const start = performance.now();
+  const step = (now) => {
+    const p = Math.min(1, (now - start) / dur);
+    el.textContent = (to * (1 - Math.pow(1 - p, 3))).toFixed(decimals) + suffix;
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+};
 
 /* ---------- 1. one-off reveals ---------- */
-document.querySelectorAll("[data-gap], [data-modes], [data-spot]").forEach((el) => onceInView(el, () => el.classList.add("is-in"), "0px 0px -18% 0px"));
+document.querySelectorAll("[data-gap], [data-modes], [data-origin]").forEach((el) => onceInView(el, () => el.classList.add("is-in"), "0px 0px -18% 0px"));
+document.querySelectorAll("[data-spot]").forEach((el) => onceInView(el, () => el.classList.add("is-in"), "0px 0px -30% 0px"));
+// the overview's invoice terms cycle only while the overview is on screen
+(() => {
+  const ov = document.querySelector(".ov");
+  if (!ov || reduceMotion || !hasIO) return;
+  new IntersectionObserver(([e]) => ov.classList.toggle("is-live", e.isIntersecting), { threshold: 0.3 }).observe(ov);
+})();
 
-/* ---------- 2. hero: charged today, or invoiced and due in 30 days ---------- */
+/* ---------- 2. hero: Immediate, then Net 30, Net 60, Net 90 ---------- */
 (() => {
   const root = document.querySelector("[data-terms]");
   if (!root) return;
   const days = root.querySelector("[data-days]");
-  let raf = 0;
+  const marks = [...root.querySelectorAll(".terms__mark")];
+  const replay = root.querySelector("[data-replay]");
+  let raf = 0, run = 0;
+
   const count = (to, dur) => {
     cancelAnimationFrame(raf);
     const from = Number(days.textContent) || 0, start = performance.now();
@@ -81,41 +103,46 @@ document.querySelectorAll("[data-gap], [data-modes], [data-spot]").forEach((el) 
     };
     raf = requestAnimationFrame(step);
   };
-  const set = (mode) => {
-    root.dataset.mode = mode;
-    if (reduceMotion) { days.textContent = mode === "net" ? "30" : "0"; return; }
-    count(mode === "net" ? 30 : 0, mode === "net" ? 1600 : 700);
+  const stop = (n) => {
+    root.dataset.stop = String(n);
+    marks.forEach((m, k) => m.classList.toggle("is-on", k === n && n > 0));
   };
+  const reset = () => { cancelAnimationFrame(raf); root.dataset.mode = "imm"; stop(0); days.textContent = "0"; };
+  const end = () => { root.dataset.mode = "net"; stop(3); days.textContent = "90"; };
+
+  // each run gets an id, so a replay mid-way cancels the old sequence cleanly
+  const play = async () => {
+    const id = ++run;
+    reset();
+    await wait(900);                          // Immediate stays highlighted first
+    if (id !== run) return;
+    root.dataset.mode = "net";
+    await wait(500);
+    for (const [n, d] of [[1, 30], [2, 60], [3, 90]]) {
+      if (id !== run) return;
+      stop(n); count(d, 1100);
+      await wait(1100 + (n < 3 ? 1100 : 0)); // travel, then hold at each stop
+    }
+  };
+
+  replay.addEventListener("click", () => { if (reduceMotion) { end(); return; } play(); });
   onceInView(root, () => {
     root.classList.add("is-in");
-    if (reduceMotion) { set("net"); return; }
-    let mode = "imm", timer = 0, inView = true;
-    const loop = () => { timer = setTimeout(() => { mode = mode === "imm" ? "net" : "imm"; set(mode); loop(); }, mode === "imm" ? 1800 : 4200); };
-    loop();
-    if (hasIO) new IntersectionObserver((entries) => entries.forEach((e) => {
-      if (e.isIntersecting && !inView) { inView = true; loop(); }
-      if (!e.isIntersecting) { inView = false; clearTimeout(timer); }
-    })).observe(root);
+    if (reduceMotion) { end(); return; }
+    setTimeout(play, 400);
   }, "0px");
 })();
 
 /* ---------- 3. counters ---------- */
 (() => {
-  const el = document.querySelector("[data-count]");
-  if (!el) return;
-  const to = Number(el.dataset.count);
-  onceInView(el, () => {
-    if (reduceMotion) return;
-    const start = performance.now(), dur = 1200;
-    const step = (now) => {
-      const p = Math.min(1, (now - start) / dur);
-      el.textContent = (to * (1 - Math.pow(1 - p, 3))).toFixed(2);
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, "0px 0px -20% 0px");
-})();
-(() => {
+  const band = document.querySelector("[data-targets]");
+  if (band) {
+    const nums = [...band.querySelectorAll("[data-to]")];
+    nums.forEach((n) => { if (!reduceMotion && hasIO) n.textContent = `0${n.dataset.suffix || ""}`; });
+    onceInView(band, () => nums.forEach((n, k) => setTimeout(() => countUp(n, Number(n.dataset.to), { suffix: n.dataset.suffix || "" }), k * 120)), "0px 0px -15% 0px");
+  }
+  const fact = document.querySelector("[data-count]");
+  if (fact) onceInView(fact, () => countUp(fact, Number(fact.dataset.count), { dur: 1200, decimals: 2 }), "0px 0px -20% 0px");
   const el = document.querySelector("[data-scramble-num]");
   if (!el || reduceMotion || !hasIO) return;
   const final = el.textContent;
@@ -131,7 +158,7 @@ document.querySelectorAll("[data-gap], [data-modes], [data-spot]").forEach((el) 
   }, "0px 0px -15% 0px");
 })();
 
-/* ---------- 4. lifecycle: the active step walks through the seven stages ---------- */
+/* ---------- 4. lifecycle: the active step walks through the seven stages, slowly enough to read ---------- */
 (() => {
   const root = document.querySelector("[data-life]");
   if (!root) return;
@@ -139,7 +166,11 @@ document.querySelectorAll("[data-gap], [data-modes], [data-spot]").forEach((el) 
   const show = (n) => steps.forEach((s, k) => { s.classList.toggle("is-on", k === n); s.classList.toggle("is-done", k < n); });
   if (reduceMotion || !hasIO) { show(steps.length - 1); return; }
   let n = -1, timer = 0;
-  const tick = () => { n = (n + 1) % (steps.length + 2); show(n < steps.length ? n : -1); timer = setTimeout(tick, n === steps.length - 1 ? 2200 : 1100); };
+  const tick = () => {
+    n = (n + 1) % (steps.length + 1);
+    show(n < steps.length ? n : -1);
+    timer = setTimeout(tick, n === steps.length - 1 ? 3200 : n === steps.length ? 900 : 1700);
+  };
   new IntersectionObserver((entries) => entries.forEach((e) => {
     clearTimeout(timer);
     if (e.isIntersecting) tick(); else { n = -1; show(-1); }
@@ -154,26 +185,33 @@ document.querySelectorAll("[data-gap], [data-modes], [data-spot]").forEach((el) 
   const panels = tabs.map((t) => document.getElementById(t.getAttribute("aria-controls")));
   const show = (n) => {
     selectTab(tabs, n);
-    panels.forEach((p, k) => { p.hidden = k !== n; });
-    if (!reduceMotion) { const p = panels[n]; p.classList.remove("is-entering"); void p.offsetWidth; p.classList.add("is-entering"); }
+    panels.forEach((p, k) => {
+      const on = k === n;
+      p.classList.toggle("is-active", on);
+      p.setAttribute("aria-hidden", String(!on));
+      p.inert = !on;
+    });
     keepInStrip(tabs[n], root.querySelector(".apply__steps"));
-    // restart the progress bar on the active step
-    const bar = tabs[n].querySelector(".apply__bar");
+    const bar = tabs[n].querySelector(".apply__bar");   // restart the progress bar on the active step
     bar.style.animation = "none"; void bar.offsetWidth; bar.style.animation = "";
   };
+  show(0);
   const p = player(root, { count: tabs.length, wait: 5200, show });
   tabs.forEach((t, k) => t.addEventListener("click", () => p.go(k)));
   arrowKeys(tabs, (k) => p.go(k));
 })();
 
-/* ---------- 6. status: the QuickBooks Online payment widget, recreated ---------- */
+/* ---------- 6. status: the QuickBooks Online page and widget at true scale ---------- */
 (() => {
   const root = document.querySelector("[data-states]");
   if (!root) return;
   const stage = root.querySelector("[data-stage]");
+  const canvas = root.querySelector("[data-canvas]");
   const drawer = root.querySelector("[data-drawer]");
-  const caption = root.querySelector("[data-caption]");
+  const caps = [...root.querySelectorAll("[data-cap]")];
   const tabs = [...root.querySelectorAll("[data-state]")];
+  const W = 1440, H = 900;   // the Figma frames' layout size; the drawer is 576px wide in it
+  const phone = matchMedia("(max-width: 699px)");
 
   const I = {
     pencil: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 2.5l3 3L5 14H2v-3z"/></svg>',
@@ -194,35 +232,52 @@ document.querySelectorAll("[data-gap], [data-modes], [data-spot]").forEach((el) 
     '<div class="nt-add"><span>+</span>Add payment method</div>';
   const useBtn = '<span class="nt-btn">Use payment method</span>';
 
+  // copy taken from Krishna's Figma frames for each state
   const STATES = {
-    ne: { body: `<h4 class="nt-h">Saved payment method(s)</h4>${methods()}`, foot: useBtn,
-      text: "<b>Not eligible.</b> The option never appears. If eligibility can't be checked, the widget behaves the same way." },
-    el: { body: `${heading}${toggle(false)}<p class="nt-sub">Saved payment method(s)</p>${methods()}`, foot: useBtn,
-      text: "<b>Eligible.</b> Net Terms sits beside Immediate, which stays selected until the customer chooses otherwise." },
-    ip: { body: `${heading}${toggle(true)}<div class="nt-status nt-status--wait"><span class="nt-status__ico">${I.clock}</span><div><h5>Your Net Terms application is currently in progress.</h5><ul><li>You will be notified of your application status by email or you could come back to this screen to check the status.</li><li>You can continue using Immediate Terms until the review is complete.</li></ul></div></div>`, foot: "",
-      text: "<b>In review.</b> Payments continue on Immediate Terms. If the status can't load, this message shows instead of an error." },
-    de: { body: `${heading}${toggle(true)}<div class="nt-status nt-status--stop"><span class="nt-status__ico">${I.warn}</span><div><h5>Your Net Terms application has been declined</h5><p>Continue with Immediate Terms to complete your transaction or keep your account active.</p></div></div>`, foot: "",
-      text: "<b>Declined.</b> The customer carries on with Immediate Terms." },
-    ap: { body: `${heading}${toggle(true)}<div class="nt-pm nt-pm--inv is-picked">${radio("", true)}<span class="nt-pm__logo nt-pm__logo--inv">${I.invoice}</span><span class="nt-pm__t"><b>Invoice</b> <span>Net 30</span></span></div>`, foot: useBtn,
-      text: "<b>Approved.</b> Invoice Net 30 is the only method under Net Terms. Saving it switches the account." },
-    oi: { body: `<div class="nt-alert">${I.warn}<div><h5>Payment Method Update Unavailable</h5><p>Your account is currently billed by invoice and has outstanding payments. Please clear all pending invoices to enable payment method updates.</p></div><span class="nt-alert__x">×</span></div>${heading}${toggle(false)}<p class="nt-sub">Saved payment method(s)</p>${methods()}`, foot: useBtn,
-      text: "<b>Open invoices.</b> A switch back to Immediate waits until every Net Terms invoice is paid." },
+    ne: { body: `<h4 class="nt-h">Saved payment method(s)</h4>${methods()}`, foot: useBtn },
+    el: { body: `${heading}${toggle(false)}<p class="nt-sub">Saved payment method(s)</p>${methods()}`, foot: useBtn },
+    ip: { body: `${heading}${toggle(true)}<div class="nt-status nt-status--wait"><span class="nt-status__ico">${I.clock}</span><div><h5>Your Net Terms application is currently in progress.</h5><ul><li>You will be notified of your application status by email or you could come back to this screen to check the status.</li><li>You can continue using Immediate Terms until the review is complete.</li></ul></div></div>`, foot: "" },
+    de: { body: `${heading}${toggle(true)}<div class="nt-status nt-status--stop"><span class="nt-status__ico">${I.warn}</span><div><h5>Your Net Terms application has been declined</h5><p>Continue with Immediate Terms to complete your transaction or keep your account active.</p></div></div>`, foot: "" },
+    ap: { body: `${heading}${toggle(true)}<div class="nt-pm nt-pm--inv is-picked">${radio("", true)}<span class="nt-pm__logo nt-pm__logo--inv">${I.invoice}</span><span class="nt-pm__t"><b>Invoice</b> <span>Net 30</span></span></div>`, foot: useBtn },
+    oi: { body: `<div class="nt-alert">${I.warn}<div><h5>Payment Method Update Unavailable</h5><p>Your account is currently billed by invoice and has outstanding payments. Please clear all pending invoices to enable payment method updates.</p></div><span class="nt-alert__x">×</span></div>${heading}${toggle(false)}<p class="nt-sub">Saved payment method(s)</p>${methods()}`, foot: useBtn, invoiced: true },
   };
   const keys = tabs.map((t) => t.dataset.state);
 
   const render = (n, animate) => {
-    const s = STATES[keys[n]];
+    const key = keys[n], s = STATES[key];
     selectTab(tabs, n);
     drawer.innerHTML = `<span class="nt-drawer__x" aria-hidden="true">×</span><div class="nt-drawer__body">${s.body}</div><div class="nt-drawer__foot">${s.foot}</div>`;
     drawer.setAttribute("aria-label", `Payment widget, ${tabs[n].textContent} state`);
+    stage.classList.toggle("is-inv", !!s.invoiced);   // with open invoices the page already reads Invoice Net 30
+    caps.forEach((c) => c.classList.toggle("is-on", c.dataset.cap === key));
     if (animate && !reduceMotion) { stage.classList.remove("is-entering"); void stage.offsetWidth; stage.classList.add("is-entering"); }
-    caption.classList.add("is-swap");
-    setTimeout(() => { caption.innerHTML = s.text; caption.classList.remove("is-swap"); }, reduceMotion ? 0 : 180);
   };
+
+  // the demo breaks out of the text column and spans the viewport, sized so the whole page fits on screen
+  function layout() {
+    root.style.width = ""; root.style.marginLeft = "";
+    if (phone.matches) { canvas.style.removeProperty("--k"); stage.style.height = ""; return; }
+    const vw = document.documentElement.clientWidth;
+    const col = root.parentElement.getBoundingClientRect();
+    const gutter = vw < 760 ? 16 : 32;
+    const fitHeight = Math.max(560, window.innerHeight - 150) * (W / H);
+    const w = Math.round(Math.max(col.width, Math.min(1360, vw - gutter * 2, fitHeight)));
+    root.style.width = `${w}px`;
+    root.style.marginLeft = `${Math.round((vw - w) / 2 - col.left)}px`;
+    const k = stage.clientWidth / W;
+    canvas.style.setProperty("--k", k.toFixed(4));
+    stage.style.height = `${Math.round(H * k)}px`;
+  }
+
   render(0, false);
+  layout();
+  window.addEventListener("resize", layout);
+  phone.addEventListener?.("change", layout);
   const p = player(root, { count: keys.length, wait: (i) => (keys[i] === "ip" || keys[i] === "oi" ? 6200 : 4600), show: (n) => render(n, true) });
   tabs.forEach((t, k) => t.addEventListener("click", () => p.go(k)));
   arrowKeys(tabs, (k) => p.go(k));
+  // the contents list steps aside while the wide demo is on screen, so the two never overlap
+  if (hasIO) new IntersectionObserver((entries) => entries.forEach((e) => document.documentElement.classList.toggle("toc-hidden", e.isIntersecting)), { threshold: 0.05 }).observe(root);
 })();
 
 /* ---------- 7. emails: inbox with a credit meter ---------- */

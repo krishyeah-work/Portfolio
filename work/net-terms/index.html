@@ -5,7 +5,7 @@
   <script>document.documentElement.classList.add("js")</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Net Terms for Intuit Enterprise Suite — Krishna Revanth</title>
-  <meta name="description" content="Case study: letting Intuit Enterprise Suite customers pay Intuit by invoice on approved terms, through the payment widget QuickBooks already uses.">
+  <meta name="description" content="Case study: bringing Net Terms to Intuit Enterprise Suite, so enterprise customers can pay Intuit by invoice through the payment widget QuickBooks already uses.">
   <meta property="og:title" content="Net Terms for Intuit Enterprise Suite — Krishna Revanth">
   <meta property="og:description" content="Invoice billing on approved terms, designed into Intuit's shared payment widget for accountants, direct customers and partners.">
   <meta property="og:type" content="article">
@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="/assets/css/base.css?v=20261018c">
   <link rel="stylesheet" href="/assets/css/footer-live.css?v=20261018c">
   <link rel="stylesheet" href="/assets/css/case-study.css?v=20261018c">
-  <link rel="stylesheet" href="/work/net-terms/net-terms.css?v=20261019b">
+  <link rel="stylesheet" href="/work/net-terms/net-terms.css?v=20261020a">
   <script src="/assets/js/site.js?v=20261018c" defer></script>
   <script src="/assets/js/clock.js?v=20261018c" defer></script>
   <script src="/assets/js/pal.js?v=20261018c" defer></script>
@@ -25,7 +25,7 @@
   <script src="/assets/js/toc.js?v=20261018c" defer></script>
   <script src="/assets/js/tabs.js?v=20261018c" defer></script>
   <script src="/assets/js/lightbox.js?v=20261018c" defer></script>
-  <script src="/work/net-terms/net-terms.js?v=20261019b" defer></script>
+  <script src="/work/net-terms/net-terms.js?v=20261020a" defer></script>
 </head>
 <body class="cs-nt">
   <a class="skip" href="#main">Skip to content</a>
@@ -51,7 +51,7 @@
         <a class="crumb label" href="/#work">← All work</a>
         <p class="label cs-eyebrow">Case study 03 · Intuit</p>
         <h1 class="cs-title" data-text-fade>Net Terms for Intuit Enterprise Suite</h1>
-        <p class="cs-lead">Letting enterprise customers pay Intuit by invoice, on approved terms, through the payment widget that QuickBooks already uses.</p>
+        <p class="cs-lead">Bringing Net Terms to Intuit Enterprise Suite, so enterprise customers can pay Intuit by invoice.</p>
 
         <dl class="meta-grid">
           <div><dt class="label">My role</dt><dd>UX Designer</dd></div>
@@ -61,17 +61,27 @@
           <div><dt class="label">Status</dt><dd>Launched</dd></div>
         </dl>
 
-        <!-- cover: the same bill, charged today or invoiced and due in 30 days -->
-        <div class="terms" data-terms data-mode="imm" aria-label="Immediate: charged to a card or bank account on the billing date. Net Terms: billed by invoice and paid within 30 days.">
+        <!-- cover: Immediate first, then Net Terms steps through Net 30, 60 and 90 -->
+        <div class="terms" data-terms data-mode="imm" data-stop="0" aria-label="Immediate: charged on the billing date. Net Terms: paid by invoice within an approved term of 30, 60 or 90 days.">
           <div class="terms__top" aria-hidden="true">
             <div class="terms__switch"><span class="terms__opt" data-opt="imm">Immediate</span><span class="terms__opt" data-opt="net">Net Terms</span><i class="terms__pill"></i></div>
             <div class="terms__count"><b data-days>0</b><span>days to pay</span></div>
           </div>
           <div class="terms__track" aria-hidden="true">
-            <div class="terms__rail"><i class="terms__fill"></i><i class="terms__dot"></i></div>
-            <div class="terms__ends"><span><b>Day 0</b>Billing date</span><span><b>Day 30</b>Payment due</span></div>
+            <div class="terms__rail">
+              <i class="terms__fill"></i>
+              <i class="terms__tick" style="--at: 33.333%"></i><i class="terms__tick" style="--at: 66.667%"></i><i class="terms__tick" style="--at: 100%"></i>
+              <i class="terms__dot"></i>
+            </div>
+            <div class="terms__marks">
+              <span class="terms__mark" data-s="0" style="--at: 0%"><b>Day 0</b><em>Billing date</em></span>
+              <span class="terms__mark" data-s="1" style="--at: 33.333%"><b>Net 30</b></span>
+              <span class="terms__mark" data-s="2" style="--at: 66.667%"><b>Net 60</b></span>
+              <span class="terms__mark" data-s="3" style="--at: 100%"><b>Net 90</b></span>
+            </div>
           </div>
-          <p class="terms__caption" aria-hidden="true"><span data-cap="imm">Charged to a card or bank account on the billing date.</span><span data-cap="net">Billed by invoice and paid within 30 days, up to an approved credit limit.</span></p>
+          <p class="terms__caption" aria-hidden="true"><span data-cap="imm">Immediate: charged to a card or bank account on the billing date.</span><span data-cap="net">Net Terms: paid by invoice within the approved term.</span></p>
+          <button type="button" class="terms__replay" data-replay aria-label="Replay the animation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4.5h4.5"/></svg></button>
         </div>
       </div>
     </header>
@@ -80,34 +90,54 @@
     <section class="overview section--alt" aria-labelledby="h-overview">
       <div class="wrap">
         <span class="label kicker">Overview</span>
-        <h2 id="h-overview">Paying Intuit the way enterprises pay suppliers.</h2>
-        <div class="overview__grid">
+        <h2 id="h-overview">Invoice billing for Intuit Enterprise Suite.</h2>
+        <div class="overview__grid ov">
           <div>
+            <div class="ov-art ov-art--ies" aria-hidden="true">
+              <span class="ies__parent">Parent company</span>
+              <svg class="ies__lines" viewBox="0 0 300 30" preserveAspectRatio="none"><path d="M150 0v12M50 30V12h200v18M150 12v18"/></svg>
+              <span class="ies__kids"><i>Entity</i><i>Entity</i><i>Entity</i></span>
+            </div>
             <span class="label">The product</span>
             <h3>Intuit Enterprise Suite</h3>
-            <p>Intuit's suite for larger, multi-entity businesses, sold directly and through accountants and partners.</p>
+            <p>Intuit's newer suite for larger, multi-entity businesses.</p>
           </div>
           <div>
+            <div class="ov-art ov-art--inv" aria-hidden="true">
+              <div class="mini-inv">
+                <div class="mini-inv__head"><b>Invoice</b><span>#1000113</span></div>
+                <div class="mini-inv__row"><em>Payment method</em><span>Invoice</span></div>
+                <div class="mini-inv__row"><em>Terms</em><span class="mini-inv__terms"><i>Net 30</i><i>Net 60</i><i>Net 90</i></span></div>
+                <div class="mini-inv__row"><em>Due</em><span>Within the term</span></div>
+              </div>
+            </div>
             <span class="label">The requirement</span>
-            <h3>Invoice billing on approved terms</h3>
-            <p>Approved customers receive a monthly invoice and pay it within their term, such as Net 30, up to a credit limit.</p>
+            <h3>Pay by invoice, on terms</h3>
+            <p>Let IES customers pay within an approved term, such as Net 30, 60 or 90.</p>
           </div>
           <div class="is-solution">
+            <div class="ov-art ov-art--ui" aria-hidden="true">
+              <div class="mini-ui">
+                <p class="mini-ui__h">How would you like to pay?</p>
+                <div class="mini-ui__toggle"><span><i></i>Immediate</span><span class="is-on"><i></i>Net Terms <b>?</b></span></div>
+                <p class="mini-ui__st"><i></i>Your Net 30 application has been approved</p>
+              </div>
+            </div>
             <span class="label">The solution</span>
-            <h3>A second way to pay, in the existing widget</h3>
-            <p>Net Terms sits beside Immediate, with an application, a clear status at every step, and invoice-aware billing pages and emails. <a href="#states">See every state ↓</a></p>
+            <h3>Net Terms in the payment widget</h3>
+            <p>A second option beside Immediate, with a short application and a clear status. <a href="#states">See every state ↓</a></p>
           </div>
         </div>
-        <div class="measures-band">
-          <div class="measures-band__head">
-            <span class="label">How success is measured</span>
-            <p>Tracked after launch. <span class="todo">Results to be added</span></p>
+        <div class="targets" data-targets>
+          <div class="targets__head">
+            <span class="label">Launch targets</span>
+            <p>What the team set out to reach. Results to follow.</p>
           </div>
-          <ul class="measures-band__list" role="list">
-            <li><strong>Adoption</strong><span>Eligible customers who apply, get approved and switch to Net Terms.</span></li>
-            <li><strong>Application completion</strong><span>Drop-off between choosing Net Terms and submitting the application.</span></li>
-            <li><strong>Days to collect</strong><span>Average days from invoice to payment on Net Terms invoices.</span></li>
-            <li><strong>Bad debt</strong><span>Share of Net Terms revenue written off as uncollectible.</span></li>
+          <ul class="targets__list" role="list">
+            <li><b data-to="70" data-suffix="%">70%</b><span>of started applications completed</span></li>
+            <li><b data-to="8" data-suffix=" min">8 min</b><span>median time to apply</span></li>
+            <li><b data-to="80" data-suffix="%">80%</b><span>of approved customers switch to Net Terms</span></li>
+            <li><b>15–20%</b><span>of eligible customers on Net Terms within six months</span></li>
           </ul>
         </div>
       </div>
@@ -129,9 +159,9 @@
           <!-- 01 -->
           <section class="cs-section" id="challenge" aria-labelledby="h-challenge">
             <span class="label">01 — The challenge</span>
-            <h2 id="h-challenge">Enterprises pay by invoice. Intuit charged a card.</h2>
+            <h2 id="h-challenge">Enterprises pay by invoice. IES billed a card.</h2>
             <div class="prose">
-              <p>Finance teams at larger businesses pay suppliers through purchase orders, invoices and scheduled payment runs. Intuit billed every subscription to a card or bank account on file, on the billing date. When a charge failed, access could stop.</p>
+              <p>Intuit already offered Net Terms to some customers on an older billing system. IES runs on Intuit's online billing, which only charged a card or bank account on file.</p>
             </div>
             <div class="gap" data-gap>
               <div class="gap__side">
@@ -144,7 +174,7 @@
                 </ol>
               </div>
               <div class="gap__side gap__side--intuit">
-                <span class="label">How Intuit billed</span>
+                <span class="label">How IES billed them</span>
                 <ol class="gap__steps" role="list">
                   <li style="--i: 0">Card or bank account on file</li>
                   <li style="--i: 1">Charged on the billing date</li>
@@ -158,35 +188,52 @@
             </div>
             <div class="callout-q">
               <span class="label">Key design challenge</span>
-              <p class="q">How might enterprise customers pay Intuit by invoice, on approved terms, without changing how anyone else pays?</p>
+              <p class="q">How might IES customers pay by invoice, on approved terms, without changing checkout for anyone else?</p>
             </div>
           </section>
 
           <!-- 02 -->
           <section class="cs-section" id="context" aria-labelledby="h-context">
             <span class="label">02 — Context</span>
-            <h2 id="h-context">Three audiences, one shared payment widget.</h2>
-            <div class="prose">
-              <p>IES reaches customers through three channels, and each one pays Intuit from its own part of the product.</p>
+            <h2 id="h-context">How it started, and who it serves.</h2>
+            <ol class="origin" role="list" data-origin>
+              <li style="--i: 0">
+                <span class="origin__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 13a8 8 0 1 1 16 0v4a2 2 0 0 1-2 2h-1v-6h3M4 13h3v6H6a2 2 0 0 1-2-2z"/></svg></span>
+                <strong>Customers ask support</strong><span>For invoice billing, logged against their Realm ID</span>
+              </li>
+              <li style="--i: 1">
+                <span class="origin__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+                <strong>Finance and payments</strong><span>Requests reach the teams that own billing</span>
+              </li>
+              <li style="--i: 2">
+                <span class="origin__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5L6 21z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span>
+                <strong>Net Terms for IES</strong><span>Added to the shared payment widget</span>
+              </li>
+            </ol>
+            <p class="origin__note"><span class="label">Realm ID</span>Intuit's ID for each business. It also decides eligibility and the Net Terms state each customer sees.</p>
+
+            <div class="screen__head cs-subhead">
+              <span class="label">Audiences</span>
+              <h3>Three audiences, one payment widget.</h3>
             </div>
             <ul class="who" role="list">
               <li>
                 <span class="who__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg></span>
                 <span class="label">QuickBooks Accountant</span>
                 <h3>Accountants</h3>
-                <p>Firms that pay for their own subscriptions and their clients'.</p>
+                <p>Firms paying for their own and their clients' subscriptions.</p>
               </li>
               <li>
                 <span class="who__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-4 7 4v13"/><path d="M9 21v-5h6v5M9 11h.01M15 11h.01"/></svg></span>
                 <span class="label">QuickBooks Online and IES</span>
                 <h3>Direct customers</h3>
-                <p>Businesses billed for their own Intuit Enterprise Suite.</p>
+                <p>Businesses paying for their own IES.</p>
               </li>
               <li>
                 <span class="who__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3.2"/><circle cx="17" cy="9.5" r="2.6"/><path d="M2.5 20c.6-3.7 2.8-6 5.5-6s4.9 2.3 5.5 6M13.5 15.6c.9-1.2 2.1-1.8 3.5-1.8 2.3 0 4 1.9 4.5 5"/></svg></span>
                 <span class="label">Partner Portal</span>
                 <h3>ProPartners</h3>
-                <p>Members of Intuit's ProPartner program who sell and support Intuit products for businesses.</p>
+                <p>Intuit partners who sell and support Intuit products.</p>
               </li>
             </ul>
 
@@ -203,26 +250,25 @@
               <li style="--i: 5"><span class="life__n">6</span><strong>Pay</strong><span>Card, ACH or wire</span><em>Billing history</em></li>
               <li style="--i: 6"><span class="life__n">7</span><strong>Monitor</strong><span>Alerts at 80, 95 and 100%</span><em>Email</em></li>
             </ol>
-            <p class="life__note"><span class="label">If unpaid</span>Past the term, the account moves to collections and its payment terms are locked.</p>
+            <p class="life__note"><span class="label">If unpaid</span>Past the term, the account moves to collections and its terms are locked.</p>
           </section>
 
           <!-- 03 -->
           <section class="cs-section" id="requirements" aria-labelledby="h-req">
             <span class="label">03 — Requirements</span>
-            <h2 id="h-req">A credit product inside a shared widget.</h2>
+            <h2 id="h-req">A payment method inside a shared widget.</h2>
             <div class="limit">
               <div class="limit__num"><b data-scramble-num>11</b></div>
               <div class="limit__text">
                 <span class="label label--accent">Constraint</span>
-                <h3>Products and flows load the same payment widget.</h3>
-                <p>From TurboTax and QuickBooks to sales tools and the Partner Portal. Net Terms had to appear only for eligible customers and leave every other checkout as it was.</p>
+                <h3>Products and flows share one payment widget.</h3>
+                <p>From TurboTax and QuickBooks to sales tools and the Partner Portal. Net Terms could appear only for eligible customers and change nothing for anyone else.</p>
               </div>
             </div>
 
             <div class="screen__head cs-subhead">
               <span class="label">Two modes</span>
               <h3>Terms change in billing settings, never mid-purchase.</h3>
-              <p>The widget opens in two modes. The mode decides what a customer can do with payment terms.</p>
             </div>
             <div class="modes" data-modes>
               <div class="mode mode--manage">
@@ -257,11 +303,11 @@
             <ol class="process" role="list" data-process>
               <li style="--i: 0">
                 <span class="process__icon process__icon--line"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg></span>
-                <span class="process__tool">Requirements</span><span>Use cases for each customer type and mode</span>
+                <span class="process__tool">Requirements</span><span>Use cases per customer type and mode</span>
               </li>
               <li style="--i: 1">
                 <span class="process__icon"><svg viewBox="0 0 38 57" aria-hidden="true" focusable="false"><path fill="#00b6ff" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z"/><path fill="#24cb71" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z"/><path fill="#ff7237" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z"/><path fill="#ff3737" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z"/><path fill="#874fff" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z"/></svg></span>
-                <span class="process__tool">Figma</span><span>Eleven flows across four surfaces</span>
+                <span class="process__tool">Figma</span><span>11 flows across four surfaces</span>
               </li>
               <li style="--i: 2">
                 <span class="process__icon process__icon--line"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3 5 6v5c0 4.4 3 8.3 7 10 4-1.7 7-5.6 7-10V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
@@ -276,29 +322,30 @@
             <!-- Applying -->
             <div class="screen__head cs-subhead">
               <span class="label">Applying</span>
-              <h3>Four short steps, with most fields pre-filled.</h3>
-              <p>In QuickBooks Accountant, the application starts where a firm already chooses how to pay.</p>
+              <h3>Four short steps, most fields pre-filled.</h3>
+              <p>Shown in QuickBooks Accountant, where firms choose how to pay.</p>
             </div>
             <div class="apply" data-apply>
               <ol class="apply__steps" role="tablist" aria-label="Application steps">
-                <li><button type="button" role="tab" id="ap-t1" aria-controls="ap-p1" aria-selected="true"><span class="apply__n">1</span><span class="apply__txt"><strong>Choose Net Terms</strong><span>Immediate stays the default. A tooltip explains Net 30 in one sentence.</span></span><i class="apply__bar"></i></button></li>
-                <li><button type="button" role="tab" id="ap-t2" aria-controls="ap-p2" aria-selected="false" tabindex="-1"><span class="apply__n">2</span><span class="apply__txt"><strong>See the steps ahead</strong><span>Selecting Net Terms lists what happens next and asks only for the company address.</span></span><i class="apply__bar"></i></button></li>
-                <li><button type="button" role="tab" id="ap-t3" aria-controls="ap-p3" aria-selected="false" tabindex="-1"><span class="apply__n">3</span><span class="apply__txt"><strong>Confirm firm details</strong><span>Company and legal details arrive pre-filled, each with an Edit link. The EIN stays masked.</span></span><i class="apply__bar"></i></button></li>
-                <li><button type="button" role="tab" id="ap-t4" aria-controls="ap-p4" aria-selected="false" tabindex="-1"><span class="apply__n">4</span><span class="apply__txt"><strong>Submit</strong><span>Projected annual spend, an optional sales contact and one consent checkbox.</span></span><i class="apply__bar"></i></button></li>
+                <li><button type="button" role="tab" id="ap-t1" aria-controls="ap-p1" aria-selected="true"><span class="apply__n">1</span><span class="apply__txt"><strong>Choose Net Terms</strong><span>Immediate stays the default. A tooltip explains Net Terms.</span></span><i class="apply__bar"></i></button></li>
+                <li><button type="button" role="tab" id="ap-t2" aria-controls="ap-p2" aria-selected="false" tabindex="-1"><span class="apply__n">2</span><span class="apply__txt"><strong>See what's next</strong><span>Four steps ahead, and only the company address to add.</span></span><i class="apply__bar"></i></button></li>
+                <li><button type="button" role="tab" id="ap-t3" aria-controls="ap-p3" aria-selected="false" tabindex="-1"><span class="apply__n">3</span><span class="apply__txt"><strong>Confirm details</strong><span>Company and legal details arrive pre-filled, each editable.</span></span><i class="apply__bar"></i></button></li>
+                <li><button type="button" role="tab" id="ap-t4" aria-controls="ap-p4" aria-selected="false" tabindex="-1"><span class="apply__n">4</span><span class="apply__txt"><strong>Submit</strong><span>Annual spend, a contact email and one consent box.</span></span><i class="apply__bar"></i></button></li>
               </ol>
               <div class="apply__view">
-                <div class="apply__panel shot" role="tabpanel" id="ap-p1" aria-labelledby="ap-t1"><img src="/work/net-terms/img/apply-1.webp" width="520" height="840" alt="How would you like to pay: Immediate selected, Net Terms beside it with a tooltip that reads: Net Terms allow you to pay at a later date (e.g., Net 30 = payment due in 30 days), subject to your approved credit limit."></div>
-                <div class="apply__panel shot" role="tabpanel" id="ap-p2" aria-labelledby="ap-t2" hidden><img src="/work/net-terms/img/apply-2.webp" width="520" height="870" loading="lazy" alt="Net Terms selected: four steps to activate Net Terms, a company address form and an Apply for Net Terms button."></div>
-                <div class="apply__panel shot" role="tabpanel" id="ap-p3" aria-labelledby="ap-t3" hidden><img src="/work/net-terms/img/apply-3.webp" width="520" height="1000" loading="lazy" alt="Apply for net terms, confirm your firm's details: company name and phone, legal business name, masked EIN, entity type and legal address, each with Edit."></div>
-                <div class="apply__panel shot" role="tabpanel" id="ap-p4" aria-labelledby="ap-t4" hidden><img src="/work/net-terms/img/apply-4.webp" width="520" height="825" loading="lazy" alt="Additional information: projected annual spend, optional Intuit sales contact, notes, primary contact email and a consent checkbox, then Submit application."></div>
+                <div class="apply__panel shot is-active" role="tabpanel" id="ap-p1" aria-labelledby="ap-t1"><img src="/work/net-terms/img/apply-1.webp" width="520" height="840" alt="How would you like to pay: Immediate selected, Net Terms beside it with a tooltip that reads: Net Terms allow you to pay at a later date (e.g., Net 30 = payment due in 30 days), subject to your approved credit limit."></div>
+                <div class="apply__panel shot" role="tabpanel" id="ap-p2" aria-labelledby="ap-t2"><img src="/work/net-terms/img/apply-2.webp" width="520" height="870" loading="lazy" alt="Net Terms selected: four steps to activate Net Terms, a company address form and an Apply for Net Terms button."></div>
+                <div class="apply__panel shot" role="tabpanel" id="ap-p3" aria-labelledby="ap-t3"><img src="/work/net-terms/img/apply-3.webp" width="520" height="1000" loading="lazy" alt="Apply for net terms, confirm your firm's details: company name and phone, legal business name, masked EIN, entity type and legal address, each with Edit."></div>
+                <div class="apply__panel shot" role="tabpanel" id="ap-p4" aria-labelledby="ap-t4"><img src="/work/net-terms/img/apply-4.webp" width="520" height="825" loading="lazy" alt="Additional information: projected annual spend, optional Intuit sales contact, notes, primary contact email and a consent checkbox, then Submit application."></div>
               </div>
             </div>
+            <p class="tgt"><span class="label">Target</span>Fewer than 5% of applications blocked by missing information or errors.</p>
 
-            <!-- Every state of the widget, rebuilt -->
+            <!-- Every state of the widget, recreated at true scale -->
             <div class="screen__head cs-subhead" id="states">
               <span class="label">Status</span>
-              <h3>Each answer comes with a next step.</h3>
-              <p>The widget on QuickBooks Online, in each state it can show. Pick a state, or let them play.</p>
+              <h3>Every answer comes with a next step.</h3>
+              <p>The QuickBooks Online widget in each state. Pick one, or let it play.</p>
             </div>
             <div class="nt-demo" data-states>
               <div class="seg nt-demo__tabs" role="tablist" aria-label="Widget states">
@@ -310,24 +357,31 @@
                 <button type="button" class="seg__btn" role="tab" data-state="oi" aria-selected="false" tabindex="-1">Open invoices</button>
               </div>
               <div class="nt-stage" data-stage role="tabpanel" aria-live="polite">
-                <div class="nt-page" aria-hidden="true">
-                  <div class="nt-page__rows"><i></i><i></i><i></i></div>
-                  <div class="nt-page__cards"><i></i><i></i><i></i></div>
+                <div class="nt-canvas" data-canvas>
+                  <img class="nt-bg" src="/work/net-terms/img/bg-card.webp" width="2160" height="1350" loading="lazy" alt="" aria-hidden="true">
+                  <img class="nt-bg nt-bg--inv" src="/work/net-terms/img/bg-invoice.webp" width="2160" height="1350" loading="lazy" alt="" aria-hidden="true">
+                  <div class="nt-scrim" aria-hidden="true"></div>
+                  <aside class="nt-drawer" data-drawer></aside>
                 </div>
-                <div class="nt-scrim" aria-hidden="true"></div>
-                <aside class="nt-drawer" data-drawer></aside>
               </div>
-              <p class="nt-demo__caption" data-caption></p>
+              <div class="nt-caps" aria-live="polite">
+                <p data-cap="ne"><b>Not eligible.</b> The option never appears, even if eligibility can't be checked.</p>
+                <p data-cap="el"><b>Eligible.</b> Net Terms sits beside Immediate, which stays selected.</p>
+                <p data-cap="ip"><b>In review.</b> Payments continue on Immediate. If the status can't load, this shows.</p>
+                <p data-cap="de"><b>Declined.</b> The customer continues with Immediate Terms.</p>
+                <p data-cap="ap"><b>Approved.</b> Invoice Net 30 becomes the payment method once saved.</p>
+                <p data-cap="oi"><b>Open invoices.</b> Switching back waits until every invoice is paid.</p>
+              </div>
               <p class="nt-note">A recreation of the original screens, rebuilt for this portfolio with the shipped copy.</p>
             </div>
 
             <div class="decision">
               <span class="label label--accent">Decision 1</span>
-              <h4>A declined application leads back to Immediate, not to Care</h4>
+              <h4>A declined application leads back to Immediate, not to Customer Care</h4>
               <dl>
-                <div><dt>Chose</dt><dd>One next step in the widget: continue with Immediate Terms to complete the transaction or keep the account active.</dd></div>
-                <div><dt>Over</dt><dd>Sending declined customers to Care for an explanation.</dd></div>
-                <div><dt>Why</dt><dd>Intuit isn't obliged to share the reason, Care has no access to it, and the referral would only add calls.</dd></div>
+                <div><dt>Chose</dt><dd>One next step in the widget: continue with Immediate Terms to finish the purchase or keep the account active.</dd></div>
+                <div><dt>Over</dt><dd>Pointing declined customers to Intuit Customer Care.</dd></div>
+                <div><dt>Why</dt><dd>Intuit doesn't have to explain a decline, Care doesn't have the details to help, and sending customers there would only raise support calls.</dd></div>
               </dl>
             </div>
 
@@ -335,17 +389,17 @@
             <div class="screen__head cs-subhead">
               <span class="label">After approval</span>
               <h3>The invoice becomes the payment method.</h3>
-              <p>Once saved, the billing page shows Invoice Net 30 where the card used to be.</p>
+              <p>Once saved, the billing page shows Invoice Net 30 in place of the card.</p>
             </div>
             <figure class="fig fig--wide">
-              <div class="shot spot" data-spot style="--x: 18.6%; --y: 13.4%; --w: 12.4%; --h: 5.4%"><img src="/work/net-terms/img/dash-approved.webp" data-full="/work/net-terms/img/dash-approved-lg.webp" width="1600" height="815" loading="lazy" alt="QuickBooks Online billing page for David's Landscaping: Payment method reads Invoice Net 30, above the subscribed bundle of Grow, Payroll Core and BillPay Premium."></div>
+              <div class="shot spot" data-spot style="--x: 18.4%; --y: 13.4%; --w: 12.2%; --h: 5.2%"><img src="/work/net-terms/img/dash-approved.webp" data-full="/work/net-terms/img/dash-approved-lg.webp" width="1600" height="815" loading="lazy" alt="QuickBooks Online billing page for David's Landscaping: Payment method reads Invoice Net 30, above the subscribed bundle of Grow, Payroll Core and BillPay Premium."></div>
             </figure>
 
             <!-- Buying on terms -->
             <div class="screen__head cs-subhead">
               <span class="label">Buying on terms</span>
-              <h3>Purchases use the terms already on file.</h3>
-              <p>Upgrades, downgrades, resubscribes and partner orders show Invoice as a fixed payment method, with the consent and summary beside it.</p>
+              <h3>Purchases use the terms on file.</h3>
+              <p>Upgrades, resubscribes and partner orders show Invoice as a fixed payment method.</p>
             </div>
             <div class="tabs" data-tabs>
               <div class="tabs__list" role="tablist" aria-label="Purchase flows">
@@ -355,22 +409,22 @@
               <div class="tabs__panel" role="tabpanel" id="panel-up" aria-labelledby="tab-up">
                 <span class="label label--accent tabs__fallback">Upgrade in QuickBooks</span>
                 <figure class="fig fig--tight"><div class="shot"><img src="/work/net-terms/img/upgrade-review.webp" width="1050" height="900" loading="lazy" alt="Upgrade, review your billing info: payment method Invoice Net 30 with consent text and a Change plan button; the subscription summary lists Grow, Payroll Core, BillPay Premium and Inventory with monthly prices."></div>
-                  <figcaption><span class="label">QuickBooks Online</span><span>The plan change is billed on the next invoice, under the same terms.</span></figcaption></figure>
+                  <figcaption><span class="label">QuickBooks Online</span><span>Plan changes are billed on the next invoice.</span></figcaption></figure>
               </div>
               <div class="tabs__panel" role="tabpanel" id="panel-po" aria-labelledby="tab-po">
                 <span class="label label--accent tabs__fallback">Partner order</span>
                 <figure class="fig fig--tight"><div class="shot"><img src="/work/net-terms/img/partner-order.webp" width="1020" height="660" loading="lazy" alt="Partner Portal, review your customer order: payment method Invoice, terms Net 30, an optional PO number and notes, the consent text, and a subscription summary due as per Net Terms."></div>
-                  <figcaption><span class="label">Partner Portal</span><span>A PO number field, because partners often order against one.</span></figcaption></figure>
+                  <figcaption><span class="label">Partner Portal</span><span>A PO number field, for partners ordering against one.</span></figcaption></figure>
               </div>
             </div>
 
             <div class="decision">
               <span class="label label--accent">Decision 2</span>
-              <h4>One consent sentence for cards and invoices, worked out with Legal</h4>
+              <h4>One consent sentence for cards and invoices, agreed with Legal</h4>
               <dl>
                 <div><dt>Chose</dt><dd>“By selecting [button], you authorize us to automatically charge/bill you … If you have an underlying contract specifying payment terms, we will charge/bill you in accordance with those terms.”</dd></div>
                 <div><dt>Over</dt><dd>A Net Terms version: “I authorize Intuit to invoice my account on mm/dd/yyyy and monthly after that … under the agreed Net Terms.”</dd></div>
-                <div><dt>Why</dt><dd>“Charge/bill” covers both ways to pay and defers to the customer's contract, so the same consent works in every flow and for accountants and partners alike.</dd></div>
+                <div><dt>Why</dt><dd>“Charge/bill” covers both ways to pay and defers to the customer's contract, so one sentence works in every flow.</dd></div>
               </dl>
             </div>
 
@@ -378,16 +432,17 @@
             <div class="screen__head cs-subhead">
               <span class="label">Paying</span>
               <h3>Due dates and balances, one click from payment.</h3>
-              <p>Billing history adds the due date, status and outstanding amount. Unpaid and partly paid invoices get a Make a payment action that opens Intuit's payment portal. Intuit Account payment history follows the same pattern.</p>
+              <p>Billing history shows the due date, status and balance. Unpaid invoices get Make a payment, which opens Intuit's payment portal.</p>
             </div>
             <figure class="fig fig--wide">
               <div class="shot"><img src="/work/net-terms/img/billing-history.webp" width="1440" height="700" loading="lazy" alt="Billing and payment history: invoices with date due, status (Unpaid, Paid in full, Partially paid) and outstanding amount; the Select actions menu on a partially paid invoice shows Make a payment and Export to PDF."></div>
             </figure>
+            <p class="tgt"><span class="label">Target</span>80% of payment-portal visitors complete their payment.</p>
             <div class="inv">
               <div class="inv__text">
                 <span class="label label--accent">Invoice</span>
                 <h4>Terms at the top of every invoice.</h4>
-                <p>Payment method, terms and the due date sit in the header, next to the invoice number and total. Accountant invoices add billing by client.</p>
+                <p>Payment method, terms and due date sit beside the invoice number and total.</p>
               </div>
               <div class="inv__scroll" tabindex="0" aria-label="Partner invoice. Scroll to read, or click to expand."><img data-zoom src="/work/net-terms/img/invoice-partner.webp" width="768" height="1165" loading="lazy" alt="Intuit partner invoice: total, date, payment due date, payment method Invoice and terms Net 45, followed by payment details and tax reporting information."></div>
             </div>
@@ -396,7 +451,7 @@
             <div class="screen__head cs-subhead">
               <span class="label">Emails</span>
               <h3>Eight emails, from application to credit limit.</h3>
-              <p>Application updates, the monthly invoice, and alerts as usage nears the credit limit. Watermarked body copy was owned by FLP (Finance, Legal and Privacy).</p>
+              <p>Application updates, the monthly invoice and credit alerts. Watermarked copy was owned by FLP (Finance, Legal and Privacy).</p>
             </div>
             <div class="mail" data-mail>
               <div class="mail__list" role="tablist" aria-label="Emails">
@@ -417,6 +472,7 @@
                 <div class="mail__scroll"><img data-zoom data-mail-img src="/work/net-terms/img/mail-submitted.webp" width="660" height="676" loading="lazy" alt="Application update email: the Net Terms application has been successfully submitted, with status Submitted and a View application status button."></div>
               </div>
             </div>
+            <p class="tgt"><span class="label">Target</span>30% of invoice-email recipients visit the payment portal.</p>
           </section>
 
           <!-- 05 -->

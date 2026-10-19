@@ -25,4 +25,8 @@
 /* sizing per context */
 .cs-hero .mc-stage { margin-top: clamp(36px, 5vw, 56px); }
 .card__art.mc-stage { aspect-ratio: 16 / 11; min-height: 0; padding: 0; }
-.card__art.mc-stage .mc-stage__float { width: clamp(64px, 8vw, 112px); }
+.card__art.mc-stage .mc-stage__float { width: clamp(64px, 8vw, 112px); animation: none; }
+/* on the homepage card the logo floats only while the card is hovered (cover.js runs the dust the same way) */
+.card:hover .card__art.mc-stage .mc-stage__float, .card:focus-visible .card__art.mc-stage .mc-stage__float { animation: mc-float-card 4s ease-in-out infinite; }
+@keyframes mc-float-card { 0%, 100% { transform: none; } 50% { transform: translateY(-8px); } }
+@media (prefers-reduced-motion: reduce) { .card:hover .card__art.mc-stage .mc-stage__float { animation: none; } }
