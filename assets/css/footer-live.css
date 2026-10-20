@@ -31,8 +31,16 @@
 .pal .eye-gap { width: 0; min-width: 0; overflow: hidden; }
 .pal.dizzy .eye { font-size: 0.82em; }
 .pal.dizzy .eye-gap, .pal.sleeping .eye-gap { width: 0.55ch; min-width: 0.55ch; overflow: visible; }
-.pal.angry .eye { width: auto; color: #d08a82; }
-.pal.angry .eye-gap { width: 0.45ch; min-width: 0.45ch; overflow: visible; }
+/* moods from rapid clicking: annoyed side-eye, then angry with a red tint, flattened ears and a shake */
+.pal.annoyed .eye { color: #d9b48a; }
+.pal.annoyed .eye-gap, .pal.angry .eye-gap { width: 0.45ch; min-width: 0.45ch; overflow: visible; }
+.pal.angry { color: #ff8a7a; }
+.pal.angry .eye { color: #ff6b5e; font-weight: 700; }
+.pal.angry .ear { animation: none; transition: transform 0.25s ease; }
+.pal.angry .ear.left { transform: rotate(-38deg) translateY(2px); }
+.pal.angry .ear.right { transform: rotate(38deg) translateY(2px); }
+.pal.shake { animation: pal-shake 0.42s ease-in-out 1, pal-float 2.7s ease-in-out 0.42s infinite; }
+@keyframes pal-shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-3px) rotate(-4deg); } 40% { transform: translateX(3px) rotate(4deg); } 60% { transform: translateX(-2px) rotate(-2deg); } 80% { transform: translateX(2px) rotate(2deg); } }
 .pal.sleeping .ear { animation-play-state: paused; }
 .pal.waking .eye { animation: pal-wake-blink 4.5s ease-in-out 1; }
 

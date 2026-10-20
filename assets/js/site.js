@@ -2,7 +2,9 @@
 // 1. Text scramble on the name in the header (on hover).
 // 2. Animated tabs hover on the top navigation.
 // 3. Back-to-top button.
+// 4. Images: a soft shimmer while a screen loads, one quiet retry if a request fails (slow or filtered networks).
 
+window.__siteOK = true; // tells the inline guard in <head> that scripts arrived, so scroll-revealed content may stay hidden until it animates in
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&*+=/<>";
 
@@ -105,5 +107,29 @@ document.querySelectorAll(".nav").forEach((nav) => {
     window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
     const main = document.getElementById("main");
     if (main) { main.tabIndex = -1; main.focus({ preventScroll: true }); }
+  });
+})();
+
+// Images. Screens sit in white frames, so a slow image used to look like an empty box.
+// While a framed image loads its frame shimmers; if a request fails (common behind office proxies)
+// it is retried once with a fresh URL, and only then does the frame say it didn't load.
+(() => {
+  const FRAMES = ".shot, .ver__scroll, .inv__scroll, .mail__scroll";
+  document.querySelectorAll("main img[src]").forEach((img) => {
+    const frame = img.closest(FRAMES);
+    const loaded = () => img.complete && img.naturalWidth > 0;
+    if (frame && !loaded()) frame.classList.add("img-wait");
+    img.addEventListener("load", () => frame?.classList.remove("img-wait", "img-failed"));
+    img.addEventListener("error", () => {
+      if (img.dataset.retried) { frame?.classList.remove("img-wait"); frame?.classList.add("img-failed"); return; }
+      img.dataset.retried = "1";
+      setTimeout(() => {
+        const url = new URL(img.getAttribute("src"), location.href);
+        url.searchParams.set("retry", Date.now().toString(36));
+        img.src = url.href;
+      }, 1500);
+    });
+    // an image that failed before this script ran (complete, but empty) gets its retry now
+    if (img.complete && img.naturalWidth === 0 && img.getAttribute("loading") !== "lazy") img.dispatchEvent(new Event("error"));
   });
 })();

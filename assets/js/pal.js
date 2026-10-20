@@ -1,8 +1,9 @@
 // pal.js — Pal, the little companion in the footer.
 // • Linked to Bengaluru time: asleep from 11:00 PM to 6:30 AM IST, awake the rest of the day.
 // • First click says hello in the visitor's language (state-level in India, country elsewhere).
-// • Click to chat, double-click to nap, triple-click a sleeping Pal for an "emergency" wake-up,
-//   click 4× fast and Pal gets annoyed, circle the cursor around Pal twice and it gets dizzy.
+// • Click to chat. Keep clicking fast and Pal's mood climbs: happy, then annoyed (3 quick clicks),
+//   then angry (5 quick clicks), with a calm-down line after. Pal only sleeps at night in Bengaluru;
+//   triple-click a sleeping Pal for an "emergency" wake-up. Circle the cursor around Pal twice and it gets dizzy.
 // Markup: <span data-pal></span>. Character, lines and interactions from Krishna's Pal prototype.
 
 (() => {
@@ -10,7 +11,7 @@
   if (!mount) return;
 
   mount.outerHTML = `
-    <div class="pal-target" id="palTarget" tabindex="0" role="button" aria-label="Pal, a little companion. Click to chat, double-click to nap.">
+    <div class="pal-target" id="palTarget" tabindex="0" role="button" aria-label="Pal, a little companion. Click to chat.">
       <span class="pal" id="pal" aria-hidden="true">
         <span class="ears"><span class="ear left">/)</span><span class="ear right">/)</span></span>
         <span class="face"><span class="side">(</span><span class="eye">•</span><span class="eye-gap"> </span><span class="eye">•</span><span class="side">)</span></span>
@@ -26,6 +27,9 @@
 
   const awakeLines = ["That's funny...", "Hey, human.", "I'm Pal, happy to help.", "Was that a fly?", "You seem nice.", "Name's Pal. Nice to meet you.", "I'm Pal, here to cheer you on.", "What are you working on today?", "Need a hand? I am right here.", "You've got this. One step at a time.", "I am glad you stopped by.", "We make a good team.", "Did you see that?", "Okay, zoomies!"];
   const sleepLines = ["Lemme sleep.", "Good night.", "It's dark in here.", "Let's talk in the daytime.", "Just five more minutes.", "I was having a nice dream.", "Shhh... sleepy Pal.", "Wake me at sunrise.", "I am counting sheep."];
+  const annoyedLines = ["Hey, that tickles.", "Easy, easy.", "Okay, I felt that.", "One poke at a time, please."];
+  const angryLines = ["Okay, easy there! Pal needs a breather.", "Stop poking me!", "I'm getting grumpy.", "Hands off the Pal!"];
+  const calmLines = ["...okay. I'm calm now.", "Deep breaths. We're good.", "Fine. Friends again?"];
 
   /* ---------- Bengaluru schedule ---------- */
   const istFmt = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
@@ -102,11 +106,11 @@
   };
 
   /* ---------- Pal behaviour (from the prototype) ---------- */
-  let awakeLineIndex = 0, sleepLineIndex = 0;
+  let awakeLineIndex = 0, sleepLineIndex = 0, annoyedIndex = 0, angryIndex = 0, calmIndex = 0;
   let isSleeping = false, wakingFromSleep = false, greeted = false;
-  let happyUntil = 0, dizzyUntil = 0, angryUntil = 0;
+  let happyUntil = 0, dizzyUntil = 0, annoyedUntil = 0, angryUntil = 0;
   let orbit = { angle: null, start: 0, rotation: 0, direction: 0 };
-  let bubbleTimer, fadeTimer, wakeTimer, angryTimer;
+  let bubbleTimer, fadeTimer, wakeTimer, calmTimer;
   const awakeClicks = [], sleepingClicks = [];
 
   function showBubble(text, visibleFor = 1650, hideAfter = visibleFor + 400) {
@@ -118,17 +122,18 @@
     fadeTimer = setTimeout(() => bubble.classList.remove("visible", "fadeout"), hideAfter);
   }
 
+  // faces: normal • •, happy ^ ^, annoyed ¬ ¬ (side-eye), angry ò ó (frowning brows), dizzy ꩜, asleep - -
+  const FACES = { normal: ["•", "•"], happy: ["^", "^"], annoyed: ["¬", "¬"], angry: ["ò", "ó"], dizzy: ["꩜", "꩜"], sleep: ["-", "-"] };
   function updateEyes() {
     const now = Date.now();
-    const mode = isSleeping ? "sleep" : now < angryUntil ? "angry" : now < dizzyUntil ? "dizzy" : now < happyUntil ? "happy" : "normal";
-    pal.classList.toggle("angry", mode === "angry");
-    pal.classList.toggle("dizzy", mode === "dizzy");
+    const mode = isSleeping ? "sleep" : now < angryUntil ? "angry" : now < annoyedUntil ? "annoyed" : now < dizzyUntil ? "dizzy" : now < happyUntil ? "happy" : "normal";
+    ["angry", "annoyed", "dizzy"].forEach((m) => pal.classList.toggle(m, mode === m));
     pal.classList.toggle("sleeping", mode === "sleep");
-    if (mode === "angry") { eyes[0].textContent = "•\\"; eyes[1].textContent = "/•"; }
-    else {
-      const marks = mode === "sleep" ? "-" : mode === "dizzy" ? "꩜" : mode === "happy" ? "^" : "•";
-      eyes.forEach((eye) => { eye.textContent = marks; });
-    }
+    eyes.forEach((eye, k) => { eye.textContent = FACES[mode][k]; });
+  }
+  // a short shake that restarts on every poke while Pal is angry
+  function shake() {
+    pal.classList.remove("shake"); void pal.offsetWidth; pal.classList.add("shake");
   }
 
   const resetOrbit = () => { orbit = { angle: null, start: 0, rotation: 0, direction: 0 }; };
@@ -136,11 +141,12 @@
   function setSleeping(sleeping) {
     isSleeping = sleeping;
     target.classList.toggle("sleeping", sleeping);
-    target.setAttribute("aria-label", sleeping ? "Pal is asleep. Click to chat." : "Pal, a little companion. Click to chat, double-click to nap.");
+    target.setAttribute("aria-label", sleeping ? "Pal is asleep. Click to chat." : "Pal, a little companion. Click to chat.");
     if (sleeping) {
-      happyUntil = dizzyUntil = angryUntil = 0;
+      happyUntil = dizzyUntil = annoyedUntil = angryUntil = 0;
       awakeClicks.length = 0; sleepingClicks.length = 0;
-      clearTimeout(angryTimer);
+      clearTimeout(calmTimer);
+      pal.classList.remove("shake");
       eyes.forEach((eye) => { eye.style.transform = ""; });
     }
     resetOrbit();
@@ -203,23 +209,33 @@
     });
   }, { passive: true });
 
+  // Angry: frowning eyes, a red tint, flattened ears and a shake. More pokes keep Pal angry;
+  // once they stop, Pal cools down and says so.
+  function getAngry(now) {
+    angryUntil = now + 2600;
+    annoyedUntil = 0;
+    updateEyes();
+    shake();
+    showBubble(angryLines[angryIndex++ % angryLines.length], 2000);
+    clearTimeout(calmTimer);
+    calmTimer = setTimeout(() => {
+      awakeClicks.length = 0;
+      updateEyes();
+      if (!isSleeping) showBubble(calmLines[calmIndex++ % calmLines.length], 1800);
+    }, 2650);
+  }
+
   function handleAwakeClick() {
     const now = Date.now();
     awakeClicks.push(now);
-    while (awakeClicks.length && now - awakeClicks[0] > 1000) awakeClicks.shift();
-    if (awakeClicks.length >= 4) {
-      angryUntil = now + 1800;
-      awakeClicks.length = 0;
-      showBubble("Okay, easy there! Pal needs a breather.");
-      let alternate = false;
-      const cycle = () => {
-        if (Date.now() >= angryUntil || isSleeping) { updateEyes(); return; }
-        eyes[0].textContent = alternate ? "-" : "•\\";
-        eyes[1].textContent = alternate ? "-" : "/•";
-        alternate = !alternate;
-        angryTimer = setTimeout(cycle, 420);
-      };
-      cycle();
+    while (awakeClicks.length && now - awakeClicks[0] > 1400) awakeClicks.shift();
+    const quick = awakeClicks.length;
+    if (now < angryUntil || quick >= 5) { getAngry(now); return; }
+    if (quick >= 3) {
+      annoyedUntil = now + 1600;
+      updateEyes();
+      setTimeout(updateEyes, 1650);
+      showBubble(annoyedLines[annoyedIndex++ % annoyedLines.length]);
       return;
     }
     happyUntil = now + 1500;
@@ -227,7 +243,9 @@
     setTimeout(updateEyes, 1550);
     if (!greeted) {
       greeted = true;
-      loadGeo().then(() => showBubble(greeting(), 2400));
+      // the hello waits for the visitor's location; if more clicks arrive first, their lines win
+      const clicksThen = clickCount;
+      loadGeo().then(() => { if (clickCount === clicksThen) showBubble(greeting(), 2400); });
       return;
     }
     showBubble(awakeLines[awakeLineIndex % awakeLines.length]);
@@ -237,7 +255,9 @@
   target.addEventListener("pointerenter", loadGeo, { once: true });
   target.addEventListener("focus", loadGeo, { once: true });
 
+  let clickCount = 0;
   target.addEventListener("click", () => {
+    clickCount++;
     if (wakingFromSleep) return;
     if (isSleeping) {
       const now = Date.now();
@@ -250,12 +270,8 @@
     handleAwakeClick();
   });
 
-  target.addEventListener("dblclick", () => {
-    if (isSleeping || wakingFromSleep) return;
-    clearTimeout(wakeTimer);
-    setSleeping(true);
-    showBubble("Good night.");
-  });
+  // double-clicks are just two quick clicks; stop the browser selecting Pal's glyphs on rapid clicks
+  target.addEventListener("mousedown", (event) => { if (event.detail > 1) event.preventDefault(); });
 
   target.addEventListener("keydown", (event) => {
     if (event.key === "Enter" || event.key === " ") { event.preventDefault(); target.click(); }
