@@ -3,9 +3,58 @@
 // 2. Animated tabs hover on the top navigation.
 // 3. Back-to-top button.
 // 4. Images: a soft shimmer while a screen loads, one quiet retry if a request fails (slow or filtered networks).
+// 5. Light / dark switch in the header, remembered across pages (the inline <head> script applies it before paint).
+// 6. Phone menu: the nav folds behind a menu button below 700px.
 
 window.__siteOK = true; // tells the inline guard in <head> that scripts arrived, so scroll-revealed content may stay hidden until it animates in
+document.documentElement.classList.add("has-js");
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Light / dark. The page starts in the saved theme, or the system's if none was chosen.
+(() => {
+  const root = document.documentElement;
+  const meta = document.querySelector('meta[name="theme-color"]');
+  const btn = document.querySelector("[data-theme-toggle]");
+  const label = (t) => (t === "light" ? "Switch to dark mode" : "Switch to light mode");
+  const apply = (t) => {
+    root.dataset.theme = t;
+    meta?.setAttribute("content", t === "light" ? "#f6f6f3" : "#0c0c0e");
+    if (btn) { btn.setAttribute("aria-label", label(t)); btn.title = label(t); }
+    window.dispatchEvent(new CustomEvent("themechange", { detail: t }));
+  };
+  apply(root.dataset.theme === "light" ? "light" : "dark");
+  btn?.addEventListener("click", () => {
+    const next = root.dataset.theme === "light" ? "dark" : "light";
+    root.classList.add("theme-anim");
+    apply(next);
+    try { localStorage.setItem("theme", next); } catch (e) { /* private mode: the choice lasts for this page only */ }
+    setTimeout(() => root.classList.remove("theme-anim"), 400);
+  });
+  // follow the system while the visitor hasn't picked a theme themselves
+  matchMedia("(prefers-color-scheme: light)").addEventListener?.("change", (e) => {
+    let saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (err) { /* ignore */ }
+    if (!saved) apply(e.matches ? "light" : "dark");
+  });
+})();
+
+// Phone menu.
+(() => {
+  const header = document.querySelector(".site-header");
+  const btn = header?.querySelector("[data-nav-toggle]");
+  const nav = header?.querySelector(".nav");
+  if (!btn || !nav) return;
+  const set = (open) => {
+    header.classList.toggle("is-open", open);
+    btn.setAttribute("aria-expanded", String(open));
+    btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  };
+  btn.addEventListener("click", () => set(!header.classList.contains("is-open")));
+  nav.addEventListener("click", (e) => { if (e.target.closest("a")) set(false); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && header.classList.contains("is-open")) { set(false); btn.focus(); } });
+  document.addEventListener("click", (e) => { if (!header.contains(e.target)) set(false); });
+  matchMedia("(min-width: 700px)").addEventListener?.("change", () => set(false));
+})();
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&*+=/<>";
 
 // Resolves `el` to `to`, one character at a time, from random glyphs.

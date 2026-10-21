@@ -5,10 +5,10 @@
 .mc-stage {
   position: relative; display: grid; place-items: center; overflow: hidden;
   aspect-ratio: 16 / 7; min-height: 240px;
-  border-radius: 18px; border: 1px solid var(--line);
+  border-radius: var(--radius-lg); border: 1px solid var(--line);
   background:
     radial-gradient(40% 55% at 50% 52%, rgba(255, 224, 27, 0.045), transparent 70%),
-    linear-gradient(180deg, #111114, #0b0b0d);
+    linear-gradient(180deg, var(--bg-2), var(--bg));
 }
 @media (max-width: 700px) { .mc-stage { aspect-ratio: 4 / 3; } }
 .mc-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -30,3 +30,6 @@
 .card:hover .card__art.mc-stage .mc-stage__float, .card:focus-visible .card__art.mc-stage .mc-stage__float { animation: mc-float-card 4s ease-in-out infinite; }
 @keyframes mc-float-card { 0%, 100% { transform: none; } 50% { transform: translateY(-8px); } }
 @media (prefers-reduced-motion: reduce) { .card:hover .card__art.mc-stage .mc-stage__float { animation: none; } }
+
+/* light mode: Freddie in MailChimp's peppercorn on paper (yellow on white would disappear) */
+:root[data-theme="light"] .mc-stage__logo { fill: #241c15; filter: none; }

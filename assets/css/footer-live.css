@@ -18,7 +18,7 @@
   --pal-ink: #a3a49f; --bubble-bg: var(--surface-2); --bubble-ink: var(--ink); --bubble-border: var(--line-strong);
   position: relative; padding: 6px 8px; color: var(--pal-ink); cursor: pointer; outline: none; -webkit-tap-highlight-color: transparent;
 }
-.pal-target:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 10px; }
+.pal-target:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: var(--radius); }
 .pal-target:hover { --pal-ink: var(--ink-2); }
 .pal { display: flex; flex-direction: column; align-items: center; gap: 0; font: 600 17px/1.02 "SFMono-Regular", Consolas, "Liberation Mono", monospace; letter-spacing: -0.08em; transform-origin: 50% 80%; animation: pal-float 2.7s ease-in-out infinite; user-select: none; }
 .pal .ears { display: flex; align-items: center; height: 1.02em; width: 4.55ch; padding-left: 1ch; gap: 0; white-space: pre; }
@@ -47,7 +47,7 @@
 /* bubble opens to the left of Pal so it never pushes the page sideways on phones */
 .pal-target .bubble {
   position: absolute; z-index: 2; right: -6px; bottom: calc(100% + 4px); width: max-content; max-width: min(250px, 72vw);
-  padding: 9px 12px; border: 1px solid var(--bubble-border); border-radius: 12px; background: var(--bubble-bg); color: var(--bubble-ink);
+  padding: 9px 12px; border: 1px solid var(--bubble-border); border-radius: var(--radius); background: var(--bubble-bg); color: var(--bubble-ink);
   font: 500 13.5px/1.4 var(--font); text-align: left; white-space: normal; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
   opacity: 0; visibility: hidden; transform: translateY(5px) scale(0.98); transform-origin: 90% 100%;
   transition: opacity 0.35s ease, transform 0.35s ease, visibility 0s linear 0.35s; pointer-events: none;
@@ -76,3 +76,11 @@
 @media (prefers-reduced-motion: reduce) {
   .pal-target *, .pal-target *::before, .pal-target *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+/* light mode: Pal in a darker grey, moods deepened */
+:root[data-theme="light"] .pal-target { --pal-ink: #6f6f77; }
+:root[data-theme="light"] .pal-target:hover { --pal-ink: var(--ink-2); }
+:root[data-theme="light"] .pal.annoyed .eye { color: #9a6420; }
+:root[data-theme="light"] .pal.angry { color: #c9402f; }
+:root[data-theme="light"] .pal.angry .eye { color: #b3261e; }
+:root[data-theme="light"] .pal-target .bubble { box-shadow: 0 10px 30px -14px rgba(0, 0, 0, 0.25); }
