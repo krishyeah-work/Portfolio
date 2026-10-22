@@ -7,14 +7,15 @@ Static HTML, CSS and a little vanilla JS. No framework, no build step, no tracke
 Every page and every project is self-contained, so an edit only touches the files for that page.
 
 ```
-index.html                     Home (hero, work list, approach, about, contact)
+index.html                     Home (intro, facts, work list, approach, about, contact)
 404.html
 assets/
-  css/base.css                 Shared: tokens, type, header, footer, buttons, screenshot frame
+  css/base.css                 Shared: tokens (dark + light themes), type, header and phone menu, footer, buttons, screenshot frame
   css/home.css                 Home page only
   css/case-study.css           Shared case-study layout and components (carousel, lightbox, toc, reveal…)
   css/footer-live.css          Footer clock and Pal
-  js/site.js                   Every page: name scramble, nav hover pill, scroll-to-top
+  js/site.js                   Every page: name scramble, nav hover pill, scroll-to-top, image retry,
+                               light/dark switch, phone menu
   js/clock.js                  Live Bengaluru clock with sliding digits ([data-clock])
   js/pal.js                    Pal: asleep 11:00 PM–6:30 AM IST, local-language hello ([data-pal]); ?pal=awake|asleep to preview
   js/reveal.js                 Case studies: title text effect ([data-text-fade]) and in-view reveal
@@ -51,7 +52,7 @@ portfolio-context/             Brief, case-study notes, decisions log (local onl
 | MailChimp case study text or images | `work/mailchimp/index.html` (+ `img/`) |
 | MailChimp-only visuals (hero dust, channels, tabs, SMS flow, cart sequence, dialogs on the dashboard, spacing) | `work/mailchimp/mailchimp.css` / `.js` |
 | Anything shared by all case studies | `assets/css/case-study.css` |
-| Colours, fonts, header, footer | `assets/css/base.css` |
+| Colours (both themes), fonts, header, footer | `assets/css/base.css` |
 | Pal's lines, greetings or sleep hours | `assets/js/pal.js` |
 | Clock | `assets/js/clock.js` + `assets/css/footer-live.css` |
 | Home page | `index.html` + `assets/css/home.css` |
@@ -62,6 +63,26 @@ portfolio-context/             Brief, case-study notes, decisions log (local onl
 2. Keep the three shared stylesheets/scripts; add `<project>.css` / `.js` only if the project needs bespoke visuals.
 3. Put images in `work/<project>/img/` as WebP (1600px wide, plus `-lg` at 2400px for zoom if useful).
 4. Add a card to `index.html`.
+
+## Themes
+
+Dark is the default; light follows the visitor's system setting until they use the sun/moon switch in the header, and the choice is remembered across pages (`localStorage.theme`).
+
+- An inline script at the top of each page's `<head>` sets `<html data-theme="dark|light">` before the first paint, so there is no flash. Every new page needs it (copy it from `index.html`).
+- Colours live in tokens in `base.css` (`:root` for dark, `:root[data-theme="light"]` for light). Use `var(--ink)`, `var(--line)` and so on, and `rgba(var(--fg), 0.08)` for translucent lines and fills, never a hard-coded white.
+- The site accent is neutral. Each case study sets its own project colour on its `<body>` class (`cs-mc`, `cs-qb`, `cs-nt`), with a deeper shade for text in light mode.
+- Product screens (screenshots and the recreated QuickBooks UI) stay white in both themes; the lightbox is always dark.
+
+## Plan A / Plan B
+
+The redesign is built on the `plan-a` branch; every push to it gets a private Vercel preview link. `main` (the live site) is untouched until `plan-a` is merged.
+The site as it was before the redesign is saved as the git tag `plan-b`. To bring it back:
+
+```bash
+git checkout main && git reset --hard plan-b && git push --force-with-lease origin main
+```
+
+(Only after confirming that is what you want: it replaces whatever is live.)
 
 ## Run locally
 

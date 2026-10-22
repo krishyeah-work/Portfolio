@@ -1,17 +1,4 @@
-/* home.css — homepage only (hero, facts, work cards, approach, about, contact) */
-
-/* ---------- hero (home) ---------- */
-.hero { padding-block: clamp(48px, 8vw, 112px) clamp(40px, 6vw, 80px); }
-.hero .wrap { display: grid; gap: clamp(40px, 5vw, 64px); }
-@media (min-width: 1000px) { .hero .wrap { grid-template-columns: minmax(0, 13fr) minmax(0, 11fr); align-items: center; } }
-.hero-title { font-size: var(--fs-hero); font-weight: 500; line-height: 1.04; letter-spacing: -0.035em; margin-top: 18px; }
-.hero-title em { font-style: normal; color: var(--accent); }
-.hero-intro { margin-top: 24px; max-width: 34em; font-size: var(--fs-lead); line-height: 1.55; color: var(--ink-2); }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
-.hero-shot { margin: 0; }
-.hero-shot a { display: block; text-decoration: none; }
-.hero-shot figcaption { margin-top: 14px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: var(--fs-small); color: var(--muted); }
-
+/* home.css — homepage only (intro, facts, work cards, approach, about, contact) */
 
 /* ---------- intro (Plan A): four short lines, then the ways to reach me ---------- */
 .intro { padding-block: clamp(64px, 12vw, 168px) clamp(48px, 7vw, 96px); }
