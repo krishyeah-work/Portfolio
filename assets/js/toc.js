@@ -1,4 +1,5 @@
-// toc.js — highlights the case-study contents link for the section in view. Optional enhancement.
+// toc.js — highlights the case-study contents link for the section in view, and moves "All work" into the
+// contents list once you scroll (wide screens only; below 1080px there is no contents list). Optional enhancement.
 const tocLinks = document.querySelectorAll(".toc a[href^='#']");
 if (tocLinks.length && "IntersectionObserver" in window) {
   const byId = new Map([...tocLinks].map((a) => [a.hash.slice(1), a]));
@@ -16,4 +17,86 @@ if (tocLinks.length && "IntersectionObserver" in window) {
     const el = document.getElementById(id);
     if (el) io.observe(el);
   });
+}
+
+// "All work". On wide screens (1640px+) the contents sit in the left margin: as you scroll, "All work" flies from the
+// top of the page into the margin and the sections slide in under it; scrolling back to the top flies it home.
+// Between 1080 and 1640px the link slides out to the left and reappears at the top of the in-column contents.
+const crumb = document.querySelector(".cs-hero .crumb");
+const toc = document.querySelector(".toc");
+const back = toc?.querySelector(".toc__back");
+if (crumb && toc && back) {
+  const wide = matchMedia("(min-width: 1080px)");
+  const rail = matchMedia("(min-width: 1640px)");
+  const still = matchMedia("(prefers-reduced-motion: reduce)");
+  const article = document.querySelector(".cs-layout > article");
+  const EASE = "cubic-bezier(0.65, 0, 0.25, 1)";
+  toc.querySelectorAll("ol li").forEach((li, i) => li.style.setProperty("--i", i));
+  let away = null, flight = 0;
+
+  const reset = () => {
+    flight++;
+    [back, crumb].forEach((el) => { el.style.transition = ""; el.style.transform = ""; el.style.opacity = ""; });
+    toc.classList.remove("is-undocking");
+  };
+  const delta = (from, to) => {
+    const a = from.getBoundingClientRect(), b = to.getBoundingClientRect();
+    return `translate(${a.left - b.left}px, ${a.top - b.top}px)`;
+  };
+
+  // top of the page → margin
+  const dock = () => {
+    const id = ++flight;
+    back.style.transition = "none";
+    back.style.transform = "none";
+    toc.classList.remove("is-undocking");
+    toc.classList.add("has-back");
+    back.style.transform = delta(crumb, back);
+    back.style.opacity = "1";
+    crumb.style.transition = "none";
+    crumb.classList.add("is-away");
+    void back.offsetWidth;
+    back.style.transition = `transform 0.65s ${EASE}`;
+    back.style.transform = "";
+    setTimeout(() => { if (id === flight) { back.style.transition = ""; back.style.opacity = ""; crumb.style.transition = ""; } }, 700);
+  };
+  // margin → top of the page
+  const undock = () => {
+    const id = ++flight;
+    crumb.style.transition = "none";
+    crumb.classList.remove("is-away");
+    crumb.style.opacity = "0";
+    toc.classList.add("is-undocking");
+    back.style.transition = `transform 0.55s ${EASE}`;
+    back.style.opacity = "1";
+    back.style.transform = delta(crumb, back);
+    setTimeout(() => {
+      if (id !== flight) return;
+      crumb.style.opacity = "";
+      toc.classList.remove("has-back", "is-undocking");
+      back.style.transition = "none";
+      back.style.transform = "";
+      back.style.opacity = "";
+      void back.offsetWidth;
+      back.style.transition = "";
+      crumb.style.transition = "";
+    }, 560);
+  };
+
+  const update = () => {
+    const next = wide.matches && window.scrollY > 60;
+    if (rail.matches && article) toc.classList.toggle("is-past", article.getBoundingClientRect().bottom < 104 + toc.offsetHeight + 40);
+    if (next === away) return;
+    const first = away === null;
+    away = next;
+    if (rail.matches && !first && !still.matches) { (away ? dock : undock)(); return; }
+    reset();
+    crumb.classList.toggle("is-away", away);
+    toc.classList.toggle("has-back", away);
+  };
+  addEventListener("scroll", update, { passive: true });
+  const onResize = () => { reset(); away = null; update(); };
+  wide.addEventListener?.("change", onResize);
+  rail.addEventListener?.("change", onResize);
+  update();
 }

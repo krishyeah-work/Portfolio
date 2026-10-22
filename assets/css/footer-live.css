@@ -1,16 +1,26 @@
-/* footer-live.css — footer location, live Bengaluru clock (clock.js) and Pal (pal.js). */
+/* footer-live.css — the footer: live Bengaluru clock (clock.js) and Pal (pal.js) on the left, "Looking to Contact" on the right. */
 
-.footer-live { display: inline-flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-.footer-live__dot { color: var(--line-strong); }
+.site-footer { font-size: 0.95rem; }
+
+.footer-live { display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+/* "Looking to Contact": back up to the links in the homepage intro */
+.reach-out { font-size: clamp(1.15rem, 1rem + 0.4vw, 1.35rem); letter-spacing: -0.02em; line-height: 1.2; }
+.reach-out__thin { font-weight: 300; color: var(--muted); }
+.reach-out__link { display: inline-flex; align-items: baseline; gap: 0.15em; font-weight: 500; color: var(--ink); text-decoration: none; }
+.reach-out__link:hover { color: var(--ink); }
+.i-up { width: 0.72em; height: 0.72em; align-self: center; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.3s var(--ease); }
+.reach-out__link:hover .i-up { transform: translateY(-3px); }
 
 /* ---------- clock: sliding digits ---------- */
-.clock { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); font: 400 0.85rem/1 ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace; font-variant-numeric: tabular-nums; }
+.clock { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); font: 400 0.98rem/1 ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace; font-variant-numeric: tabular-nums; }
 .clock__digits { display: inline-flex; align-items: center; gap: 0.5px; }
 .sn { display: inline-block; height: 1em; overflow: hidden; width: 1ch; }
 .sn__track { display: flex; flex-direction: column; transition: transform 0.45s cubic-bezier(0.34, 1.32, 0.64, 1); will-change: transform; }
 .sn__track > span { display: block; height: 1em; line-height: 1em; text-align: center; }
 .clock__sep { color: var(--muted); padding: 0 1px; }
-.clock__tz { color: var(--muted); font-size: 0.72rem; letter-spacing: 0.08em; }
+.clock__ampm { margin-left: 2px; color: var(--ink-2); }
+.clock__place { font-family: var(--font); font-size: 1rem; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .sn__track { transition: none; } }
 
 /* ---------- Pal ---------- */
@@ -20,7 +30,7 @@
 }
 .pal-target:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: var(--radius); }
 .pal-target:hover { --pal-ink: var(--ink-2); }
-.pal { display: flex; flex-direction: column; align-items: center; gap: 0; font: 600 17px/1.02 "SFMono-Regular", Consolas, "Liberation Mono", monospace; letter-spacing: -0.08em; transform-origin: 50% 80%; animation: pal-float 2.7s ease-in-out infinite; user-select: none; }
+.pal { display: flex; flex-direction: column; align-items: center; gap: 0; font: 600 19px/1.02 "SFMono-Regular", Consolas, "Liberation Mono", monospace; letter-spacing: -0.08em; transform-origin: 50% 80%; animation: pal-float 2.7s ease-in-out infinite; user-select: none; }
 .pal .ears { display: flex; align-items: center; height: 1.02em; width: 4.55ch; padding-left: 1ch; gap: 0; white-space: pre; }
 .pal .ear { display: inline-block; width: 1.75ch; font-size: 1.1em; font-weight: inherit; letter-spacing: -0.3em; transform-origin: 55% 90%; }
 .pal .ear.left { animation: pal-ear-left 3.4s ease-in-out infinite; }
@@ -41,19 +51,20 @@
 .pal.angry .ear.right { transform: rotate(38deg) translateY(2px); }
 .pal.shake { animation: pal-shake 0.42s ease-in-out 1, pal-float 2.7s ease-in-out 0.42s infinite; }
 @keyframes pal-shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-3px) rotate(-4deg); } 40% { transform: translateX(3px) rotate(4deg); } 60% { transform: translateX(-2px) rotate(-2deg); } 80% { transform: translateX(2px) rotate(2deg); } }
-.pal.sleeping .ear { animation-play-state: paused; }
+/* asleep, Pal lies still: no float, no ear twitches (only the z's drift up) */
+.pal.sleeping, .pal.sleeping .ear { animation: none; }
 .pal.waking .eye { animation: pal-wake-blink 4.5s ease-in-out 1; }
 
-/* bubble opens to the left of Pal so it never pushes the page sideways on phones */
+/* Pal sits on the left of the footer, so the bubble opens to the right and never runs off the screen */
 .pal-target .bubble {
-  position: absolute; z-index: 2; right: -6px; bottom: calc(100% + 4px); width: max-content; max-width: min(250px, 72vw);
+  position: absolute; z-index: 2; left: -6px; bottom: calc(100% + 4px); width: max-content; max-width: min(250px, 72vw);
   padding: 9px 12px; border: 1px solid var(--bubble-border); border-radius: var(--radius); background: var(--bubble-bg); color: var(--bubble-ink);
   font: 500 13.5px/1.4 var(--font); text-align: left; white-space: normal; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
-  opacity: 0; visibility: hidden; transform: translateY(5px) scale(0.98); transform-origin: 90% 100%;
+  opacity: 0; visibility: hidden; transform: translateY(5px) scale(0.98); transform-origin: 10% 100%;
   transition: opacity 0.35s ease, transform 0.35s ease, visibility 0s linear 0.35s; pointer-events: none;
 }
 .pal-target .bubble::after {
-  content: ""; position: absolute; right: 22px; bottom: -5px; width: 8px; height: 8px;
+  content: ""; position: absolute; left: 22px; bottom: -5px; width: 8px; height: 8px;
   border-right: 1px solid var(--bubble-border); border-bottom: 1px solid var(--bubble-border); background: var(--bubble-bg); transform: rotate(45deg);
 }
 .pal-target .bubble.visible { visibility: visible; opacity: 1; transform: none; transition: opacity 0.35s ease, transform 0.35s ease; }

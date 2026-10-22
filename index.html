@@ -13,15 +13,16 @@
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..600&display=swap">
-  <link rel="stylesheet" href="/assets/css/base.css?v=20261022b">
-  <link rel="stylesheet" href="/assets/css/footer-live.css?v=20261022b">
-  <link rel="stylesheet" href="/assets/css/home.css?v=20261023a">
-  <link rel="stylesheet" href="/work/mailchimp/cover.css?v=20261022b">
-  <script src="/assets/js/site.js?v=20261022b" defer></script>
-  <script src="/assets/js/clock.js?v=20261018c" defer></script>
-  <script src="/assets/js/pal.js?v=20261021a" defer></script>
-  <script src="/work/mailchimp/cover.js?v=20261020a" defer></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..600&display=swap">
+  <link rel="stylesheet" href="/assets/css/base.css?v=20261023d">
+  <link rel="stylesheet" href="/assets/css/footer-live.css?v=20261023c">
+  <link rel="stylesheet" href="/assets/css/work-art.css?v=20261023c">
+  <link rel="stylesheet" href="/assets/css/home.css?v=20261023c">
+  <link rel="stylesheet" href="/work/mailchimp/cover.css?v=20261023c">
+  <script src="/assets/js/site.js?v=20261023c" defer></script>
+  <script src="/assets/js/clock.js?v=20261023b" defer></script>
+  <script src="/assets/js/pal.js?v=20261023c" defer></script>
+  <script src="/work/mailchimp/cover.js?v=20261023c" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -48,8 +49,8 @@
   </header>
 
   <main id="main">
-    <!-- ============ HERO: a short introduction, then the ways to reach me ============ -->
-    <section class="intro" aria-labelledby="hero-title">
+    <!-- ============ INTRO: a short introduction and the ways to reach me (the "Contact" target) ============ -->
+    <section class="intro" id="contact" aria-labelledby="hero-title" data-hl-group data-hl-time="1000">
       <div class="wrap">
         <h1 class="intro__lead" id="hero-title">
           <span class="intro__line" style="--i: 0">Hi, I'm Krishna, a UX designer in Bangalore.</span>
@@ -58,24 +59,14 @@
           <span class="intro__line" style="--i: 3">I prototype in code with AI, so ideas get tested, not just shown.</span>
         </h1>
         <div class="intro__reach" style="--i: 4">
-          <a href="https://www.linkedin.com/in/krishna-revanth/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
-          <a href="mailto:revanth.tallapaka@gmail.com">Email <span aria-hidden="true">↗</span></a>
+          <a href="https://www.linkedin.com/in/krishna-revanth/" target="_blank" rel="noopener noreferrer" data-hl>LinkedIn</a>
+          <a href="mailto:revanth.tallapaka@gmail.com" data-hl>Email</a>
+          <a href="/assets/Krishna-Revanth-Resume.pdf" target="_blank" rel="noopener" data-hl>Résumé</a>
           <span class="intro__note">that's it, no other socials :)</span>
         </div>
         <a class="intro__next" href="#work" style="--i: 5">Selected work <span aria-hidden="true">↓</span></a>
       </div>
     </section>
-
-    <div class="facts">
-      <div class="wrap">
-        <ul>
-          <li><span class="label">Now</span><p>Associate UX Designer, Cognizant</p></li>
-          <li><span class="label">Recently</span><p>Intuit GTM Tech design team · Nov 2025 – Jul 2026</p></li>
-          <li><span class="label">Education</span><p>M.Des, User Experience Design · IIT Guwahati</p></li>
-          <li><span class="label">Open to</span><p>UX and design engineer roles · remote or hybrid, worldwide</p></li>
-        </ul>
-      </div>
-    </div>
 
     <!-- ============ WORK ============ -->
     <section class="section" id="work" aria-labelledby="work-title">
@@ -85,7 +76,6 @@
             <span class="label kicker">Selected work</span>
             <h2 id="work-title">Commerce and payments at Intuit.</h2>
           </div>
-          <p>Each case study distinguishes my contribution from the team's, and delivered work from work in progress.</p>
         </div>
 
         <ol class="work-list" role="list">
@@ -98,7 +88,7 @@
               <div class="card__body">
                 <div class="card__meta label"><span>01</span><span>Intuit · MailChimp</span><span>2026</span></div>
                 <h3 class="card__title">MailChimp on Sales Agent Channel <span class="arrow" aria-hidden="true">→</span></h3>
-                <p class="card__desc">Enabling Intuit sales agents to sell MailChimp and its add-ons from the same dashboard they use for QuickBooks.</p>
+                <p class="card__desc">Helping Intuit sales agents sell MailChimp from the same dashboard they use for QuickBooks.</p>
                 <div class="chips">
                   <span class="chip">Purchase flow</span>
                   <span class="chip">B2B sales tool</span>
@@ -122,7 +112,7 @@
               <div class="card__body">
                 <div class="card__meta label"><span>02</span><span>Intuit · QuickBooks</span><span>2026</span></div>
                 <h3 class="card__title">QuickBooks Payments and Bill Pay Rate Tables <span class="arrow" aria-hidden="true">→</span></h3>
-                <p class="card__desc">One readable fee table for every way a QuickBooks merchant gets paid and pays suppliers, built from a pricing system with dozens of parameters.</p>
+                <p class="card__desc">One readable fee table for every way a QuickBooks merchant gets paid and pays suppliers.</p>
                 <div class="chips">
                   <span class="chip">Pricing UX</span>
                   <span class="chip">Information architecture</span>
@@ -144,7 +134,7 @@
               <div class="card__body">
                 <div class="card__meta label"><span>03</span><span>Intuit · Enterprise Suite</span><span>2026</span></div>
                 <h3 class="card__title">Net Terms for Intuit Enterprise Suite <span class="arrow" aria-hidden="true">→</span></h3>
-                <p class="card__desc">Invoice billing on approved terms for enterprise customers, designed into the payment widget used across QuickBooks.</p>
+                <p class="card__desc">Invoice billing on approved terms for enterprise customers, inside QuickBooks' shared payment widget.</p>
                 <div class="chips">
                   <span class="chip">Payments UX</span>
                   <span class="chip">B2B billing</span>
@@ -170,52 +160,49 @@
             <span class="label kicker">How I work with AI</span>
             <h2 id="approach-title">AI-assisted prototyping, guided by design judgment.</h2>
           </div>
-          <p>At Intuit, I used Claude to turn approved patterns into working prototypes faster, so product discussions could begin with an interactive design rather than a static mock-up.</p>
+          <p>At Intuit, I used Claude to turn approved patterns into working prototypes, so discussions started from something people could click.</p>
         </div>
         <ol class="steps" role="list">
           <li class="step">
             <span class="step__n">01</span>
             <h3>Define</h3>
-            <p><span class="label who">Me</span>Review requirements and existing Figma patterns with product and design partners, so every prototype starts from approved foundations.</p>
+            <p><span class="label who">Me</span>Review requirements and existing Figma patterns with product and design partners.</p>
             <p class="ai"><span class="label who">AI</span>Not used at this stage.</p>
           </li>
           <li class="step">
             <span class="step__n">02</span>
             <h3>Prototype</h3>
-            <p><span class="label who">Me</span>Direct the build, including which patterns, states and edge cases to cover.</p>
-            <p class="ai"><span class="label who">AI</span>Produces a working, interactive prototype in hours rather than days.</p>
+            <p><span class="label who">Me</span>Decide which patterns, states and edge cases to build.</p>
+            <p class="ai"><span class="label who">AI</span>Builds a working prototype in hours, not days.</p>
           </li>
           <li class="step">
             <span class="step__n">03</span>
             <h3>Review and iterate</h3>
-            <p><span class="label who">Me</span>Present to product partners, identify issues and decide on changes.</p>
-            <p class="ai"><span class="label who">AI</span>Applies revisions quickly between review rounds.</p>
+            <p><span class="label who">Me</span>Present to partners and decide what changes.</p>
+            <p class="ai"><span class="label who">AI</span>Applies changes between review rounds.</p>
           </li>
           <li class="step">
             <span class="step__n">04</span>
             <h3>Hand off</h3>
-            <p><span class="label who">Me</span>Verify the result against the design system and prepare designs or code for developers.</p>
-            <p class="ai"><span class="label who">AI</span>Drafts implementation-ready structure, which I review before handoff.</p>
+            <p><span class="label who">Me</span>Check it against the design system and prepare files for developers.</p>
+            <p class="ai"><span class="label who">AI</span>Drafts code structure, which I review before handoff.</p>
           </li>
         </ol>
        
       </div>
     </section>
 
-    <!-- ============ ABOUT ============ -->
+    <!-- ============ MORE ABOUT ME ============ -->
     <section class="section" id="about" aria-labelledby="about-title">
       <div class="wrap">
         <div class="section-head">
-          <div>
-            <span class="label kicker">About</span>
-            <h2 id="about-title">Hi, I'm Krishna.</h2>
-          </div>
+          <h2 id="about-title">More about me</h2>
         </div>
         <div class="about-grid">
           <div class="about-copy">
-            <p>I'm a UX designer drawn to the parts of a product where clarity matters most: carts, bills, fee tables and plan changes. When these screens are unclear, customers hesitate, contact support or leave.</p>
-            <p>I trained as an architect at Christ University, Bengaluru, then completed a Master of Design at IIT Guwahati before joining Cognizant in 2025. From November 2025 to July 2026 I was part of Intuit's GTM Tech design team, working with design leads, product managers, engineers, and legal and finance partners on sales enablement, subscriptions, payment methods and pricing.</p>
-            <p>I learn new product areas quickly and prefer to communicate ideas through working prototypes. I'm looking for my next role in fintech, payments, AI or health, in a remote or hybrid setting.</p>
+            <p>I trained as an architect at Christ University, Bengaluru, then moved into UX with a Master of Design at IIT Guwahati.</p>
+            <p>At Intuit I worked with design leads, product managers, engineers, and legal and finance partners on sales enablement, subscriptions, payment methods and pricing.</p>
+            <p>Next, I'm looking for a role in fintech, payments, AI or health, remote or hybrid.</p>
           </div>
           <div>
             <p class="label ledger-title">Experience</p>
@@ -240,31 +227,15 @@
       </div>
     </section>
 
-    <!-- ============ CONTACT ============ -->
-    <section class="section section--alt" id="contact" aria-labelledby="contact-title">
-      <div class="wrap">
-        <span class="label kicker" id="contact-title">Contact</span>
-        <p class="cs-lead" style="margin-top:0">Hiring for a UX or design engineering role? I would be glad to hear from you.</p>
-        <a class="contact-big" href="mailto:revanth.tallapaka@gmail.com">Get in touch <span class="arrow" aria-hidden="true">↗</span></a>
-        <p style="margin-top:12px"><a href="mailto:revanth.tallapaka@gmail.com">revanth.tallapaka@gmail.com</a></p>
-        <ul class="contact-links">
-          <li><a href="https://www.linkedin.com/in/krishna-revanth/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a></li>
-          <li><a href="/assets/Krishna-Revanth-Resume.pdf" download="Krishna-Revanth-Resume.pdf">Résumé (PDF) <span aria-hidden="true">↓</span></a></li>
-          <li><span class="muted">Based in</span> Bangalore, India</li>
-        </ul>
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer">
     <div class="wrap">
-      <span>© 2026 Krishna Revanth</span>
       <div class="footer-live">
-        <span>Bangalore, India</span>
-        <span class="footer-live__dot" aria-hidden="true">·</span>
         <span data-clock></span>
         <span data-pal></span>
       </div>
+      <p class="reach-out"><span class="reach-out__thin">Looking to</span> <a class="reach-out__link" href="#contact">Contact<svg class="i-up" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V4.5M5.5 11 12 4.5l6.5 6.5"/></svg></a></p>
     </div>
   </footer>
 </body>

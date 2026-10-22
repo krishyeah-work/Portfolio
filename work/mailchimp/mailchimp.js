@@ -57,7 +57,7 @@ document.querySelectorAll(".seq__tip-btn").forEach((btn) => {
     const sr = stage.getBoundingClientRect();
     const vw = document.documentElement.clientWidth;
     const toc = document.querySelector(".toc");
-    const tocRight = toc && toc.offsetParent ? toc.getBoundingClientRect().right : 0;
+    const tocRight = toc && toc.getClientRects().length ? toc.getBoundingClientRect().right : 0; // in-column or in the margin
     // the backdrop may reach past the column: up to the table of contents on the left, the viewport edge on the right
     const al = Math.max(0, sr.left - (tocRight ? tocRight + 16 : 0));
     const ar = Math.max(0, vw - sr.right);

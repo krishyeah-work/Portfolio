@@ -161,14 +161,6 @@
 .gr figcaption { display: flex; gap: 12px; align-items: baseline; color: var(--muted); font-size: var(--fs-small); }
 .gr figcaption .label { color: var(--ink-2); flex: none; }
 
-/* ---------- copy ---------- */
-.copy-list { list-style: none; display: grid; gap: 12px; }
-@media (min-width: 760px) { .copy-list { grid-template-columns: 1fr 1fr; } }
-.copy-list li { display: flex; flex-wrap: wrap; gap: 8px; align-content: start; padding: 16px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
-.copy-list q { display: inline-block; padding: 4px 10px; border-radius: 8px; background: rgba(var(--fg), 0.06); color: var(--ink); font-weight: 500; line-height: 1.4; quotes: none; }
-.copy-list q.is-never { color: var(--muted); text-decoration: line-through; }
-.copy-list li > span { flex-basis: 100%; color: var(--muted); font-size: var(--fs-small); line-height: 1.45; }
-
 /* ---------- final cart: guidance tooltip on the "!" icon, and the phone version of the leader ---------- */
 /* positions are px of the 702 x 1284 final-cart export: the icon sits at (180-209, 701-729) */
 .seq__cartbox { position: relative; width: min(100%, 360px); }
@@ -206,8 +198,8 @@
 .carousel--stage .carousel__track { border-radius: 0; }
 
 /* ---------- themes: MailChimp keeps its yellow; light mode uses a deeper shade so text stays readable ---------- */
-body.cs-mc { --accent: #f5c451; --accent-ink: #1a1508; --accent-soft: rgba(245, 196, 81, 0.12); }
-:root[data-theme="light"] body.cs-mc { --accent: #8a6500; --accent-ink: #ffffff; --accent-soft: rgba(138, 101, 0, 0.1); }
+body.cs-mc { --accent: #f5c451; --accent-ink: #1a1508; --accent-soft: rgba(245, 196, 81, 0.12); --hl: rgba(245, 196, 81, 0.34); }
+:root[data-theme="light"] body.cs-mc { --accent: #8a6500; --accent-ink: #ffffff; --accent-soft: rgba(138, 101, 0, 0.1); --hl: rgba(245, 196, 81, 0.55); }
 /* light mode: Krishna's yellow line-art dashboards are drawn for dark; deepen the lines so they read on paper */
 :root[data-theme="light"] img[src*="sales-dash"] { filter: brightness(0.5) saturate(1.6) contrast(1.2); }
 /* light mode: the small yellow ticks in a deeper mustard */

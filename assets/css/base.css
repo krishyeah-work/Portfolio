@@ -23,6 +23,7 @@
   --accent: #f2f1ed;
   --accent-ink: #0c0c0e;
   --accent-soft: rgba(var(--fg), 0.08);
+  --hl: rgba(255, 221, 87, 0.3);    /* hand-drawn marker behind a heading or link you jumped to (site.js); case studies use their own colour */
   --todo: rgba(245, 196, 81, 0.16);
   --todo-ink: #f8d77f;
   --todo-line: rgba(245, 196, 81, 0.5);
@@ -67,6 +68,7 @@
   --accent: #141416;
   --accent-ink: #ffffff;
   --accent-soft: rgba(var(--fg), 0.06);
+  --hl: rgba(255, 214, 10, 0.42);
   --todo: rgba(184, 132, 0, 0.12);
   --todo-ink: #7a5a00;
   --todo-line: rgba(140, 100, 0, 0.45);
@@ -278,4 +280,20 @@ body::after {
 .to-top:hover { border-color: var(--accent); color: var(--accent); }
 
 main:focus { outline: none; }
+
+/* arrival highlight (site.js): a transparent copy of the text behind the original carries a marker stroke per line,
+   draws in left to right, then fades away. Colours come from --hl (each case study sets its own). */
+.hl-host { position: relative; isolation: isolate; }
+.hl-ghost { position: absolute; inset: 0; z-index: -1; pointer-events: none; color: transparent; transition: opacity 0.8s ease-out; }
+.hl-ghost.is-fading { opacity: 0; }
+.hl-ghost__t {
+  background-repeat: no-repeat; background-position: left center; background-size: 0% 100%;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  padding: 0 0.16em; margin: 0 -0.16em;
+  transition: background-size 0.42s cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+.hl-ghost__t.is-drawn { background-size: 100% 100%; }
+/* a small coloured label would vanish into a marker of the same colour, so it reads in ink while marked */
+.label { transition: color 0.4s var(--ease); }
+.label.hl-host { color: var(--ink) !important; } /* outranks each project's label colour, only while marked */
 .to-top__icon { font-size: 1rem; line-height: 1; }

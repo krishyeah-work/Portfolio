@@ -2,15 +2,19 @@
    Project-specific styles belong in that project's folder. */
 
 .cs-hero { padding-block: clamp(48px, 8vw, 104px) clamp(32px, 5vw, 56px); }
-.crumb { display: inline-flex; gap: 8px; text-decoration: none; }
-.cs-eyebrow { margin-top: 32px; }
-.cs-title { font-size: var(--fs-h1); letter-spacing: -0.035em; line-height: 1.02; margin-top: 14px; max-width: 13em; }
-.cs-lead { font-size: var(--fs-lead); max-width: 38em; margin-top: 24px; line-height: 1.55; color: var(--ink-2); }
-
-.meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); border-top: 1px solid var(--line-strong); margin: clamp(36px, 5vw, 56px) 0 0; }
-.meta-grid div { padding: 16px 16px 6px 0; }
-.meta-grid dt { margin-bottom: 6px; }
-.meta-grid dd { margin: 0; font-weight: 400; line-height: 1.4; color: var(--ink-2); }
+.crumb {
+  display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--muted); font-size: 0.92rem;
+  transition: opacity 0.35s var(--ease), transform 0.5s var(--ease), color 0.2s var(--ease);
+}
+.crumb:hover { color: var(--ink); }
+/* the return arrow, drawn at the weight of the text beside it */
+.i-back { flex: none; width: 1.2em; height: 1.2em; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.25s var(--ease); }
+.crumb:hover .i-back, .toc__back:hover .i-back { transform: translateX(-3px); }
+/* at wide widths, scrolling slides the link left and out; it reappears at the top of the contents list (toc.js) */
+.crumb.is-away { opacity: 0; transform: translateX(-40px); pointer-events: none; }
+.cs-date { margin-top: 40px; color: var(--muted); font-size: 0.92rem; font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+.cs-title { font-size: var(--fs-h1); letter-spacing: -0.035em; line-height: 1.02; margin-top: 12px; max-width: 13em; }
+.cs-lead { font-size: var(--fs-lead); max-width: 34em; margin-top: 22px; line-height: 1.55; color: var(--ink-2); }
 
 .cs-cover { margin-top: clamp(36px, 5vw, 64px); }
 .cs-cover .shot { border-radius: var(--radius-lg); }
@@ -38,11 +42,34 @@
 @media (min-width: 1080px) {
   .toc { display: block; position: sticky; top: 96px; align-self: start; }
   .toc ol { list-style: none; border-left: 1px solid var(--line); }
+  .toc__back {
+    display: inline-flex; align-items: center; gap: 8px; margin-bottom: 22px; text-decoration: none; color: var(--muted); font-size: 0.9rem;
+    opacity: 0; visibility: hidden; transform: translateX(36px);
+    transition: opacity 0.35s var(--ease), transform 0.55s var(--ease), visibility 0s linear 0.55s, color 0.2s var(--ease);
+  }
+  .toc__back:hover { color: var(--ink); }
+  .toc.has-back .toc__back { opacity: 1; visibility: visible; transform: none; transition-delay: 0.12s, 0.12s, 0s, 0s; }
   .toc a { display: flex; gap: 10px; padding: 7px 0 7px 16px; margin-left: -1px; border-left: 1px solid transparent; text-decoration: none; color: var(--muted); font-size: 0.9rem; }
   .toc a:hover { color: var(--ink); }
   .toc a.is-active { color: var(--ink); border-left-color: var(--accent); }
   .toc .n { color: var(--muted); font-size: 0.78rem; padding-top: 2px; min-width: 1.4em; }
   .toc a.is-active .n { color: var(--accent); }
+}
+/* very wide screens: "All work" and the contents leave the column and sit together in the left margin, so the
+   article lines up with the title. "All work" flies in from the top of the page as you scroll (toc.js). */
+@media (min-width: 1640px) {
+  .cs-layout { grid-template-columns: minmax(0, 1fr); }
+  .cs-layout > .toc {
+    position: fixed; top: 104px; left: calc(50% - 796px); width: 176px; z-index: 20; visibility: hidden;
+    transition: opacity 0.35s var(--ease), visibility 0s linear 0.6s;
+  }
+  .cs-layout > .toc.has-back { visibility: visible; transition: opacity 0.35s var(--ease), visibility 0s; }
+  .cs-layout > .toc.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
+  .toc ol { border-left-color: transparent; transition: border-color 0.4s var(--ease); }
+  .toc ol li { opacity: 0; transform: translateX(14px); transition: opacity 0.35s var(--ease), transform 0.5s var(--ease); }
+  .toc.has-back ol { border-left-color: var(--line); }
+  .toc.has-back ol li { opacity: 1; transform: none; transition-delay: calc(0.32s + var(--i, 0) * 0.05s); }
+  .toc.is-undocking ol li { opacity: 0; transform: translateX(14px); transition-delay: 0s; }
 }
 
 .cs-section { padding-block: clamp(56px, 8vw, 104px); border-top: 1px solid var(--line); scroll-margin-top: 80px; }
@@ -147,11 +174,40 @@
 .team span { color: var(--muted); font-size: var(--fs-small); }
 
 /* next */
-.next-cs { display: block; text-decoration: none; padding-block: clamp(56px, 8vw, 112px); border-top: 1px solid var(--line); }
-.next-cs:hover { color: inherit; }
-.next-cs h2 { font-size: var(--fs-h1); margin-top: 12px; letter-spacing: -0.035em; }
-.next-cs .arrow { color: var(--accent); display: inline-block; transition: transform 0.25s var(--ease); }
-.next-cs:hover .arrow { transform: translateX(10px); }
+.also { padding-block: clamp(56px, 8vw, 104px); border-top: 1px solid var(--line); }
+.also > .label { font-size: var(--fs-label); }
+.also__grid { display: grid; gap: 36px; margin-top: 24px; }
+@media (min-width: 760px) { .also__grid { grid-template-columns: 1fr 1fr; gap: 56px; } }
+.also__item { display: grid; gap: 10px; align-content: start; text-decoration: none; color: var(--ink); }
+.also__item:hover { color: var(--ink); }
+.also__n { color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+.also__title { max-width: 15em; font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem); font-weight: 500; letter-spacing: -0.03em; line-height: 1.12; transition: color 0.3s var(--ease); }
+.also__title .arrow { display: inline-block; transition: transform 0.25s var(--ease); }
+/* the title takes its project's colour on hover (colours in work-art.css) */
+.also__item:hover .also__title, .also__item:focus-visible .also__title { color: var(--proj, var(--accent)); }
+.also__item:hover .arrow, .also__item:focus-visible .arrow { transform: translateX(6px); }
+
+/* the preview that trails the pointer (peek.js); desktop with a mouse only */
+.peek {
+  position: fixed; left: 0; top: 0; z-index: 60; width: 280px; aspect-ratio: 16 / 11; pointer-events: none;
+  opacity: 0; transition: opacity 0.25s var(--ease);
+}
+.peek.is-on { opacity: 1; }
+.peek__art {
+  display: grid; place-items: center; width: 100%; height: 100%; padding: 18px; overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--proj, var(--accent)) 40%, transparent); border-radius: var(--radius);
+  background: var(--surface); box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.5);
+  transform: scale(0.92); transition: transform 0.35s var(--ease);
+}
+.peek.is-on .peek__art { transform: none; }
+.peek__art--nt { background: radial-gradient(120% 90% at 20% 0%, rgba(35, 108, 255, 0.2), transparent 60%), var(--surface); }
+.peek__art.mc-stage { aspect-ratio: auto; min-height: 0; padding: 0; }
+.peek__art.mc-stage .mc-stage__float { width: 76px; }
+.peek .art-table { width: 100%; font-size: 0.62rem; }
+.peek .art-table th, .peek .art-table td { padding: 7px 6px; }
+.peek .art-nt { width: 100%; gap: 10px; font-size: 0.7rem; }
+:root[data-theme="light"] .peek__art { box-shadow: 0 24px 48px -24px rgba(20, 20, 30, 0.35); }
+@media not all and (hover: hover) and (pointer: fine) and (min-width: 1080px) { .peek { display: none; } }
 
 .banner { display: flex; gap: 12px; align-items: baseline; border: 1px dashed color-mix(in srgb, var(--accent) 50%, transparent); border-radius: var(--radius); padding: 14px 16px; margin-top: 28px; max-width: 46em; font-size: var(--fs-small); color: var(--ink-2); }
 .banner .label { color: var(--accent); white-space: nowrap; }
@@ -193,16 +249,16 @@
 .carousel__slide figcaption { display: flex; gap: 12px; align-items: baseline; color: var(--muted); font-size: var(--fs-small); line-height: 1.5; max-width: 52em; }
 .carousel__slide figcaption .label { flex: none; color: var(--ink-2); }
 .carousel__slide figcaption strong { color: var(--ink); font-weight: 500; }
-.carousel__nav { display: none; align-items: center; gap: 14px; margin-top: 18px; }
+.carousel__nav { display: none; align-items: center; gap: 16px; margin-top: 16px; }
 .carousel.is-ready .carousel__nav { display: flex; }
-.carousel__btn {
-  width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
-  background: transparent; color: var(--ink); border: 1px solid var(--line-strong); font: inherit; font-size: 1rem; cursor: pointer;
-  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
-}
-.carousel__btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
-.carousel__btn:disabled { opacity: 0.3; cursor: default; }
-.carousel__count { color: var(--muted); font-size: 0.88rem; min-width: 3.5em; text-align: center; }
+/* one slim pill per image: the current one is longer and in the project colour */
+.carousel__pills { display: flex; align-items: center; gap: 6px; }
+.carousel__pill { position: relative; flex: none; width: 18px; height: 28px; padding: 0; border: 0; background: none; cursor: pointer; transition: width 0.35s var(--ease); }
+.carousel__pill::before { content: ""; position: absolute; inset: 50% 0 auto; height: 3px; margin-top: -1.5px; border-radius: 3px; background: var(--line-strong); transition: background-color 0.25s var(--ease); }
+.carousel__pill:hover::before { background: var(--muted); }
+.carousel__pill.is-on { width: 40px; }
+.carousel__pill.is-on::before { background: var(--accent); }
+.carousel__count { color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
 
 /* lightbox (enlarge any screen) — the image always fits the area between the close button and the hint */
 img.is-zoomable { cursor: zoom-in; }

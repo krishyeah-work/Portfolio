@@ -7,20 +7,24 @@ Static HTML, CSS and a little vanilla JS. No framework, no build step, no tracke
 Every page and every project is self-contained, so an edit only touches the files for that page.
 
 ```
-index.html                     Home (intro, facts, work list, approach, about, contact)
+index.html                     Home (intro with contact links, work list, approach, more about me)
 404.html
 assets/
   css/base.css                 Shared: tokens (dark + light themes), type, header and phone menu, footer, buttons, screenshot frame
   css/home.css                 Home page only
-  css/case-study.css           Shared case-study layout and components (carousel, lightbox, toc, reveal…)
-  css/footer-live.css          Footer clock and Pal
+  css/case-study.css           Shared case-study layout and components (carousel, lightbox, toc, reveal, "Also check out"…)
+  css/work-art.css             Project colours and the animated QuickBooks / Net Terms thumbnails (home cards + previews)
+  css/footer-live.css          Footer: clock and Pal on the left, "Looking to Contact" on the right
   js/site.js                   Every page: name scramble, nav hover pill, scroll-to-top, image retry,
-                               light/dark switch, phone menu
-  js/clock.js                  Live Bengaluru clock with sliding digits ([data-clock])
+                               light/dark switch, phone menu, arrival highlight (marker on the heading you
+                               jumped to; colour from --hl; [data-hl-group] + [data-hl] for groups of links)
+  js/clock.js                  Live Bengaluru clock, 12-hour, with sliding digits ([data-clock])
   js/pal.js                    Pal: asleep 11:00 PM–6:30 AM IST, local-language hello ([data-pal]); ?pal=awake|asleep to preview
   js/reveal.js                 Case studies: title text effect ([data-text-fade]) and in-view reveal
-  js/toc.js                    Highlights the case-study contents link in view
-  js/carousel.js               Scroll-snap carousel  ([data-carousel])
+  js/toc.js                    Highlights the case-study contents link in view; on scroll "All work" joins the contents
+                               (at 1640px+ both sit in the left margin and "All work" flies there from the top)
+  js/peek.js                   "Also check out": desktop preview of a project that trails the pointer on hover
+  js/carousel.js               Scroll-snap carousel with pill indicators ([data-carousel])
   js/lightbox.js               Click any screen to enlarge and zoom (.shot img, img[data-zoom])
   favicon.svg
 api/

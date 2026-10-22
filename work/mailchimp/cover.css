@@ -26,10 +26,17 @@
 .cs-hero .mc-stage { margin-top: clamp(36px, 5vw, 56px); }
 .card__art.mc-stage { aspect-ratio: 16 / 11; min-height: 0; padding: 0; }
 .card__art.mc-stage .mc-stage__float { width: clamp(64px, 8vw, 112px); animation: none; }
-/* on the homepage card the logo floats only while the card is hovered (cover.js runs the dust the same way) */
-.card:hover .card__art.mc-stage .mc-stage__float, .card:focus-visible .card__art.mc-stage .mc-stage__float { animation: mc-float-card 4s ease-in-out infinite; }
+/* on the homepage card and the "Also check out" preview the logo floats only while hovered (cover.js runs the dust the same way) */
+.card:hover .card__art.mc-stage .mc-stage__float, .card:focus-visible .card__art.mc-stage .mc-stage__float,
+.also__item:hover .peek .mc-stage__float { animation: mc-float-card 4s ease-in-out infinite; }
 @keyframes mc-float-card { 0%, 100% { transform: none; } 50% { transform: translateY(-8px); } }
 @media (prefers-reduced-motion: reduce) { .card:hover .card__art.mc-stage .mc-stage__float { animation: none; } }
 
 /* light mode: Freddie in MailChimp's peppercorn on paper (yellow on white would disappear) */
-:root[data-theme="light"] .mc-stage__logo { fill: #241c15; filter: none; }
+/* a soft shadow keeps the float readable without the glow */
+:root[data-theme="light"] .mc-stage__logo { fill: #241c15; filter: drop-shadow(0 12px 14px rgba(36, 28, 21, 0.2)); }
+:root[data-theme="light"] .mc-stage {
+  background:
+    radial-gradient(42% 58% at 50% 52%, rgba(255, 224, 27, 0.2), transparent 72%),
+    linear-gradient(180deg, var(--bg-2), var(--bg));
+}

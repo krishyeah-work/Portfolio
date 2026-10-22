@@ -7,6 +7,7 @@ body.cs-qb {
   --qb-warn: #f0a02c;
   --accent: #2ca01c;
   --accent-soft: rgba(44, 160, 28, 0.14);
+  --hl: rgba(44, 160, 28, 0.42);          /* arrival marker (site.js) */
   --accent-ink: #ffffff;
   --qb-ink: #393a3d;      /* QuickBooks UI text, used inside the recreated screens */
   --qb-muted: #6b6c72;
@@ -276,7 +277,9 @@ body.cs-qb {
 .phone .rt__head p { font-size: 17px; }
 .phone .rt__body { padding: 0 14px 14px; }
 .phone .rt__title { font-size: 15px; }
-.phone .rt__jump { display: none; }
+/* on the phone the jump links stay, as one row that swipes sideways */
+.phone .rt__jump { flex-wrap: nowrap; gap: 14px; margin-inline: -14px; padding: 6px 14px 12px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; font-size: 13px; }
+.phone .rt__jump::-webkit-scrollbar { display: none; }
 .phone .rt__plan { display: grid; gap: 2px; font-size: 14px; }
 .phone .rt-sec__title { font-size: 14px; }
 .phone .rt-ico { width: 28px; height: 28px; }
@@ -312,6 +315,6 @@ body.cs-qb {
 }
 
 /* ---------- themes: light mode deepens the greens so text and icons stay readable on paper ---------- */
-:root[data-theme="light"] body.cs-qb { --accent: #23861a; --accent-soft: rgba(35, 134, 26, 0.1); --qb-hi: #1e7a12; --qb-coin: #23861a; --qb-warn: #b26a00; }
+:root[data-theme="light"] body.cs-qb { --accent: #23861a; --accent-soft: rgba(35, 134, 26, 0.1); --hl: rgba(83, 196, 60, 0.36); --qb-hi: #1e7a12; --qb-coin: #23861a; --qb-warn: #b26a00; }
 :root[data-theme="light"] .money__wire i { text-shadow: none; }
 :root[data-theme="light"] .fee-cover { background: radial-gradient(70% 90% at 50% 0%, rgba(44, 160, 28, 0.12), transparent 70%), var(--bg-2); }

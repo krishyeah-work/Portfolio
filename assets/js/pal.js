@@ -25,11 +25,12 @@
   const eyes = [...target.querySelectorAll(".eye")];
   const bubble = document.getElementById("palBubble");
 
-  const awakeLines = ["That's funny...", "Hey, human.", "I'm Pal, happy to help.", "Was that a fly?", "You seem nice.", "Name's Pal. Nice to meet you.", "I'm Pal, here to cheer you on.", "What are you working on today?", "Need a hand? I am right here.", "You've got this. One step at a time.", "I am glad you stopped by.", "We make a good team.", "Did you see that?", "Okay, zoomies!"];
+  // casual and a little silly: no helper-bot offers, no pep talks
+  const awakeLines = ["That's funny...", "Hey, human.", "Was that a fly?", "You seem nice.", "Name's Pal. Nice to meet you.", "Did you see that?", "Okay, zoomies!", "Boop.", "Nice cursor.", "Is it lunch yet?", "I was here first.", "Just vibing down here.", "Don't tell anyone I'm here.", "I tried coffee once. Never again."];
   const sleepLines = ["Lemme sleep.", "Good night.", "It's dark in here.", "Let's talk in the daytime.", "Just five more minutes.", "I was having a nice dream.", "Shhh... sleepy Pal.", "Wake me at sunrise.", "I am counting sheep."];
   const annoyedLines = ["Hey, that tickles.", "Easy, easy.", "Okay, I felt that.", "One poke at a time, please."];
   const angryLines = ["Okay, easy there! Pal needs a breather.", "Stop poking me!", "I'm getting grumpy.", "Hands off the Pal!"];
-  const calmLines = ["...okay. I'm calm now.", "Deep breaths. We're good.", "Fine. Friends again?"];
+  const calmLines = ["...okay. I'm calm now.", "Okay. We're cool.", "Fine. Friends again?"];
 
   /* ---------- Bengaluru schedule ---------- */
   const istFmt = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });

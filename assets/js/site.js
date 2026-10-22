@@ -5,6 +5,9 @@
 // 4. Images: a soft shimmer while a screen loads, one quiet retry if a request fails (slow or filtered networks).
 // 5. Light / dark switch in the header, remembered across pages (the inline <head> script applies it before paint).
 // 6. Phone menu: the nav folds behind a menu button below 700px.
+// 7. Arrival highlight: after a jump to a section (contents link, nav link, page load with #hash), its heading
+//    gets a hand-drawn marker stroke in the project colour that fades away. Groups marked [data-hl-group]
+//    highlight their [data-hl] children instead, e.g. the contact links on the homepage.
 
 window.__siteOK = true; // tells the inline guard in <head> that scripts arrived, so scroll-revealed content may stay hidden until it animates in
 document.documentElement.classList.add("has-js");
@@ -36,6 +39,79 @@ const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     try { saved = localStorage.getItem("theme"); } catch (err) { /* ignore */ }
     if (!saved) apply(e.matches ? "light" : "dark");
   });
+})();
+
+// Arrival highlight. A transparent copy of the text sits behind the original, carrying a marker stroke per line
+// (box-decoration-break: clone), so the stroke follows the real line breaks and can fade without touching the text.
+(() => {
+  // two slightly uneven strokes read as a felt-tip marker rather than a box
+  const marker = (color) => "url(\"data:image/svg+xml," + encodeURIComponent(
+    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'>` +
+    `<path d='M3 11 C 46 6, 118 8, 197 5 L 198 31 C 150 35, 64 33, 2 36 Z' fill='${color}'/>` +
+    `<path d='M6 8 C 70 4, 140 7, 194 9 L 196 28 C 120 30, 52 31, 4 33 Z' fill='${color}' opacity='0.55'/></svg>`) + "\")";
+
+  // `total` is how long the mark lives, in ms: it draws in, rests, then fades out slowly, gone by `total`
+  const mark = (el, total) => {
+    if (!el || el.querySelector(":scope > .hl-ghost")) return;
+    const color = getComputedStyle(el).getPropertyValue("--hl").trim() || "rgba(128, 128, 128, 0.3)";
+    const fade = Math.min(900, total * 0.55);
+    const ghost = document.createElement("span");
+    ghost.className = "hl-ghost";
+    ghost.setAttribute("aria-hidden", "true");
+    const text = document.createElement("span");
+    text.className = "hl-ghost__t";
+    text.textContent = el.textContent.replace(/\s+/g, " ").trim();
+    text.style.backgroundImage = marker(color);
+    ghost.style.transitionDuration = `${fade}ms`;
+    ghost.append(text);
+    el.classList.add("hl-host");
+    el.prepend(ghost);
+    void text.offsetWidth; // start from an empty stroke so the draw-in animates
+    text.classList.add("is-drawn");
+    setTimeout(() => ghost.classList.add("is-fading"), total - fade);
+    setTimeout(() => { ghost.remove(); el.classList.remove("hl-host"); }, total + 50);
+  };
+
+  // what to highlight for a target: a group's [data-hl] items, else its first heading and the small label above it
+  const targetsFor = (el) => {
+    if (el.matches("[data-hl-group]")) return [...el.querySelectorAll("[data-hl]")];
+    const h = el.matches("h1, h2, h3") ? el : el.querySelector("h2, h3");
+    if (!h) return [];
+    const label = h.previousElementSibling;
+    return label?.matches(".label, .kicker") ? [label, h] : [h];
+  };
+  const holdFor = (el) => Number(el.dataset.hlTime) || 2500;
+
+  // wait until the page stops scrolling, then mark
+  const afterScroll = (fn) => {
+    let last = -1, still = 0, tries = 0;
+    const check = () => {
+      const y = Math.round(window.scrollY);
+      still = y === last ? still + 1 : 0;
+      last = y;
+      if (still >= 3 || tries++ > 40) fn();
+      else setTimeout(check, 60);
+    };
+    setTimeout(check, 80);
+  };
+
+  const arrive = (hash) => {
+    const id = decodeURIComponent((hash || "").slice(1));
+    const el = id && document.getElementById(id);
+    if (!el) return;
+    afterScroll(() => targetsFor(el).forEach((t) => mark(t, holdFor(el))));
+  };
+
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href*="#"]');
+    if (!a || a.target === "_blank") return;
+    const url = new URL(a.href, location.href);
+    if (url.pathname !== location.pathname || !url.hash || url.hash === "#main") return;
+    arrive(url.hash);
+  });
+  // arriving from another page with a #hash (for example "Contact" from a case study)
+  if (location.hash && location.hash !== "#main") window.addEventListener("load", () => arrive(location.hash));
+  window.siteMarkHighlight = mark;
 })();
 
 // Phone menu.

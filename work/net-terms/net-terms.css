@@ -4,6 +4,7 @@
 body.cs-nt {
   --accent: #236cff;
   --accent-soft: rgba(35, 108, 255, 0.14);
+  --hl: rgba(35, 108, 255, 0.45);          /* arrival marker (site.js) */
   --accent-ink: #ffffff;
   --nt-hi: #8db4ff;         /* light blue for figures and icons on dark */
   --nt-warn: #ff8a80;
@@ -19,7 +20,7 @@ body.cs-nt {
 .cs-nt .cs-section > .label, .cs-nt .kicker, .cs-nt .label--accent, .cs-nt .overview__grid .label, .cs-nt .callout-q .label,
 .cs-nt .screen__head .label, .cs-nt .toc a.is-active .n, .cs-nt .lessons li::before { color: var(--accent-text); }
 .cs-nt a:hover, .cs-nt .brand:hover { color: var(--accent-text); }
-.cs-nt .process li:not(:last-child)::after, .cs-nt .next-cs .arrow { color: var(--accent-text); }
+.cs-nt .process li:not(:last-child)::after { color: var(--accent-text); }
 .cs-nt .overview__grid a { color: var(--accent-text); text-decoration: none; }
 .cs-nt .overview__grid a:hover { text-decoration: underline; }
 .cs-nt ::selection { background: var(--accent); color: #fff; }
@@ -420,7 +421,7 @@ body.cs-nt {
 }
 
 /* ---------- themes: light mode swaps the lifted blues and reds for deep ones ---------- */
-:root[data-theme="light"] body.cs-nt { --accent-text: #1d5be6; --nt-hi: #1d5be6; --nt-warn: #c4362a; --accent-soft: rgba(35, 108, 255, 0.1); }
+:root[data-theme="light"] body.cs-nt { --accent-text: #1d5be6; --hl: rgba(35, 108, 255, 0.2); --nt-hi: #1d5be6; --nt-warn: #c4362a; --accent-soft: rgba(35, 108, 255, 0.1); }
 :root[data-theme="light"] .fact { border-color: rgba(196, 54, 42, 0.3); background: linear-gradient(120deg, rgba(196, 54, 42, 0.06), transparent 60%), var(--surface); }
 :root[data-theme="light"] .gap__steps li.is-fail::before { box-shadow: none; }
 :root[data-theme="light"] .terms[data-mode="net"] .terms__dot { box-shadow: 0 0 0 6px rgba(35, 108, 255, 0.18); }

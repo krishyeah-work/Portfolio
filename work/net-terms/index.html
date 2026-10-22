@@ -14,16 +14,20 @@
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..600&display=swap">
-  <link rel="stylesheet" href="/assets/css/base.css?v=20261022b">
-  <link rel="stylesheet" href="/assets/css/footer-live.css?v=20261022b">
-  <link rel="stylesheet" href="/assets/css/case-study.css?v=20261022b">
-  <link rel="stylesheet" href="/work/net-terms/net-terms.css?v=20261022b">
-  <script src="/assets/js/site.js?v=20261022b" defer></script>
-  <script src="/assets/js/clock.js?v=20261018c" defer></script>
-  <script src="/assets/js/pal.js?v=20261021a" defer></script>
-  <script src="/assets/js/reveal.js?v=20261018c" defer></script>
-  <script src="/assets/js/toc.js?v=20261018c" defer></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..600&display=swap">
+  <link rel="stylesheet" href="/assets/css/base.css?v=20261023d">
+  <link rel="stylesheet" href="/assets/css/footer-live.css?v=20261023c">
+  <link rel="stylesheet" href="/assets/css/case-study.css?v=20261023c">
+  <link rel="stylesheet" href="/assets/css/work-art.css?v=20261023c">
+  <link rel="stylesheet" href="/work/mailchimp/cover.css?v=20261023c">
+  <link rel="stylesheet" href="/work/net-terms/net-terms.css?v=20261023c">
+  <script src="/assets/js/site.js?v=20261023c" defer></script>
+  <script src="/assets/js/clock.js?v=20261023b" defer></script>
+  <script src="/assets/js/pal.js?v=20261023c" defer></script>
+  <script src="/assets/js/reveal.js?v=20261023c" defer></script>
+  <script src="/assets/js/toc.js?v=20261023c" defer></script>
+  <script src="/assets/js/peek.js?v=20261023c" defer></script>
+  <script src="/work/mailchimp/cover.js?v=20261023c" defer></script>
   <script src="/assets/js/tabs.js?v=20261018c" defer></script>
   <script src="/assets/js/lightbox.js?v=20261018c" defer></script>
   <script src="/work/net-terms/net-terms.js?v=20261020a" defer></script>
@@ -56,18 +60,10 @@
     <!-- ============ HERO ============ -->
     <header class="cs-hero">
       <div class="wrap">
-        <a class="crumb label" href="/#work">← All work</a>
-        <p class="label cs-eyebrow">Case study 03 · Intuit</p>
+        <a class="crumb" href="/#work"><svg class="i-back" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8 4.4 3 7.7l4.8 3.3M3 7.7h12a6 6 0 0 1 0 12H6.3"/></svg>All work</a>
+        <p class="cs-date"><span class="todo" title="Months to confirm">MM.25 – MM.26</span></p>
         <h1 class="cs-title" data-text-fade>Net Terms for Intuit Enterprise Suite</h1>
         <p class="cs-lead">Bringing Net Terms to Intuit Enterprise Suite, so enterprise customers can pay Intuit by invoice.</p>
-
-        <dl class="meta-grid">
-          <div><dt class="label">My role</dt><dd>UX Designer</dd></div>
-          <div><dt class="label">Team</dt><dd>Senior designer, product manager, engineering</dd></div>
-          <div><dt class="label">Timeline</dt><dd>2025–2026</dd></div>
-          <div><dt class="label">Platform</dt><dd>QuickBooks Accountant, QuickBooks Online, Partner Portal, Intuit Account</dd></div>
-          <div><dt class="label">Status</dt><dd>Launched</dd></div>
-        </dl>
 
         <!-- cover: Immediate first, then Net Terms steps through Net 30, 60 and 90 -->
         <div class="terms" data-terms data-mode="imm" data-stop="0" aria-label="Immediate: charged on the billing date. Net Terms: paid by invoice within an approved term of 30, 60 or 90 days.">
@@ -154,6 +150,7 @@
     <div class="wrap section">
       <div class="cs-layout">
         <nav class="toc" aria-label="On this page">
+          <a class="toc__back" href="/#work"><svg class="i-back" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8 4.4 3 7.7l4.8 3.3M3 7.7h12a6 6 0 0 1 0 12H6.3"/></svg>All work</a>
           <ol>
             <li><a href="#challenge"><span class="n">01</span>The challenge</a></li>
             <li><a href="#context"><span class="n">02</span>Context</a></li>
@@ -169,7 +166,7 @@
             <span class="label">01 — The challenge</span>
             <h2 id="h-challenge">Enterprises pay by invoice. IES billed a card.</h2>
             <div class="prose">
-              <p>Intuit already offered Net Terms to some customers on an older billing system. IES runs on Intuit's online billing, which only charged a card or bank account on file.</p>
+              <p>Intuit already offered Net Terms on an older billing system. IES runs on newer billing that could only charge a card or bank account.</p>
             </div>
             <div class="gap" data-gap>
               <div class="gap__side">
@@ -196,7 +193,7 @@
             </div>
             <div class="callout-q">
               <span class="label">Key design challenge</span>
-              <p class="q">How might IES customers pay by invoice, on approved terms, without changing checkout for anyone else?</p>
+              <p class="q">How can IES customers pay by invoice without changing checkout for anyone else?</p>
             </div>
           </section>
 
@@ -218,7 +215,7 @@
                 <strong>Net Terms for IES</strong><span>Added to the shared payment widget</span>
               </li>
             </ol>
-            <p class="origin__note"><span class="label">Realm ID</span>Intuit's ID for each business. It also decides eligibility and the Net Terms state each customer sees.</p>
+            <p class="origin__note"><span class="label">Realm ID</span>Intuit's ID for each business. It decides eligibility and which Net Terms state a customer sees.</p>
 
             <div class="screen__head cs-subhead">
               <span class="label">Audiences</span>
@@ -270,7 +267,7 @@
               <div class="limit__text">
                 <span class="label label--accent">Constraint</span>
                 <h3>Products and flows share one payment widget.</h3>
-                <p>From TurboTax and QuickBooks to sales tools and the Partner Portal. Net Terms could appear only for eligible customers and change nothing for anyone else.</p>
+                <p>Used from TurboTax to the Partner Portal. Net Terms had to show only for eligible customers, and change nothing for others.</p>
               </div>
             </div>
 
@@ -387,9 +384,9 @@
               <span class="label label--accent">Decision 1</span>
               <h4>A declined application leads back to Immediate, not to Customer Care</h4>
               <dl>
-                <div><dt>Chose</dt><dd>One next step in the widget: continue with Immediate Terms to finish the purchase or keep the account active.</dd></div>
+                <div><dt>Chose</dt><dd>One next step in the widget: continue with Immediate Terms.</dd></div>
                 <div><dt>Over</dt><dd>Pointing declined customers to Intuit Customer Care.</dd></div>
-                <div><dt>Why</dt><dd>Intuit doesn't have to explain a decline, Care doesn't have the details to help, and sending customers there would only raise support calls.</dd></div>
+                <div><dt>Why</dt><dd>Intuit doesn't explain declines, so Care couldn't help. Sending customers there would only add support calls.</dd></div>
               </dl>
             </div>
 
@@ -440,7 +437,7 @@
             <div class="screen__head cs-subhead">
               <span class="label">Paying</span>
               <h3>Due dates and balances, one click from payment.</h3>
-              <p>Billing history shows the due date, status and balance. Unpaid invoices get Make a payment, which opens Intuit's payment portal.</p>
+              <p>Billing history shows due date, status and balance. Make a payment opens Intuit's payment portal.</p>
             </div>
             <figure class="fig fig--wide">
               <div class="shot"><img src="/work/net-terms/img/billing-history.webp" width="1440" height="700" loading="lazy" alt="Billing and payment history: invoices with date due, status (Unpaid, Paid in full, Partially paid) and outstanding amount; the Select actions menu on a partially paid invoice shows Make a payment and Export to PDF."></div>
@@ -489,9 +486,9 @@
             <h2 id="h-reflection">Team, and what I learned.</h2>
             <span class="label outcome__label">Team</span>
             <ul class="team" role="list">
-              <li><strong>My contribution</strong><span>Flows for accountants, direct customers and partners: widget states, application, purchases on terms, billing history, invoices and emails; prototypes and handoff</span></li>
+              <li><strong>My contribution</strong><span>Flows for accountants, customers and partners: widget states, application, purchases, billing, invoices and emails; prototypes and handoff</span></li>
               <li><strong>Senior designer</strong><span>Design direction and reviews</span></li>
-              <li><strong>Product manager</strong><span>Requirements, scope and alignment with finance and legal teams</span></li>
+              <li><strong>Product manager</strong><span>Requirements, scope and alignment with finance and legal</span></li>
               <li><strong>Engineering</strong><span>Widget states, billing changes and integrations</span></li>
             </ul>
             <span class="label outcome__label">What I learned</span>
@@ -506,22 +503,31 @@
     </div>
 
     <div class="wrap">
-      <a class="next-cs" href="/work/mailchimp/">
-        <span class="label">Next case study · 01</span>
-        <h2>MailChimp on Sales Agent Channel <span class="arrow" aria-hidden="true">→</span></h2>
-      </a>
+      <section class="also" aria-labelledby="h-also">
+        <h2 class="label" id="h-also">Also check out</h2>
+        <div class="also__grid">
+          <a class="also__item also--mc" href="/work/mailchimp/">
+            <span class="also__n">01</span>
+            <span class="also__title">MailChimp on Sales Agent Channel <span class="arrow" aria-hidden="true">→</span></span>
+            <div class="peek" aria-hidden="true"><div class="peek__art mc-stage" data-dust="hover"><canvas></canvas><span class="mc-stage__float"><svg class="mc-stage__logo" viewBox="0 0 246.24 261.34" aria-hidden="true" focusable="false"><path d="M185.23,123.5c1.91-.23,3.74-.24,5.41,0,.97-2.23,1.14-6.07,.26-10.26-1.3-6.22-3.06-9.98-6.69-9.4-3.63,.59-3.77,5.09-2.47,11.31,.73,3.5,2.03,6.49,3.48,8.34Z"/><path d="M154.03,128.42c2.6,1.14,4.2,1.9,4.82,1.24,.4-.41,.28-1.2-.34-2.21-1.28-2.09-3.92-4.22-6.72-5.41-5.73-2.47-12.56-1.65-17.83,2.14-1.74,1.27-3.39,3.04-3.15,4.11,.08,.35,.34,.61,.95,.69,1.43,.16,6.45-2.37,12.22-2.72,4.08-.25,7.45,1.02,10.05,2.17Z"/><path d="M148.79,131.4c-3.39,.53-5.25,1.65-6.45,2.69-1.02,.89-1.66,1.88-1.65,2.58,0,.33,.15,.52,.26,.62,.15,.14,.34,.21,.56,.21,.76,0,2.48-.69,2.48-.69,4.71-1.69,7.82-1.48,10.9-1.13,1.7,.19,2.51,.3,2.88-.29,.11-.17,.24-.53-.1-1.08-.79-1.29-4.21-3.46-8.88-2.91Z"/><path d="M174.69,142.36c2.3,1.13,4.83,.69,5.66-.99s-.37-3.95-2.67-5.08c-2.3-1.13-4.83-.69-5.66,.99-.82,1.68,.37,3.95,2.67,5.08Z"/><path d="M189.48,129.44c-1.87-.03-3.42,2.02-3.46,4.58-.04,2.56,1.44,4.66,3.3,4.7,1.87,.03,3.42-2.02,3.46-4.58,.04-2.56-1.44-4.66-3.3-4.7Z"/><path d="M62.02,175.4c-.52,.12-1.1,.26-1.74,.25-1.37-.03-2.54-.61-3.19-1.62-.85-1.31-.8-3.26,.14-5.49,.13-.3,.28-.63,.44-1,1.5-3.36,4.01-8.99,1.19-14.35-2.12-4.04-5.57-6.55-9.73-7.08-3.99-.51-8.1,.97-10.72,3.86-4.13,4.56-4.78,10.76-3.98,12.96,.29,.8,.75,1.03,1.08,1.07,.7,.09,1.74-.42,2.39-2.17,.05-.13,.11-.32,.19-.57,.29-.93,.83-2.65,1.72-4.03,1.07-1.67,2.73-2.82,4.68-3.23,1.99-.43,4.02-.05,5.72,1.07,2.89,1.89,4.01,5.44,2.77,8.83-.64,1.75-1.68,5.1-1.45,7.85,.46,5.57,3.89,7.8,6.96,8.04,2.99,.11,5.08-1.57,5.61-2.79,.31-.73,.05-1.17-.12-1.36-.46-.58-1.23-.4-1.97-.23Z"/><path d="M236.61,165.46c-.11-.4-.86-3.11-1.87-6.38-1.02-3.27-2.07-5.57-2.07-5.57,4.09-6.12,4.16-11.59,3.62-14.69-.58-3.84-2.18-7.12-5.4-10.5-3.22-3.38-9.82-6.85-19.08-9.45-1.06-.3-4.55-1.26-4.86-1.35-.02-.2-.26-11.46-.47-16.3-.15-3.49-.45-8.95-2.15-14.32-2.02-7.27-5.53-13.64-9.92-17.71,12.11-12.55,19.67-26.38,19.65-38.24-.03-22.81-28.05-29.71-62.57-15.42-.04,.02-7.26,3.08-7.31,3.11-.03-.03-13.22-12.97-13.42-13.15C91.38-28.85-31.69,107.94,7.66,141.16l8.6,7.28c-2.23,5.78-3.11,12.4-2.39,19.52,.92,9.14,5.64,17.91,13.28,24.68,7.26,6.43,16.8,10.5,26.06,10.49,15.31,35.28,50.3,56.93,91.32,58.15,44,1.31,80.94-19.34,96.41-56.43,1.01-2.6,5.31-14.33,5.31-24.68s-5.88-14.72-9.63-14.72Zm-180.03,27.77c-1.34,.23-2.7,.32-4.08,.29-13.29-.36-27.65-12.32-29.07-26.51-1.58-15.68,6.44-27.75,20.63-30.61,1.7-.34,3.75-.54,5.96-.42,7.95,.44,19.66,6.54,22.34,23.86,2.37,15.34-1.39,30.95-15.77,33.41Zm-14.84-66.22c-8.83,1.72-16.62,6.72-21.38,13.64-2.85-2.37-8.15-6.97-9.08-8.76-7.6-14.43,8.29-42.49,19.4-58.33C58.12,34.39,101.1,4.76,121,10.13c3.23,.92,13.95,13.34,13.95,13.34,0,0-19.89,11.03-38.33,26.42-24.85,19.13-43.62,46.94-54.87,77.12Zm50.68-53.61c9.75-11.27,21.76-21.07,32.52-26.58,.37-.19,.77,.21,.56,.58-.85,1.55-2.5,4.86-3.02,7.37-.08,.39,.35,.69,.68,.46,6.69-4.56,18.34-9.45,28.55-10.08,.44-.03,.65,.54,.3,.8-1.55,1.19-3.25,2.84-4.49,4.51-.21,.28-.01,.69,.34,.69,7.17,.05,17.28,2.56,23.87,6.26,.45,.25,.13,1.11-.37,1-9.97-2.29-26.29-4.02-43.24,.12-15.13,3.69-26.68,9.39-35.11,15.52-.43,.31-.94-.25-.59-.65Zm144.64,110.29c-1.91,11.58-6.83,20.97-15.1,29.62-5.03,5.42-11.15,10.13-18.14,13.56-3.71,1.95-7.67,3.64-11.84,5-31.18,10.18-63.09-1.01-73.37-25.05-.82-1.81-1.52-3.7-2.06-5.68-4.38-15.84-.66-34.85,10.97-46.81,0,0,0,0,0,0,.72-.76,1.45-1.66,1.45-2.79,0-.94-.6-1.94-1.12-2.65-4.07-5.9-18.17-15.96-15.34-35.43,2.03-13.98,14.26-23.83,25.67-23.25,.96,.05,1.93,.11,2.89,.17,4.94,.29,9.25,.93,13.32,1.1,6.81,.29,12.93-.7,20.18-6.74,2.45-2.04,4.41-3.81,7.73-4.37,.35-.06,1.22-.37,2.95-.29,1.77,.09,3.46,.58,4.97,1.59,5.81,3.87,6.64,13.24,6.94,20.09,.17,3.91,.64,13.38,.81,16.1,.37,6.21,2,7.09,5.31,8.18,1.86,.61,3.58,1.07,6.13,1.78,7.7,2.16,12.26,4.35,15.13,7.17,1.72,1.76,2.51,3.63,2.76,5.41,.91,6.62-5.14,14.8-21.15,22.23-17.5,8.12-38.73,10.18-53.39,8.54-1.13-.13-5.12-.58-5.14-.58-11.73-1.58-18.43,13.58-11.38,23.97,4.54,6.69,16.9,11.05,29.27,11.05,28.36,0,50.15-12.11,58.26-22.56,.24-.31,.27-.35,.65-.92,.4-.6,.07-.93-.43-.59-6.62,4.53-36.05,22.53-67.52,17.11,0,0-3.82-.63-7.31-1.99-2.77-1.08-8.58-3.75-9.29-9.71,25.4,7.85,41.39,.43,41.39,.43,.29-.12,.49-.45,.45-.78-.04-.4-.4-.7-.8-.66,0,0-20.82,3.08-40.49-4.12,2.14-6.96,7.84-4.45,16.45-3.75,15.52,.92,29.43-1.34,39.71-4.29,8.91-2.56,20.61-7.6,29.69-14.77,3.06,6.73,4.15,14.14,4.15,14.14,0,0,2.37-.42,4.35,.8,1.87,1.15,3.25,3.55,2.31,9.75Zm-96.05-1.07s0,0,0,0c0,0,0,0,0,.01,0,0,0-.01,0-.02Z"/></svg></span></div></div>
+          </a>
+          <a class="also__item also--qb" href="/work/quickbooks-rate-tables/">
+            <span class="also__n">02</span>
+            <span class="also__title">QuickBooks Payments and Bill Pay Rate Tables <span class="arrow" aria-hidden="true">→</span></span>
+            <div class="peek" aria-hidden="true"><div class="peek__art"><table class="art-table"><thead><tr><th>Method</th><th>Network</th><th>Type</th><th>Fee</th></tr></thead><tbody><tr style="--r: 0"><td>Card</td><td>Visa</td><td>Keyed</td><td><span class="bar" style="width:38px"></span></td></tr><tr style="--r: 1"><td>Card</td><td>Amex</td><td>Swiped</td><td><span class="bar" style="width:26px"></span></td></tr><tr style="--r: 2"><td>ACH</td><td>Bank</td><td>Transfer</td><td><span class="bar" style="width:14px"></span></td></tr><tr style="--r: 3"><td>Check</td><td>Mail</td><td>Vendor</td><td><span class="bar" style="width:20px"></span></td></tr></tbody></table></div></div>
+          </a>
+        </div>
+      </section>
     </div>
   </main>
 
   <footer class="site-footer">
     <div class="wrap">
-      <span>© 2026 Krishna Revanth</span>
       <div class="footer-live">
-        <span>Bangalore, India</span>
-        <span class="footer-live__dot" aria-hidden="true">·</span>
         <span data-clock></span>
         <span data-pal></span>
       </div>
+      <p class="reach-out"><span class="reach-out__thin">Looking to</span> <a class="reach-out__link" href="/#contact">Contact<svg class="i-up" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V4.5M5.5 11 12 4.5l6.5 6.5"/></svg></a></p>
     </div>
   </footer>
 </body>

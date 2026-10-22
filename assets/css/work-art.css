@@ -1,0 +1,55 @@
+/* work-art.css — the small animated thumbnails for each project, shared by the homepage cards and the
+   "Also check out" previews on case studies. They play while their card or link is hovered.
+   (The MailChimp one lives in /work/mailchimp/cover.css + cover.js.) */
+
+/* each project's colour: MailChimp yellow, QuickBooks green, Intuit blue */
+.card--mc, .also--mc { --proj: #f5c451; }
+.card--qb, .also--qb { --proj: #2ca01c; --qb-row-ink: #8be27a; }
+.card--nt, .also--nt { --proj: #236cff; }
+:root[data-theme="light"] .card--mc, :root[data-theme="light"] .also--mc { --proj: #8a6500; }
+:root[data-theme="light"] .card--qb, :root[data-theme="light"] .also--qb { --proj: #23861a; --qb-row-ink: #1e7a12; }
+:root[data-theme="light"] .card--nt, :root[data-theme="light"] .also--nt { --proj: #1d5be6; }
+
+/* schematic rate table (QuickBooks card art): muted gray at rest; on hover a green highlight scans the rows */
+.art-table { width: min(100%, 460px); border-collapse: collapse; font-size: clamp(0.66rem, 0.55rem + 0.4vw, 0.82rem); color: var(--ink-2); }
+.art-table th, .art-table td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; transition: color 0.3s var(--ease); }
+.art-table th { color: var(--muted); font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.85em; border-bottom-color: var(--line-strong); }
+.art-table td:last-child { text-align: right; }
+.art-table .bar { display: inline-block; height: 6px; border-radius: 3px; background: var(--line-strong); vertical-align: middle; transform-origin: right center; }
+.card--qb:hover .art-table tbody td, .card--qb:focus-visible .art-table tbody td, .also--qb:hover .art-table tbody td { animation: qb-row 3.2s var(--ease) infinite; animation-delay: calc(var(--r) * 0.8s); }
+.card--qb:hover .art-table .bar, .card--qb:focus-visible .art-table .bar, .also--qb:hover .art-table .bar { animation: qb-bar 3.2s var(--ease) infinite; animation-delay: calc(var(--r) * 0.8s); }
+.card--qb:hover .art-table th:last-child, .card--qb:focus-visible .art-table th:last-child, .also--qb:hover .art-table th:last-child { color: var(--qb-row-ink); }
+@keyframes qb-row { 0% { background: transparent; color: var(--ink-2); } 6%, 22% { background: rgba(44, 160, 28, 0.14); color: var(--qb-row-ink); } 30%, 100% { background: transparent; color: var(--ink-2); } }
+@keyframes qb-bar { 0% { transform: scaleX(0.35); background: var(--line-strong); } 8%, 22% { transform: none; background: #2ca01c; } 30%, 100% { transform: none; background: var(--line-strong); } }
+
+/* schematic payment widget (Net Terms card art): Immediate at rest; on hover, Net Terms and the dot steps to Net 30, 60, 90 */
+.art-nt { width: min(100%, 400px); display: grid; gap: 14px; font-size: clamp(0.78rem, 0.66rem + 0.4vw, 0.95rem); color: var(--ink-2); }
+.art-nt__q { color: var(--ink); font-weight: 500; }
+.art-nt__opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 6px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--bg-2); }
+.art-nt__opt { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; color: var(--muted); }
+.art-nt__opt i { width: 14px; height: 14px; border: 1.5px solid var(--muted); border-radius: 50%; }
+.art-nt__opt--imm { background: rgba(var(--fg), 0.07); color: var(--ink); }
+.art-nt__opt--imm i { border-color: var(--ink); box-shadow: inset 0 0 0 3px var(--bg-2), inset 0 0 0 8px var(--ink); }
+.art-nt__rail { position: relative; height: 6px; margin-top: 10px; border-radius: 6px; background: rgba(var(--fg), 0.08); }
+.art-nt__rail u { position: absolute; left: var(--at); top: -4px; bottom: -4px; width: 2px; translate: -50% 0; background: rgba(var(--fg), 0.2); }
+.art-nt__rail b { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 6px; background: linear-gradient(90deg, rgba(35, 108, 255, 0.35), #236cff); }
+.art-nt__rail i { position: absolute; top: 50%; left: 0; width: 14px; height: 14px; translate: -50% -50%; border-radius: 50%; background: var(--ink); }
+.art-nt__ends { display: grid; grid-template-columns: repeat(4, 1fr); color: var(--muted); font-size: 0.85em; }
+.art-nt__ends span:nth-child(2), .art-nt__ends span:nth-child(3) { text-align: center; }
+.art-nt__ends span:nth-child(2) { translate: -12% 0; } .art-nt__ends span:nth-child(3) { translate: 12% 0; }
+.art-nt__ends span:last-child { text-align: right; }
+.card--nt:hover .art-nt__opt--imm, .card--nt:focus-visible .art-nt__opt--imm, .also--nt:hover .art-nt__opt--imm { animation: nt-imm 7s var(--ease) infinite; }
+.card--nt:hover .art-nt__opt--net, .card--nt:focus-visible .art-nt__opt--net, .also--nt:hover .art-nt__opt--net { animation: nt-net 7s var(--ease) infinite; }
+.card--nt:hover .art-nt__opt--imm i, .card--nt:focus-visible .art-nt__opt--imm i, .also--nt:hover .art-nt__opt--imm i { animation: nt-dot-imm 7s var(--ease) infinite; }
+.card--nt:hover .art-nt__opt--net i, .card--nt:focus-visible .art-nt__opt--net i, .also--nt:hover .art-nt__opt--net i { animation: nt-dot-net 7s var(--ease) infinite; }
+.card--nt:hover .art-nt__rail b, .card--nt:focus-visible .art-nt__rail b, .also--nt:hover .art-nt__rail b { animation: nt-fill 7s var(--ease) infinite; }
+.card--nt:hover .art-nt__rail i, .card--nt:focus-visible .art-nt__rail i, .also--nt:hover .art-nt__rail i { animation: nt-move 7s var(--ease) infinite; }
+@keyframes nt-imm { 0%, 10%, 100% { background: rgba(var(--fg), 0.07); color: var(--ink); } 16%, 92% { background: transparent; color: var(--muted); } }
+@keyframes nt-net { 0%, 10%, 100% { background: transparent; color: var(--muted); } 16%, 92% { background: rgba(35, 108, 255, 0.18); color: var(--ink); } }
+@keyframes nt-dot-imm { 0%, 10%, 100% { border-color: var(--ink); box-shadow: inset 0 0 0 3px var(--bg-2), inset 0 0 0 8px var(--ink); } 16%, 92% { border-color: var(--muted); box-shadow: none; } }
+@keyframes nt-dot-net { 0%, 10%, 100% { border-color: var(--muted); box-shadow: none; } 16%, 92% { border-color: #236cff; box-shadow: inset 0 0 0 3px var(--bg-2), inset 0 0 0 8px #236cff; } }
+@keyframes nt-fill { 0%, 18% { width: 0; } 30%, 42% { width: 33.333%; } 54%, 66% { width: 66.667%; } 78%, 94% { width: 100%; } 100% { width: 0; } }
+@keyframes nt-move { 0%, 18% { left: 0; background: var(--ink); } 30%, 42% { left: 33.333%; background: #236cff; } 54%, 66% { left: 66.667%; background: #236cff; } 78%, 94% { left: 100%; background: #236cff; box-shadow: 0 0 16px rgba(35, 108, 255, 0.8); } 100% { left: 0; background: var(--ink); } }
+@media (prefers-reduced-motion: reduce) {
+  .art-nt *, .art-table * { animation: none !important; }
+}
