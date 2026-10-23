@@ -13,6 +13,20 @@
 /* at wide widths, scrolling slides the link left and out; it reappears at the top of the contents list (toc.js) */
 .crumb.is-away { opacity: 0; transform: translateX(-40px); pointer-events: none; }
 .cs-date { margin-top: 40px; color: var(--muted); font-size: 0.92rem; font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+/* MM.YY that grows into MON.YYYY on hover (reveal.js builds the pieces): the digits slide out as the month name slides in,
+   the century opens in front of the year, and the line darkens; it stays the same size */
+.cs-date.is-ready { display: flex; width: max-content; height: 1.4em; cursor: default; -webkit-tap-highlight-color: transparent; }
+.cs-date__in { display: inline-flex; align-items: flex-start; gap: 0.45em; line-height: 1.4; transform-origin: left center; transition: transform 0.55s var(--ease), color 0.3s var(--ease); }
+.cd { display: inline-flex; align-items: flex-start; overflow: hidden; }
+.cd > span { display: block; overflow: hidden; white-space: nowrap; }
+.cd__s, .cd__l, .cd__c { transition: max-width 0.55s var(--ease), opacity 0.35s var(--ease), transform 0.5s var(--ease); }
+.cd__s { max-width: 1.6em; }
+.cd__l { max-width: 0; opacity: 0; transform: translateY(0.6em); }
+.cd__c { max-width: 0; opacity: 0; }
+.cs-date:hover .cs-date__in, .cs-date.is-open .cs-date__in { color: var(--ink); }
+.cs-date:hover .cd__s, .cs-date.is-open .cd__s { max-width: 0; opacity: 0; transform: translateY(-0.6em); }
+.cs-date:hover .cd__l, .cs-date.is-open .cd__l { max-width: 2.6em; opacity: 1; transform: none; }
+.cs-date:hover .cd__c, .cs-date.is-open .cd__c { max-width: 1.4em; opacity: 1; }
 .cs-title { font-size: var(--fs-h1); letter-spacing: -0.035em; line-height: 1.02; margin-top: 12px; max-width: 13em; }
 .cs-lead { font-size: var(--fs-lead); max-width: 34em; margin-top: 22px; line-height: 1.55; color: var(--ink-2); }
 
@@ -61,10 +75,13 @@
   .cs-layout { grid-template-columns: minmax(0, 1fr); }
   .cs-layout > .toc {
     position: fixed; top: 104px; left: calc(50% - 796px); width: 176px; z-index: 20; visibility: hidden;
-    transition: opacity 0.35s var(--ease), visibility 0s linear 0.6s;
+    transform: translateX(var(--shift, 0px)); /* steps further left beside wide blocks (toc.js) */
+    transition: opacity 0.35s var(--ease), visibility 0s linear 0.6s, transform 0.7s var(--ease);
   }
-  .cs-layout > .toc.has-back { visibility: visible; transition: opacity 0.35s var(--ease), visibility 0s; }
-  .cs-layout > .toc.is-past { opacity: 0; visibility: hidden; pointer-events: none; }
+  .cs-layout > .toc.has-back { visibility: visible; transition: opacity 0.35s var(--ease), visibility 0s, transform 0.7s var(--ease); }
+  /* in the margin the contents only hide at the end of the article, or when a wide block leaves no room (toc.js) */
+  html.toc-hidden .cs-layout > .toc { opacity: 1; pointer-events: auto; }
+  html .cs-layout > .toc.is-past, html .cs-layout > .toc.is-cramped { opacity: 0; pointer-events: none; }
   .toc ol { border-left-color: transparent; transition: border-color 0.4s var(--ease); }
   .toc ol li { opacity: 0; transform: translateX(14px); transition: opacity 0.35s var(--ease), transform 0.5s var(--ease); }
   .toc.has-back ol { border-left-color: var(--line); }

@@ -15,6 +15,8 @@
 }
 .intro__reach a:nth-of-type(2)::after { transform: scaleX(-1) translateY(1px); }
 .intro__reach a:hover::after, .intro__reach a:focus-visible::after { background: var(--ink); opacity: 1; }
+/* a fuller marker on the contact links after a jump to Contact (site.js) */
+.intro__reach .hl-ghost__t { padding: 0.14em 0.32em; margin: 0 -0.32em; }
 .intro__note { padding: 4px 10px; border: 1px dashed var(--line-strong); border-radius: 4px; color: var(--muted); font-size: 0.85rem; }
 .intro__next { display: inline-flex; gap: 8px; margin-top: clamp(44px, 7vh, 72px); color: var(--muted); font-size: var(--fs-small); text-decoration: none; }
 .intro__next:hover { color: var(--ink); }

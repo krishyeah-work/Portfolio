@@ -2,25 +2,30 @@
 
 .site-footer { font-size: 0.95rem; }
 
-.footer-live { display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+/* three columns: time on the left, Pal in the middle, "Looking to Contact" on the right */
+.site-footer .wrap { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; }
+.footer-live { justify-self: start; }
+.site-footer [data-pal] { justify-self: center; }
+.reach-out { justify-self: end; }
+@media (max-width: 599px) { .site-footer .wrap { grid-template-columns: 1fr auto; } .reach-out { grid-column: 1 / -1; justify-self: start; } }
 
 /* "Looking to Contact": back up to the links in the homepage intro */
-.reach-out { font-size: clamp(1.15rem, 1rem + 0.4vw, 1.35rem); letter-spacing: -0.02em; line-height: 1.2; }
+.reach-out { font-size: clamp(1rem, 0.92rem + 0.3vw, 1.15rem); letter-spacing: -0.015em; line-height: 1.2; }
 .reach-out__thin { font-weight: 300; color: var(--muted); }
-.reach-out__link { display: inline-flex; align-items: baseline; gap: 0.15em; font-weight: 500; color: var(--ink); text-decoration: none; }
+.reach-out__link { display: inline-flex; align-items: baseline; gap: 0.2em; font-weight: 500; color: var(--ink); text-decoration: none; }
 .reach-out__link:hover { color: var(--ink); }
-.i-up { width: 0.72em; height: 0.72em; align-self: center; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.3s var(--ease); }
+.i-up { width: 0.92em; height: 0.92em; align-self: center; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.3s var(--ease); }
 .reach-out__link:hover .i-up { transform: translateY(-3px); }
 
 /* ---------- clock: sliding digits ---------- */
-.clock { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); font: 400 0.98rem/1 ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace; font-variant-numeric: tabular-nums; }
+.clock { display: inline-flex; align-items: center; gap: 0; color: var(--ink-2); font: 400 0.98rem/1 ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace; font-variant-numeric: tabular-nums; }
 .clock__digits { display: inline-flex; align-items: center; gap: 0.5px; }
 .sn { display: inline-block; height: 1em; overflow: hidden; width: 1ch; }
 .sn__track { display: flex; flex-direction: column; transition: transform 0.45s cubic-bezier(0.34, 1.32, 0.64, 1); will-change: transform; }
 .sn__track > span { display: block; height: 1em; line-height: 1em; text-align: center; }
 .clock__sep { color: var(--muted); padding: 0 1px; }
-.clock__ampm { margin-left: 2px; color: var(--ink-2); }
-.clock__place { font-family: var(--font); font-size: 1rem; color: var(--muted); }
+.clock__ampm { margin-left: 0.35em; color: var(--ink-2); }
+.clock__place { margin-left: 0.5em; font-family: var(--font); font-size: 1rem; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .sn__track { transition: none; } }
 
 /* ---------- Pal ---------- */

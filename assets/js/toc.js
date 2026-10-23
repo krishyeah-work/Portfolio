@@ -22,6 +22,8 @@ if (tocLinks.length && "IntersectionObserver" in window) {
 // "All work". On wide screens (1640px+) the contents sit in the left margin: as you scroll, "All work" flies from the
 // top of the page into the margin and the sections slide in under it; scrolling back to the top flies it home.
 // Between 1080 and 1640px the link slides out to the left and reappears at the top of the in-column contents.
+// Blocks wider than the column ([data-wide], such as the live rate table) would run under the margin contents, so while
+// one is alongside, the contents slide further left to make room, and back after it; they hide only if no margin is left.
 const crumb = document.querySelector(".cs-hero .crumb");
 const toc = document.querySelector(".toc");
 const back = toc?.querySelector(".toc__back");
@@ -83,9 +85,29 @@ if (crumb && toc && back) {
     }, 560);
   };
 
+  const wides = [...document.querySelectorAll("[data-wide]")];
+  const TOP = 104, GAP = 40, EDGE = 16;
+  const makeRoom = () => {
+    let shift = 0, cramped = false;
+    if (rail.matches) {
+      const home = document.documentElement.clientWidth / 2 - 796; // the contents' usual left edge (see case-study.css)
+      const bottom = TOP + toc.offsetHeight;
+      wides.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.bottom < TOP - GAP || r.top > bottom + GAP) return; // not alongside
+        const left = r.left - GAP - toc.offsetWidth;
+        if (left < EDGE) cramped = true;
+        else shift = Math.min(shift, left - home);
+      });
+    }
+    toc.style.setProperty("--shift", `${cramped ? 0 : Math.round(shift)}px`);
+    toc.classList.toggle("is-cramped", cramped);
+  };
+
   const update = () => {
     const next = wide.matches && window.scrollY > 60;
-    if (rail.matches && article) toc.classList.toggle("is-past", article.getBoundingClientRect().bottom < 104 + toc.offsetHeight + 40);
+    if (rail.matches && article) toc.classList.toggle("is-past", article.getBoundingClientRect().bottom < TOP + toc.offsetHeight + 40);
+    makeRoom();
     if (next === away) return;
     const first = away === null;
     away = next;

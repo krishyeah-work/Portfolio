@@ -3,6 +3,7 @@
 //    (vanilla take on motion-primitives' TextEffect, per="char", preset="fade").
 // 2. In-view reveal: images and text fade in (with a soft blur and scale) as they enter the
 //    viewport, with a bottom margin, groups staggering their children (motion-primitives' InView).
+// 3. Project dates: "11.25 – 01.26" grows into "NOV.2025 – JAN.2026" on hover (tap on touch screens).
 // Content already on screen at load is left untouched. Respects prefers-reduced-motion.
 
 (() => {
@@ -36,6 +37,30 @@
     const run = () => el.classList.add("tf-run");
     fonts.then(() => requestAnimationFrame(() => requestAnimationFrame(run)));
     setTimeout(run, 1600); // safety net: the title always appears, even if frames are throttled
+  });
+
+  /* ---------- 3. Project dates ---------- */
+  // <p class="cs-date" data-from="2025-11" data-to="2026-01">11.25 – 01.26</p>. Each month's digits swap for its
+  // name and the century opens in front of the year, while the line grows; the plain text stays for screen readers.
+  const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+  const NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  document.querySelectorAll(".cs-date[data-from][data-to]").forEach((el) => {
+    const part = (ym) => {
+      const [y, m] = ym.split("-");
+      return `<span class="cd"><span class="cd__s">${m}</span><span class="cd__l">${MONTHS[m - 1]}</span><span>.</span>` +
+        `<span class="cd__c">${y.slice(0, 2)}</span><span>${y.slice(2)}</span></span>`;
+    };
+    const said = (ym) => { const [y, m] = ym.split("-"); return `${NAMES[m - 1]} ${y}`; };
+    el.innerHTML = `<span class="sr-only">${said(el.dataset.from)} to ${said(el.dataset.to)}</span>` +
+      `<span class="cs-date__in" aria-hidden="true">${part(el.dataset.from)}<span class="cd__dash">–</span>${part(el.dataset.to)}</span>`;
+    el.classList.add("is-ready");
+    // touch screens have no hover: a tap opens it, another tap (or a few seconds) closes it
+    let t = 0;
+    el.addEventListener("click", () => {
+      clearTimeout(t);
+      el.classList.toggle("is-open");
+      if (el.classList.contains("is-open")) t = setTimeout(() => el.classList.remove("is-open"), 3000);
+    });
   });
 
   /* ---------- 2. In-view reveal ---------- */
