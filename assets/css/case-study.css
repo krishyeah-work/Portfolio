@@ -177,6 +177,9 @@
 
 .screens { display: grid; gap: clamp(48px, 7vw, 88px); margin-top: clamp(40px, 6vw, 72px); }
 .screen { display: grid; gap: 18px; }
+/* Safari (iPad) can size a grid's automatic column to a screenshot's full pixel width (1600px), stretching everything
+   below it past the screen. One-column grids that hold screenshots get a column that always shrinks to fit instead. */
+.screens, .screen, .stack, .carousel__slide { grid-template-columns: minmax(0, 1fr); }
 .screen__head { display: grid; gap: 8px; max-width: 44em; }
 .screen__head h3 { font-size: var(--fs-h3); }
 .screen__head p { color: var(--muted); }

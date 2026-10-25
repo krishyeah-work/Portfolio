@@ -138,8 +138,8 @@
 .seq-pinned .to-top.is-visible { opacity: 0; pointer-events: none; }
 
 /* ---------- dialogs over the dashboard (configuration and guardrails) ---------- */
-.gr-list { display: grid; gap: clamp(28px, 4vw, 44px); margin-top: clamp(20px, 2.6vw, 30px); }
-.gr { margin: 0; display: grid; gap: 12px; }
+.gr-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(28px, 4vw, 44px); margin-top: clamp(20px, 2.6vw, 30px); }
+.gr { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; } /* shrink-to-fit column, see .screen */
 /* The stage is Krishna's 1600 x 1151 dashboard. Each dialog keeps its real size and position on that
    screen: --x, --y and --w are px of the 1600-wide frame, taken from the final designs. */
 .gr__stage { position: relative; aspect-ratio: 1600 / 1151; container-type: inline-size; }
