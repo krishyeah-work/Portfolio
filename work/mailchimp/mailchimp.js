@@ -55,7 +55,7 @@ document.querySelectorAll(".seq__tip-btn").forEach((btn) => {
     H = stage.clientHeight;
     const W = stage.clientWidth;
     const sr = stage.getBoundingClientRect();
-    const vw = document.documentElement.clientWidth;
+    const vw = Math.min(document.documentElement.clientWidth, window.innerWidth); // the window, never a page widened by overflow
     const toc = document.querySelector(".toc");
     const tocRight = toc && toc.getClientRects().length ? toc.getBoundingClientRect().right : 0; // in-column or in the margin
     // the backdrop may reach past the column: up to the table of contents on the left, the viewport edge on the right
@@ -155,7 +155,13 @@ document.querySelectorAll(".seq__tip-btn").forEach((btn) => {
   const relayout = () => { layout(); update(); };
 
   window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", relayout);
+  // iPad and phone browsers fire "resize" while scrolling (the toolbar shrinks), so only re-measure on a real change
+  let lastW = window.innerWidth, lastH = window.innerHeight;
+  window.addEventListener("resize", () => {
+    if (window.innerWidth === lastW && Math.abs(window.innerHeight - lastH) < 120) return;
+    lastW = window.innerWidth; lastH = window.innerHeight;
+    relayout();
+  });
   document.fonts?.ready.then(relayout);
   relayout();
 })();

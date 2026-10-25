@@ -82,6 +82,10 @@
 /* ---------- base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+/* the page never scrolls sideways: pieces that reach to the window edge (the MailChimp backdrop, wide demos) are cut there.
+   Without this, iPad Safari could widen the page to fit them, re-measure, and keep growing. clip keeps sticky elements working. */
+html, body { overflow-x: hidden; }
+@supports (overflow: clip) { html, body { overflow-x: clip; } }
 body {
   margin: 0;
   background: var(--bg);
@@ -165,10 +169,19 @@ a:hover { color: var(--accent); }
 .icon-btn:hover { color: var(--ink); border-color: var(--ink); }
 .icon-btn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 /* sun in dark mode (switch to light), moon in light mode (switch to dark) */
-.theme-toggle .i-moon, :root[data-theme="light"] .theme-toggle .i-sun { display: none; }
-:root[data-theme="light"] .theme-toggle .i-moon { display: block; }
-.theme-toggle svg { transition: transform 0.45s var(--ease); }
-.theme-toggle:active svg { transform: rotate(-30deg) scale(0.9); }
+/* theme switch (after 21st.dev's AnimatedThemeToggle): the sun shows in dark mode (switch to light), the moon in light.
+   The outgoing icon shrinks while its lines un-draw; the incoming one grows and draws itself in. */
+.theme-toggle .i-theme { width: 19px; height: 19px; stroke-width: 1.9; overflow: visible; }
+.i-theme path {
+  transform-box: fill-box; transform-origin: center; stroke-dasharray: 1; stroke-dashoffset: 0;
+  transition: transform 0.7s var(--ease), stroke-dashoffset 0.45s var(--ease) 0.25s;
+}
+.i-theme .i-theme__moon, :root[data-theme="light"] .i-theme .i-theme__sun {
+  transform: scale(0); stroke-dashoffset: 1; transition: transform 0.7s var(--ease), stroke-dashoffset 0.3s var(--ease);
+}
+:root[data-theme="light"] .i-theme .i-theme__moon {
+  transform: none; stroke-dashoffset: 0; transition: transform 0.7s var(--ease), stroke-dashoffset 0.45s var(--ease) 0.25s;
+}
 .nav-toggle { display: none; }
 .nav-toggle span { position: relative; display: block; width: 16px; height: 10px; }
 .nav-toggle span::before, .nav-toggle span::after { content: ""; position: absolute; left: 0; right: 0; height: 1.6px; border-radius: 2px; background: currentColor; transition: transform 0.3s var(--ease), top 0.3s var(--ease); }
