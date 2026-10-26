@@ -7,7 +7,7 @@ Static HTML, CSS and a little vanilla JS. No framework, no build step, no tracke
 Every page and every project is self-contained, so an edit only touches the files for that page.
 
 ```
-index.html                     Home (intro with contact links, work list, approach)
+index.html                     Home (intro with contact links, work list)
 about/index.html               More about me: story, experience, education, tools, playlist
 404.html
 assets/
