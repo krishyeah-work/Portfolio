@@ -1,4 +1,4 @@
-/* home.css — homepage only (intro, work cards, approach, more about me, "Looking to Contact") */
+/* home.css — homepage only (intro, work cards, approach). "More about me" lives on /about/ (about.css). */
 
 /* ---------- intro: four short lines and the ways to reach me, centred in the first screen ---------- */
 .intro { position: relative; display: grid; align-items: center; min-height: calc(100svh - 65px); padding-block: 56px 88px; text-align: center; scroll-margin-top: 80px; }
@@ -78,14 +78,3 @@
 .step .ai { color: var(--muted); }
 .approach-note { margin-top: 32px; color: var(--muted); max-width: 46em; }
 
-/* ---------- about ---------- */
-.about-grid { display: grid; gap: clamp(36px, 5vw, 72px); }
-@media (min-width: 900px) { .about-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
-.about-copy { display: grid; gap: 1.1em; align-content: start; font-size: var(--fs-lead); line-height: 1.6; max-width: 36em; color: var(--ink-2); }
-.ledger { list-style: none; border-top: 1px solid var(--line-strong); }
-.ledger li { display: grid; grid-template-columns: 7rem 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
-.ledger .label { padding-top: 3px; }
-.ledger strong { display: block; font-weight: 500; }
-.ledger span.d { color: var(--muted); font-size: var(--fs-small); }
-.ledger-title { margin: 40px 0 12px; }
-.ledger-title:first-child { margin-top: 0; }

@@ -7,17 +7,21 @@ Static HTML, CSS and a little vanilla JS. No framework, no build step, no tracke
 Every page and every project is self-contained, so an edit only touches the files for that page.
 
 ```
-index.html                     Home (intro with contact links, work list, approach, more about me)
+index.html                     Home (intro with contact links, work list, approach)
+about/index.html               More about me: story, experience, education, tools, playlist
 404.html
 assets/
   css/base.css                 Shared: tokens (dark + light themes), type, header and phone menu, footer, buttons, screenshot frame
   css/home.css                 Home page only
+  css/about.css                About page only
   css/case-study.css           Shared case-study layout and components (carousel, lightbox, toc, reveal, "Also check out"…)
   css/work-art.css             Project colours and the animated QuickBooks / Net Terms thumbnails (home cards + previews)
-  css/footer-live.css          Footer: clock and Pal on the left, "Looking to Contact" on the right
+  css/footer-live.css          Footer: clock (left), Pal (centre), "Looking to Contact" (right), and the Bangalore strip
   js/site.js                   Every page: name scramble, nav hover pill, scroll-to-top, image retry,
                                light/dark switch, phone menu, arrival highlight (marker on the heading you
                                jumped to; colour from --hl; [data-hl-group] + [data-hl] for groups of links)
+  js/bangalore.js              Van Gogh-style Bangalore above every footer, drawn to scale; sky follows Bangalore time (?sky=dawn|day|dusk|night to preview)
+  js/about.js                  About page: loads the Spotify player only when "Listen here" is pressed
   js/clock.js                  Live Bengaluru clock, 12-hour, with sliding digits ([data-clock])
   js/pal.js                    Pal: asleep 11:00 PM–6:30 AM IST, local-language hello ([data-pal]); ?pal=awake|asleep to preview
   js/reveal.js                 Case studies: title text effect ([data-text-fade]) and in-view reveal
@@ -60,6 +64,8 @@ portfolio-context/             Brief, case-study notes, decisions log (local onl
 | Pal's lines, greetings or sleep hours | `assets/js/pal.js` |
 | Clock | `assets/js/clock.js` + `assets/css/footer-live.css` |
 | Home page | `index.html` + `assets/css/home.css` |
+| About page (story, experience, education, tools, playlist) | `about/index.html` + `assets/css/about.css` |
+| Bangalore strip above the footer (skyline, movers, sky times) | `assets/js/bangalore.js` + the "Bangalore strip" block in `assets/css/footer-live.css` |
 
 ### Adding a new case study
 

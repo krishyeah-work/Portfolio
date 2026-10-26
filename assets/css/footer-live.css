@@ -1,4 +1,5 @@
-/* footer-live.css — the footer: live Bengaluru clock (clock.js) and Pal (pal.js) on the left, "Looking to Contact" on the right. */
+/* footer-live.css — the footer: live Bengaluru clock (clock.js) on the left, Pal (pal.js) in the middle, "Looking to Contact"
+   on the right, and the Van Gogh-style Bangalore strip above it (bangalore.js). */
 
 .site-footer { font-size: 0.95rem; }
 
@@ -60,7 +61,7 @@
 .pal.sleeping, .pal.sleeping .ear { animation: none; }
 .pal.waking .eye { animation: pal-wake-blink 4.5s ease-in-out 1; }
 
-/* Pal sits on the left of the footer, so the bubble opens to the right and never runs off the screen */
+/* the bubble opens to the right of Pal, and to the left on phones, where Pal sits at the right edge, so it never runs off the screen */
 .pal-target .bubble {
   position: absolute; z-index: 2; left: -6px; bottom: calc(100% + 4px); width: max-content; max-width: min(250px, 72vw);
   padding: 9px 12px; border: 1px solid var(--bubble-border); border-radius: var(--radius); background: var(--bubble-bg); color: var(--bubble-ink);
@@ -74,6 +75,10 @@
 }
 .pal-target .bubble.visible { visibility: visible; opacity: 1; transform: none; transition: opacity 0.35s ease, transform 0.35s ease; }
 .pal-target .bubble.fadeout { opacity: 0; transform: translateY(-3px) scale(0.98); }
+@media (max-width: 599px) {
+  .pal-target .bubble { left: auto; right: -6px; transform-origin: 90% 100%; }
+  .pal-target .bubble::after { left: auto; right: 22px; }
+}
 
 .pal-target .zzz { position: absolute; z-index: 1; top: -22px; right: -2px; width: 36px; height: 36px; visibility: hidden; pointer-events: none; color: var(--pal-ink); font: 600 13px/1 "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
 .pal-target.sleeping .zzz { visibility: visible; }
@@ -100,3 +105,178 @@
 :root[data-theme="light"] .pal.angry { color: #c9402f; }
 :root[data-theme="light"] .pal.angry .eye { color: #b3261e; }
 :root[data-theme="light"] .pal-target .bubble { box-shadow: 0 10px 30px -14px rgba(0, 0, 0, 0.25); }
+
+/* ---------- Bangalore strip above the footer (bangalore.js) ---------- */
+/* a Van Gogh pen sketch with colour: a swirling sky, the city at four depths, the metro, an auto and a flower cart.
+   Fills are the page colour lightly tinted, so nearer things hide what's behind; the sky's colours, lit windows and
+   lamps follow the time in Bangalore. Sizes are drawing pixels times --k, which is smaller on phones. */
+.blr {
+  --k: 1;
+  --ink1: rgba(var(--fg), 0.6); --ink2: rgba(var(--fg), 0.4); --ink3: rgba(var(--fg), 0.3); --ink4: rgba(var(--fg), 0.15);
+  --haze: #1d1e24; --w1: #271a16; --w2: #282218; --w3: #1d221e; --w4: #1c2028; --w5: #271d22;
+  --stone: #2f2b27; --glass: #1b2128; --temple: #312319; --conc: #212021; --walk: #232221; --crown: #1b251d;
+  --v1: #2b3327; --v2: #392930; --v3: #26313a; --v4: #3a331f; --v5: #2f2a39;
+  --shade: rgba(0, 0, 0, 0.5); --shut: #3b3d42; --tank: #3a3a40; --win: rgba(var(--fg), 0.1); --refl: rgba(255, 255, 255, 0.28);
+  --l1: rgba(70, 150, 85, 0.85); --l2: rgba(120, 185, 100, 0.8); --l3: rgba(205, 215, 115, 0.8); --fl: rgba(100, 160, 100, 0.45);
+  --flame: #ee5a2b; --pink: #f09ac0; --bougain: #d9409a; --trunk: rgba(160, 125, 95, 0.75); --grass: rgba(110, 175, 100, 0.6);
+  --sg1: #c8463c; --sg2: #2f68b5; --sg3: #e2b52f; --sg4: #2b8f58; --t1: #e0663a; --t2: #3f9a8a; --t3: #e8c45a; --gold: #e2b14a;
+  --kerby: #e2b02a; --kerbk: #2a2a2e; --cow: #e8e2d4; --dog: #b5793f; --horn: #e8742a;
+  --steel: #aab0ba; --steel-2: #9aa1ac; --steel-3: #858c97; --purple: #8f55d6; --mglass: #262d3a;
+  --cloud1: rgba(235, 238, 245, 0.6); --cloud2: rgba(170, 190, 220, 0.45);
+  --sun: #ffcf6b; --moon: #f1e6b8; --sun-ring: rgba(255, 200, 90, 0.55); --moon-ring: rgba(240, 220, 140, 0.5); --star: #f6e6a8;
+  /* these follow the time of day (set below) */
+  --s1: rgba(70, 130, 205, 0.5); --s2: rgba(110, 165, 225, 0.45); --s3: rgba(185, 215, 240, 0.35); --s4: rgba(240, 230, 195, 0.35);
+  --lit: var(--win); --mwin: var(--mglass); --bulb: #8a877e; --glow: transparent; --glowfill: transparent; --beam: #ffe08c;
+  position: relative; height: calc(184px * var(--k)); overflow: hidden; pointer-events: none;
+}
+:root[data-theme="light"] .blr {
+  --ink1: rgba(var(--fg), 0.66); --ink2: rgba(var(--fg), 0.46); --ink3: rgba(var(--fg), 0.34); --ink4: rgba(var(--fg), 0.17);
+  --haze: #e1e3e7; --w1: #f0ddd1; --w2: #f2e9d4; --w3: #e1e9de; --w4: #e0e6ed; --w5: #f1e1e4;
+  --stone: #ebe3d4; --glass: #dee8ee; --temple: #f0dcc8; --conc: #ecece7; --walk: #efede8; --crown: #d4e3d2;
+  --v1: #ddead2; --v2: #f4d9e0; --v3: #d5e6f0; --v4: #f5eac5; --v5: #e2dbee;
+  --shade: rgba(40, 40, 50, 0.4); --shut: #b9bcc2; --tank: #2a2a2e; --win: rgba(var(--fg), 0.16); --refl: rgba(255, 255, 255, 0.9);
+  --l1: rgba(47, 122, 64, 0.85); --l2: rgba(90, 158, 74, 0.85); --l3: rgba(169, 184, 78, 0.9); --fl: rgba(60, 130, 70, 0.4);
+  --flame: #e04a1c; --pink: #e0679e; --bougain: #c42e85; --trunk: rgba(95, 70, 50, 0.7); --grass: rgba(60, 130, 60, 0.55);
+  --kerby: #e9b52a; --cow: #e9e2d3;
+  --steel: #d6d9de; --steel-2: #c6cad1; --steel-3: #a9aeb7; --purple: #7a3fbf; --mglass: #3a4558;
+  --cloud1: rgba(120, 140, 180, 0.6); --cloud2: rgba(150, 170, 205, 0.5);
+  --sun: #f5b23e; --moon: #e8d27a; --sun-ring: rgba(235, 160, 40, 0.6); --moon-ring: rgba(200, 160, 40, 0.55); --star: #d9a520;
+}
+@media (max-width: 599px) { .blr { --k: 0.72; } }
+
+/* the sky by the time in Bangalore: deep blues and a yellow moon at night, pinks at dawn, blues by day, oranges at dusk */
+.blr[data-sky="night"] { --s1: rgba(52, 86, 170, 0.75); --s2: rgba(88, 128, 205, 0.6); --s3: rgba(160, 190, 230, 0.45); --s4: rgba(240, 205, 100, 0.6); }
+.blr[data-sky="dawn"] { --s1: rgba(95, 110, 180, 0.55); --s2: rgba(230, 140, 165, 0.5); --s3: rgba(250, 180, 140, 0.5); --s4: rgba(250, 215, 140, 0.55); }
+.blr[data-sky="day"] { --s1: rgba(70, 130, 205, 0.5); --s2: rgba(110, 165, 225, 0.45); --s3: rgba(185, 215, 240, 0.35); --s4: rgba(240, 230, 195, 0.35); }
+.blr[data-sky="dusk"] { --s1: rgba(110, 80, 165, 0.6); --s2: rgba(215, 95, 125, 0.55); --s3: rgba(245, 145, 85, 0.55); --s4: rgba(250, 200, 95, 0.6); }
+:root[data-theme="light"] .blr[data-sky="night"] { --s1: rgba(30, 55, 130, 0.7); --s2: rgba(55, 95, 175, 0.55); --s3: rgba(120, 155, 210, 0.5); --s4: rgba(215, 165, 30, 0.65); }
+:root[data-theme="light"] .blr[data-sky="dawn"] { --s1: rgba(80, 95, 165, 0.45); --s2: rgba(215, 105, 140, 0.45); --s3: rgba(240, 150, 105, 0.5); --s4: rgba(230, 180, 80, 0.55); }
+:root[data-theme="light"] .blr[data-sky="day"] { --s1: rgba(50, 110, 185, 0.45); --s2: rgba(85, 145, 210, 0.4); --s3: rgba(140, 185, 225, 0.4); --s4: rgba(215, 195, 140, 0.4); }
+:root[data-theme="light"] .blr[data-sky="dusk"] { --s1: rgba(90, 60, 145, 0.55); --s2: rgba(200, 75, 110, 0.5); --s3: rgba(230, 120, 60, 0.55); --s4: rgba(225, 165, 50, 0.6); }
+/* after dark: windows, lamps and headlights come on */
+.blr[data-sky="night"], .blr[data-sky="dusk"] { --lit: #ffd36e; --mwin: #ffe29a; --bulb: #ffe08a; --glow: rgba(255, 205, 90, 0.55); --glowfill: rgba(255, 205, 90, 0.08); }
+:root[data-theme="light"] .blr[data-sky="night"], :root[data-theme="light"] .blr[data-sky="dusk"] { --lit: #e2a21f; --mwin: #f5c95a; --bulb: #f5c442; --glow: rgba(225, 150, 20, 0.6); --glowfill: rgba(240, 180, 60, 0.12); --beam: #eba83a; }
+
+.blr__paint, .blr__back, .blr__front { position: absolute; left: 0; bottom: 0; width: 100%; height: 100%; }
+.blr__paint { -webkit-mask-image: linear-gradient(to bottom, transparent, #000 40%); mask-image: linear-gradient(to bottom, transparent, #000 40%); }
+
+/* city fills */
+.b-haze { fill: var(--haze); } .b-w1 { fill: var(--w1); } .b-w2 { fill: var(--w2); } .b-w3 { fill: var(--w3); } .b-w4 { fill: var(--w4); } .b-w5 { fill: var(--w5); }
+.b-stone { fill: var(--stone); } .b-glass { fill: var(--glass); } .b-temple { fill: var(--temple); } .b-conc { fill: var(--conc); } .b-walk { fill: var(--walk); }
+.b-v1 { fill: var(--v1); } .b-v2 { fill: var(--v2); } .b-v3 { fill: var(--v3); } .b-v4 { fill: var(--v4); } .b-v5 { fill: var(--v5); }
+.b-shade { fill: var(--shade); } .b-shut { fill: var(--shut); } .b-tank { fill: var(--tank); } .b-gold { fill: var(--gold); }
+.b-sg1 { fill: var(--sg1); } .b-sg2 { fill: var(--sg2); } .b-sg3 { fill: var(--sg3); } .b-sg4 { fill: var(--sg4); }
+.b-crown { fill: var(--crown); stroke: var(--l1); stroke-width: 0.6; stroke-opacity: 0.5; } .b-trunk { fill: var(--trunk); } .b-nut { fill: #8a6a2a; }
+.b-cow { fill: var(--cow); } .b-dog { fill: var(--dog); }
+.b-lamphead { fill: #2a2a2e; } .b-bulb { fill: var(--bulb); transition: fill 1s; } .b-glowfill { fill: var(--glowfill); transition: fill 1s; }
+/* city strokes: brush and pen marks */
+.b-s1, .b-s2, .b-s3, .b-s4, .b-ink1, .b-ink2, .b-ink3, .b-ink4, .b-hatch, .b-hatch2, .b-refl, .b-lit, .b-t1, .b-t2, .b-t3, .b-fl, .b-tw, .b-tk,
+.b-bougain, .b-branch, .b-palm, .b-l1, .b-l2, .b-l3, .b-flame, .b-pink, .b-frond, .b-glow, .b-horn, .b-pole { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.b-s1, .b-s2, .b-s3, .b-s4 { stroke-width: 2.1; transition: stroke 1.2s; }
+.b-s1 { stroke: var(--s1); } .b-s2 { stroke: var(--s2); } .b-s3 { stroke: var(--s3); } .b-s4 { stroke: var(--s4); }
+.b-ink1 { stroke: var(--ink1); stroke-width: 1.05; } .b-ink2 { stroke: var(--ink2); stroke-width: 0.9; } .b-ink3 { stroke: var(--ink3); stroke-width: 0.8; } .b-ink4 { stroke: var(--ink4); stroke-width: 0.7; }
+.b-hatch { stroke: var(--ink4); stroke-width: 0.6; } .b-hatch2 { stroke: var(--ink3); stroke-width: 0.6; } .b-refl { stroke: var(--refl); stroke-width: 0.9; }
+.b-lit { stroke: var(--lit); stroke-width: 1.9; stroke-linecap: butt; transition: stroke 1s; }
+/* repeated marks drawn as one dashed line each: rows of windows, paving joints, kerb stones, railings, deck joints, grass */
+.b-wrow, .b-vrow, .b-shadeh, .b-pave, .b-kerbk, .b-kerby, .b-fence, .b-joint, .b-grass, .b-grass2 { fill: none; stroke-linecap: butt; }
+.b-wrow { stroke: var(--win); stroke-width: 1.9; stroke-dasharray: 2 4; } .b-vrow { stroke: var(--win); stroke-width: 4.4; stroke-dasharray: 1.6 6.4; }
+.b-shadeh { stroke: var(--ink4); stroke-width: 0.6; stroke-dasharray: 3 2.2; } .b-pave { stroke: var(--ink4); stroke-width: 2.4; stroke-dasharray: 0.7 8.3; }
+.b-kerbk { stroke: var(--kerbk); stroke-width: 4.6; } .b-kerby { stroke: var(--kerby); stroke-width: 4.6; stroke-dasharray: 14 14; }
+.b-fence { stroke: var(--ink3); stroke-width: 5; stroke-dasharray: 0.7 2.8; } .b-joint { stroke: var(--ink4); stroke-width: 5; stroke-dasharray: 0.6 14.4; }
+.b-grass { stroke: var(--grass); stroke-width: 3.4; stroke-dasharray: 0.7 3.1 0.6 4.6 0.8 2.2 0.6 5.4; transform: skewX(-14deg); }
+.b-grass2 { stroke: var(--grass); stroke-width: 2.6; stroke-dasharray: 0.6 5.2 0.7 3.6 0.6 6.8; transform: skewX(12deg); }
+.b-t1, .b-t2, .b-t3 { stroke-width: 1.3; } .b-t1 { stroke: var(--t1); } .b-t2 { stroke: var(--t2); } .b-t3 { stroke: var(--t3); }
+.b-tw { stroke: rgba(255, 255, 255, 0.85); stroke-width: 0.55; } .b-tk { stroke: rgba(20, 20, 22, 0.75); stroke-width: 0.55; }
+.b-fl { stroke: var(--fl); stroke-width: 2; } .b-bougain { stroke: var(--bougain); stroke-width: 1.8; }
+.b-branch { stroke: var(--trunk); stroke-width: 1.4; } .b-palm { stroke: var(--trunk); stroke-width: 2.2; } .b-frond { stroke: var(--l1); stroke-width: 0.9; }
+.b-l1, .b-l2, .b-l3, .b-flame, .b-pink { stroke-width: 2.3; }
+.b-l1 { stroke: var(--l1); } .b-l2 { stroke: var(--l2); } .b-l3 { stroke: var(--l3); } .b-flame { stroke: var(--flame); } .b-pink { stroke: var(--pink); }
+.b-glow { stroke: var(--glow); stroke-width: 1.3; stroke-dasharray: 3 4; transition: stroke 1s; } .b-horn { stroke: var(--horn); stroke-width: 1.2; } .b-pole { stroke: var(--ink1); stroke-width: 1.6; }
+
+/* stars, and the sun or moon on its arc with rings of broken strokes round it */
+.blr__stars { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s; }
+.blr[data-sky="night"] .blr__stars { opacity: 1; }
+.blr[data-sky="dawn"] .blr__stars, .blr[data-sky="dusk"] .blr__stars { opacity: 0.35; }
+.blr__stars i { position: absolute; top: calc(var(--y) * 1px * var(--k)); width: 3px; height: 3px; margin-left: -1.5px; border-radius: 50%; background: var(--star); animation: blr-twinkle 5s ease-in-out infinite; }
+.blr__stars i::after { content: ""; position: absolute; inset: -5px; border: 1px dashed var(--star); border-radius: 50%; opacity: 0.55; }
+.blr__orb { position: absolute; left: var(--orb-x, 50%); bottom: calc(var(--orb-y, 120) * 1px * var(--k)); width: 0; height: 0; }
+.blr__halo, .blr__disc { position: absolute; overflow: visible; }
+.blr__halo { left: calc(-34px * var(--k)); top: calc(-34px * var(--k)); width: calc(68px * var(--k)); height: calc(68px * var(--k)); animation: blr-spin 90s linear infinite; }
+.blr__disc { left: calc(-10px * var(--k)); top: calc(-10px * var(--k)); width: calc(20px * var(--k)); height: calc(20px * var(--k)); }
+.o-ring { fill: none; stroke: var(--sun-ring); stroke-width: 2; stroke-linecap: round; }
+.blr.is-moon .o-ring { stroke: var(--moon-ring); }
+.o-ring--0 { stroke-dasharray: 4 3; } .o-ring--1 { stroke-dasharray: 6 4; opacity: 0.8; } .o-ring--2 { stroke-dasharray: 7 6; opacity: 0.6; } .o-ring--3 { stroke-dasharray: 5 9; opacity: 0.4; }
+.o-sun { fill: var(--sun); } .o-moon { fill: var(--moon); opacity: 0; }
+.blr.is-moon .o-sun { opacity: 0; } .blr.is-moon .o-moon { opacity: 1; }
+
+/* movers */
+.blr__mover { position: absolute; left: 0; overflow: visible; }
+.blr__metro { bottom: calc(78px * var(--k)); width: calc(322px * var(--k)); height: calc(21px * var(--k)); }
+.blr__auto { bottom: calc(0.5px * var(--k)); width: calc(50px * var(--k)); height: calc(34px * var(--k)); }
+.blr__seller { bottom: calc(3px * var(--k)); width: calc(70px * var(--k)); height: calc(46px * var(--k)); }
+.blr__cloud { width: calc(90px * var(--k)); height: calc(30px * var(--k)); transition: opacity 1.2s; }
+.blr__cloud--a { bottom: calc(128px * var(--k)); }
+.blr__cloud--b { bottom: calc(104px * var(--k)); width: calc(64px * var(--k)); height: calc(21.3px * var(--k)); }
+.blr[data-sky="night"] .blr__cloud { opacity: 0.4; }
+.c-fill { fill: var(--bg); } .c-1, .c-2 { fill: none; stroke-width: 1.5; stroke-linecap: round; } .c-1 { stroke: var(--cloud1); } .c-2 { stroke: var(--cloud2); }
+.blr__kite { position: absolute; width: calc(14px * var(--k)); height: calc(5px * var(--k)); opacity: 0; transition: opacity 1.2s; }
+.blr__kite svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.blr__kite path { fill: none; stroke: var(--ink2); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+.blr__kite--a { left: 33%; top: calc(36px * var(--k)); }
+.blr__kite--b { left: 64%; top: calc(24px * var(--k)); }
+.blr[data-sky="day"] .blr__kite, .blr[data-sky="dawn"] .blr__kite, .blr[data-sky="dusk"] .blr__kite { opacity: 1; }
+
+/* the metro */
+.m-body { fill: var(--steel); } .m-pur { fill: var(--purple); } .m-door { fill: var(--steel-2); } .m-roof { fill: var(--steel-3); } .m-gang { fill: #2c2e34; }
+.m-glass { fill: var(--mglass); } .m-win { fill: var(--mwin); transition: fill 1s; } .m-pax { fill: rgba(15, 15, 25, 0.55); }
+.m-ink { fill: none; stroke: var(--ink1); stroke-width: 0.55; stroke-linejoin: round; }
+.m-lamp { fill: #fff6d0; } .m-tail { fill: #e0442f; } .blr__beam { opacity: 0; transition: opacity 1s; } .beam-0 { stop-color: var(--beam); stop-opacity: 0.45; } .beam-1 { stop-color: var(--beam); stop-opacity: 0; }
+.blr[data-sky="night"] .blr__beam, .blr[data-sky="dusk"] .blr__beam { opacity: 1; }
+/* the auto */
+.a-in { fill: rgba(20, 20, 25, 0.6); } .a-khaki { fill: #b89a62; } .a-shirt { fill: #5b8fd0; } .a-skin { fill: #9c6a48; } .a-hair { fill: #1d1a1a; }
+.a-hood { fill: #f2c230; } .a-body { fill: #2f8f55; } .a-lemon { fill: #f4e04a; } .a-lamp { fill: #fff3c4; } .a-tail { fill: #e0442f; }
+.a-line, .a-stitch, .a-glass, .a-nimbu, .a-chilli, .a-ink, .a-spoke { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.a-line { stroke: #55555c; stroke-width: 0.9; } .a-stitch { stroke: rgba(0, 0, 0, 0.3); stroke-width: 0.5; stroke-dasharray: 1 1; }
+.a-glass { stroke: rgba(190, 220, 240, 0.85); stroke-width: 1.4; } .a-nimbu { stroke: #6b5a3a; stroke-width: 0.4; } .a-chilli { stroke: #2f9a3a; stroke-width: 0.7; }
+.a-ink { stroke: var(--ink1); stroke-width: 0.7; }
+.a-tyre { fill: #1f1f22; stroke: var(--ink1); stroke-width: 0.6; } .a-hub { fill: #a9a9a9; } .a-spoke { stroke: #4a4a50; stroke-width: 0.6; }
+/* the flower seller and her cart */
+.f-u1 { fill: #d84a3a; } .f-u2 { fill: #2f6fc0; } .f-u3 { fill: #f1c23a; } .f-u4 { fill: #2e9a5e; }
+.f-mari { fill: #f39a1f; } .f-jas { fill: #f4f0e2; } .f-rose { fill: #cf3a50; } .f-cart { fill: #a8713e; }
+.f-sari { fill: #b8326e; } .f-border { fill: #e4b440; } .f-blouse { fill: #2f8a64; } .f-skin { fill: #9c6a48; } .f-hairc { fill: #1d1a1a; }
+.f-wood, .f-rod, .f-garland, .f-garland-w, .f-ink, .f-mari2, .f-jas2, .f-rose2, .f-leaf, .f-rim, .f-spoke, .f-pleat, .f-border-line, .f-arm, .f-bangle, .f-jasmine, .f-foot { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.f-wood { stroke: #a8713e; stroke-width: 1.2; } .f-rod { stroke: #8a5a30; stroke-width: 0.8; } .f-garland { stroke: #f39a1f; stroke-width: 1.5; } .f-garland-w { stroke: #f6f2e4; stroke-width: 1.4; }
+.f-ink { stroke: var(--ink1); stroke-width: 0.6; } .f-mari2 { stroke: #fbc93c; stroke-width: 1.6; } .f-jas2 { stroke: #dfe8c9; stroke-width: 1.3; } .f-rose2 { stroke: #8e1f33; stroke-width: 1.4; }
+.f-leaf { stroke: #4a9a4a; stroke-width: 1; } .f-rim { stroke: var(--ink1); stroke-width: 1; } .f-spoke { stroke: var(--ink2); stroke-width: 0.45; }
+.f-pleat { stroke: rgba(0, 0, 0, 0.3); stroke-width: 0.5; } .f-border-line { stroke: #e4b440; stroke-width: 0.8; } .f-arm { stroke: #9c6a48; stroke-width: 1.3; }
+.f-bangle { stroke: #e4b440; stroke-width: 1.6; } .f-jasmine { stroke: #fff; stroke-width: 1.3; } .f-foot { stroke: #9c6a48; stroke-width: 1.1; }
+
+/* motion */
+.blr__metro { animation: blr-ltr var(--t-metro, 25s) linear infinite calc(var(--t-metro, 25s) * -0.3); }
+.blr__auto { animation: blr-rtl var(--t-auto, 18s) linear infinite calc(var(--t-auto, 18s) * -0.25); }
+.blr__seller { animation: blr-ltr var(--t-seller, 95s) linear infinite calc(var(--t-seller, 95s) * -0.38); }
+.blr__cloud--a { animation: blr-ltr var(--t-cloud, 220s) linear infinite calc(var(--t-cloud, 220s) * -0.42); }
+.blr__cloud--b { animation: blr-ltr var(--t-cloud, 220s) linear infinite calc(var(--t-cloud, 220s) * -0.86); }
+.blr__kite--a { animation: blr-wheel 24s linear infinite; } .blr__kite--b { animation: blr-wheel 31s linear infinite reverse; }
+.blr__bump { animation: blr-bump 0.38s ease-in-out infinite alternate; }
+.a-wheel, .f-wheel { transform-box: view-box; }
+.a-wheel { animation: blr-spin 0.28s linear infinite reverse; } .f-wheel { animation: blr-spin 2.1s linear infinite; }
+.f-walker { animation: blr-bump 0.45s ease-in-out infinite alternate; }
+.f-hem { transform-box: view-box; transform-origin: 15.8px 27px; animation: blr-sway 0.9s ease-in-out infinite alternate; }
+.f-foot--a { animation: blr-step 0.9s ease-in-out infinite alternate; } .f-foot--b { animation: blr-step 0.9s ease-in-out infinite alternate-reverse; }
+.blr__stars i:nth-child(3n) { animation-duration: 3.6s; } .blr__stars i:nth-child(3n + 1) { animation-duration: 6.2s; }
+.blr:not(.is-on) *, .blr:not(.is-on) { animation-play-state: paused !important; }
+@keyframes blr-ltr { from { transform: translateX(-100%); } to { transform: translateX(100vw); } }
+@keyframes blr-rtl { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
+@keyframes blr-bump { to { transform: translateY(-0.6px); } }
+@keyframes blr-spin { to { transform: rotate(360deg); } }
+@keyframes blr-sway { from { transform: skewX(-3deg); } to { transform: skewX(3deg); } }
+@keyframes blr-step { from { transform: translateX(-1.2px); } to { transform: translateX(1.2px); } }
+@keyframes blr-twinkle { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.55); } }
+@keyframes blr-wheel { from { transform: rotate(0deg) translateX(26px) rotate(0deg); } to { transform: rotate(360deg) translateX(26px) rotate(-360deg); } }
+/* reduced motion: a still scene, everyone parked in view */
+@media (prefers-reduced-motion: reduce) {
+  .blr *, .blr { animation: none !important; }
+  .blr__metro { transform: translateX(14vw); } .blr__seller { transform: translateX(30vw); } .blr__auto { transform: translateX(62vw); }
+  .blr__cloud--a { transform: translateX(22vw); } .blr__cloud--b { transform: translateX(70vw); }
+}
