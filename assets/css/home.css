@@ -55,6 +55,16 @@
   }
   .mail:hover .mail__pop, .mail:focus-within .mail__pop { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
 }
+/* on touch screens a tap on Email opens the same box below the row; a tap anywhere else closes it (intro.js) */
+@media (hover: none) {
+  .reach__row { position: relative; }
+  .mail { position: static; }
+  .mail__pop {
+    display: block; position: absolute; left: 0; top: 100%; z-index: 5; padding-top: 0.7rem;
+    opacity: 0; visibility: hidden; transform: translateY(0.3rem); transition: opacity 0.2s var(--ease), transform 0.2s var(--ease), visibility 0s linear 0.2s;
+  }
+  .mail.is-open .mail__pop { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+}
 .mail__box {
   display: flex; align-items: center; gap: 0.6rem; padding: 0.3rem 0.3rem 0.3rem 0.8rem; border: 1px solid var(--line-strong); border-radius: 999px;
   background: var(--surface); box-shadow: 0 12px 30px -16px rgba(0, 0, 0, 0.55); color: var(--ink-2); font-size: var(--fs-small); white-space: nowrap;

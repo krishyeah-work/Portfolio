@@ -213,6 +213,12 @@ a:hover { color: var(--accent); }
   .nav a { padding: 0.875rem 0; border-bottom: 1px solid var(--line); color: var(--ink-2); }
   .nav a:last-child { border-bottom: 0; }
   .nav__pill { display: none; }
+  /* with the menu open, the page behind dims almost away; a tap on it closes the menu (site.js) */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 45; background: rgba(var(--bg-rgb), 0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    opacity: 0; visibility: hidden; transition: opacity 0.3s var(--ease), visibility 0s linear 0.3s;
+  }
+  .nav-open body::before { opacity: 1; visibility: visible; transition: opacity 0.3s var(--ease), visibility 0s; }
   /* without scripts the menu button does nothing, so the links stay visible in a row */
   html:not(.has-js) .nav { position: static; display: flex; visibility: visible; opacity: 1; transform: none; padding: 0; background: none; border: 0; font-size: 0.9rem; }
   html:not(.has-js) .nav a { padding: 0.3125rem 0.375rem; border: 0; }

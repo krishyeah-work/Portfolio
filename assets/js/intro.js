@@ -34,6 +34,13 @@
   }
 
   // ---------- copy the email address ----------
+  // on touch screens a tap on Email opens the address and Copy button instead of the mail app; tapping elsewhere closes it
+  if (matchMedia("(hover: none)").matches) {
+    document.querySelectorAll(".mail").forEach((mail) => {
+      mail.querySelector("a").addEventListener("click", (e) => { e.preventDefault(); mail.classList.toggle("is-open"); });
+      document.addEventListener("pointerdown", (e) => { if (!mail.contains(e.target)) mail.classList.remove("is-open"); });
+    });
+  }
   document.querySelectorAll("[data-copy]").forEach((btn) => {
     let timer = 0;
     btn.addEventListener("click", async () => {

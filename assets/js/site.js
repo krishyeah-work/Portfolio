@@ -122,13 +122,14 @@ const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!btn || !nav) return;
   const set = (open) => {
     header.classList.toggle("is-open", open);
+    document.documentElement.classList.toggle("nav-open", open); // dims the page behind the menu (base.css)
     btn.setAttribute("aria-expanded", String(open));
     btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
   };
   btn.addEventListener("click", () => set(!header.classList.contains("is-open")));
   nav.addEventListener("click", (e) => { if (e.target.closest("a")) set(false); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && header.classList.contains("is-open")) { set(false); btn.focus(); } });
-  document.addEventListener("click", (e) => { if (!header.contains(e.target)) set(false); });
+  document.addEventListener("pointerdown", (e) => { if (!header.contains(e.target)) set(false); }); // pointerdown: phones send no click for taps on plain page areas
   matchMedia("(min-width: 700px)").addEventListener?.("change", () => set(false));
 })();
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&*+=/<>";
