@@ -1,11 +1,36 @@
-/* home.css — homepage only (intro, work cards, approach). "More about me" lives on /about/ (about.css). */
+/* home.css — homepage only (intro, work cards; approach is held back for now). "More about me" lives on /about/ (about.css). */
 
-/* ---------- intro: four short lines and the ways to reach me, centred in the first screen ---------- */
-.intro { position: relative; display: grid; align-items: center; min-height: calc(100svh - 65px); padding-block: 56px 88px; text-align: center; scroll-margin-top: 80px; }
-.intro__lead { display: grid; gap: 0.35em; max-width: 25em; margin-inline: auto; font-size: clamp(1.4rem, 1rem + 1.55vw, 2.3rem); font-weight: 500; line-height: 1.24; letter-spacing: -0.026em; text-wrap: balance; }
-.intro__line { display: block; color: var(--muted); }
-.intro__line:first-child { color: var(--ink); }
-.intro__reach { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px 34px; margin-top: clamp(36px, 4.5vw, 52px); font-size: 1.2rem; }
+/* ---------- intro: four short lines about me and the ways to reach me; the work starts just below, in view ---------- */
+/* the intro fills the first screen except a strip at the bottom (--peek) where the work starts, under a fade */
+.intro { --peek: clamp(8rem, 30vh, 22rem); position: relative; display: grid; align-content: center; min-height: calc(100svh - 4.0625rem - var(--peek)); padding-block: clamp(4rem, 14vh, 10rem) 1.5rem; scroll-margin-top: 5rem; }
+.intro .wrap { max-width: calc(46rem + 2 * var(--gutter)); }
+.intro__text { display: grid; gap: 0.7em; font-size: clamp(1.125rem, 0.95rem + 0.55vw, 1.5rem); font-weight: 400; line-height: 1.7; letter-spacing: -0.011em; color: var(--ink-2); }
+.intro__text p { text-wrap: pretty; }
+/* names, links and set phrases never break across two lines */
+.intro__text a, .intro__text .u, .intro__text .nb { white-space: nowrap; }
+/* underlines stay muted: links to more about me (and the two marked for later, which will open photos or notes) */
+/* drawn as one line under the whole phrase (a text underline would break and overlap at every letter span) */
+@property --ul { syntax: "<color>"; inherits: true; initial-value: transparent; }
+.intro__text a, .intro__text .u {
+  --ul: var(--line-strong); color: var(--ink); text-decoration: none;
+  background: linear-gradient(var(--ul), var(--ul)) 0 100% / 100% 1px no-repeat;
+  transition: --ul 0.3s var(--ease), color 0.3s var(--ease);
+}
+.intro__text a:hover, .intro__text a:focus-visible { --ul: var(--muted); color: var(--ink); }
+.intro__text .u { cursor: default; }
+/* letters thicken near the pointer (intro.js sets --t from 0 to 1). An outline stroke thickens each letter without
+   changing its width, so the words around it never move */
+.intro__text .c { -webkit-text-stroke: calc(var(--t, 0) * 0.034em) currentColor; }
+/* on load the words come into focus one after another (intro.js wraps them); hidden until then, shown anyway after 3s */
+.intro-wait .intro__text { opacity: 0; animation: intro-show 0s 3s forwards; }
+@keyframes intro-show { to { opacity: 1; } }
+.intro__text .w { animation: intro-word 0.9s var(--ease) both; animation-delay: calc(0.1s + var(--wi) * 16ms); }
+@keyframes intro-word { from { opacity: 0; filter: blur(6px); } to { opacity: 1; filter: blur(0); } }
+/* reach me on the left, the résumé pushed to the right, each with a small caption above */
+.intro__reach { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 1.75rem 3rem; margin-top: clamp(2.25rem, 5vh, 3rem); font-size: 1.1rem; }
+.reach { display: grid; gap: 0.6rem; justify-items: start; }
+.reach__cap { color: var(--muted); font-size: var(--fs-small); }
+.reach__row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.75rem; }
 /* links underlined as if by a fine pencil, at the weight of the text: grey at rest, ink on hover */
 .intro__reach a { position: relative; color: var(--ink); text-decoration: none; }
 .intro__reach a::after {
@@ -13,41 +38,86 @@
   transition: background-color 0.25s var(--ease), opacity 0.25s var(--ease);
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10' preserveAspectRatio='none'%3E%3Cpath d='M1.5 6.4C18 4.7 34 7 52 5.7S88 4.5 106 5.6s11 .3 12.5-.6' fill='none' stroke='%23000' stroke-width='1.4' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M9 7.6c31-1.3 62 0 103-1.2' fill='none' stroke='%23000' stroke-opacity='.45' stroke-width='1' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") no-repeat 0 0 / 100% 100%; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10' preserveAspectRatio='none'%3E%3Cpath d='M1.5 6.4C18 4.7 34 7 52 5.7S88 4.5 106 5.6s11 .3 12.5-.6' fill='none' stroke='%23000' stroke-width='1.4' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M9 7.6c31-1.3 62 0 103-1.2' fill='none' stroke='%23000' stroke-opacity='.45' stroke-width='1' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") no-repeat 0 0 / 100% 100%;
 }
-.intro__reach a:nth-of-type(2)::after { transform: scaleX(-1) translateY(1px); }
+.mail > a::after { transform: scaleX(-1) translateY(1px); }
 .intro__reach a:hover::after, .intro__reach a:focus-visible::after { background: var(--ink); opacity: 1; }
 /* a fuller marker on the contact links after a jump to Contact (site.js) */
 .intro__reach .hl-ghost__t { padding: 0.14em 0.32em; margin: 0 -0.32em; }
-.intro__note { padding: 4px 10px; border: 1px dashed var(--line-strong); border-radius: 4px; color: var(--muted); font-size: 0.85rem; }
-.intro__next { display: inline-flex; gap: 8px; margin-top: clamp(44px, 7vh, 72px); color: var(--muted); font-size: var(--fs-small); text-decoration: none; }
+.intro__note { padding: 0.25rem 0.625rem; border: 1px dashed var(--line-strong); border-radius: 4px; color: var(--muted); font-size: 0.85rem; }
+/* hovering Email shows the address with a copy button (intro.js), for anyone who'd rather paste it than open a mail app.
+   Mouse and keyboard only: on phones a long press on the link already offers to copy it. */
+.mail { position: relative; display: inline-block; }
+.mail__pop { display: none; }
+@media (hover: hover) {
+  .mail__pop {
+    display: block; position: absolute; left: -0.9rem; top: 100%; z-index: 5; padding-top: 0.8rem; /* the gap is part of it, so the pointer can cross */
+    opacity: 0; visibility: hidden; transform: translateY(0.3rem);
+    transition: opacity 0.2s var(--ease) 0.12s, transform 0.2s var(--ease) 0.12s, visibility 0s linear 0.32s;
+  }
+  .mail:hover .mail__pop, .mail:focus-within .mail__pop { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+}
+.mail__box {
+  display: flex; align-items: center; gap: 0.6rem; padding: 0.3rem 0.3rem 0.3rem 0.8rem; border: 1px solid var(--line-strong); border-radius: 999px;
+  background: var(--surface); box-shadow: 0 12px 30px -16px rgba(0, 0, 0, 0.55); color: var(--ink-2); font-size: var(--fs-small); white-space: nowrap;
+}
+.mail__copy {
+  padding: 0.3rem 0.75rem; border: 0; border-radius: 999px; background: var(--ink); color: var(--bg); font: inherit; font-weight: 500; cursor: pointer;
+  transition: transform 0.2s var(--ease), background-color 0.25s var(--ease);
+}
+.mail__copy:hover { transform: scale(1.04); }
+.mail__copy.is-done { background: #3f9a5f; color: #fff; }
+/* "Selected work ↓" sits under the contact row and leaves once you scroll (intro.js); on wider screens the bottom of the
+   window fades into the page, so the work below reads as a sneak peek */
+.peek-cue { margin-top: clamp(2.5rem, 7vh, 4.5rem); transition: opacity 0.5s var(--ease), transform 0.5s var(--ease), visibility 0s; }
+.intro__next { display: inline-flex; gap: 0.5rem; color: var(--muted); font-size: var(--fs-small); text-decoration: none; }
 .intro__next:hover { color: var(--ink); }
-.intro__next span { transition: transform 0.25s var(--ease); }
-.intro__next:hover span { transform: translateY(3px); }
-.intro__line, .intro__reach, .intro__next { animation: intro-in 0.8s var(--ease) both; animation-delay: calc(0.12s + var(--i) * 0.14s); }
+.intro__next span { transition: transform 0.3s var(--ease); }
+.intro__next:hover span, .intro__next:focus-visible span { transform: translateY(3px); }
+.is-scrolled .peek-cue { opacity: 0; visibility: hidden; transform: translateY(-0.5rem); transition: opacity 0.5s var(--ease), transform 0.5s var(--ease), visibility 0s linear 0.5s; }
+@media (min-width: 700px) and (min-height: 560px) {
+  .intro::after {
+    content: ""; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; height: clamp(6rem, 19vh, 11rem); pointer-events: none;
+    background: linear-gradient(to bottom, rgba(var(--bg-rgb), 0), rgba(var(--bg-rgb), 0.6) 50%, var(--bg) 92%); transition: opacity 0.5s var(--ease);
+  }
+  .is-scrolled .intro::after { opacity: 0; }
+}
+.intro__reach { animation: intro-in 0.8s var(--ease) both; animation-delay: calc(0.55s + var(--i) * 0.14s); }
 @keyframes intro-in { from { opacity: 0; transform: translateY(10px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
-@media (prefers-reduced-motion: reduce) { .intro__line, .intro__reach, .intro__next { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .intro__text .w, .intro__reach { animation: none; } }
+
+/* first visit in a session: the nav and the work wait while the intro is read, then come into view (intro.js;
+   the inline script in index.html shows them anyway after 4.5s). Scrolling or pressing a key brings them in at once. */
+/* the fade belongs to the reveal only, so on load they are simply hidden, never fading out first */
+.first-visit.intro-ready .site-header, .first-visit.intro-ready #work, .first-visit.intro-ready .peek-cue { transition: opacity 1.6s var(--ease), filter 1.6s var(--ease), transform 1.6s var(--ease); }
+.first-visit.intro-quick .site-header, .first-visit.intro-quick #work, .first-visit.intro-quick .peek-cue { transition-duration: 0.5s; }
+.first-visit:not(.intro-ready) .site-header { opacity: 0; filter: blur(6px); }
+.first-visit:not(.intro-ready) .peek-cue { opacity: 0; }
+.first-visit:not(.intro-ready) #work { opacity: 0; transform: translateY(1.25rem); }
 
 
 /* ---------- work cards ---------- */
-.work-list { list-style: none; display: grid; gap: clamp(48px, 7vw, 96px); }
-.card { display: grid; gap: 28px; text-decoration: none; color: inherit; }
+/* the work starts in the first screen, under the intro, with its heading on one line */
+#work { padding-top: clamp(2rem, 5vh, 4rem); scroll-margin-top: 6rem; } /* a jump to the work leaves room under the nav */
+@media (min-width: 900px) { #work .section-head { grid-template-columns: minmax(0, 1fr); } }
+.work-list { list-style: none; display: grid; gap: clamp(3rem, 7vw, 6rem); }
+.card { display: grid; gap: 1.75rem; text-decoration: none; color: inherit; }
 .card:hover { color: inherit; }
 @media (min-width: 900px) {
-  .card { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 56px; align-items: center; }
+  .card { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 3.5rem; align-items: center; }
   .work-list li:nth-child(even) .card { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
   .work-list li:nth-child(even) .card .card__art { order: 2; }
 }
 .card__art {
   position: relative; overflow: hidden; aspect-ratio: 16 / 11; border-radius: var(--radius);
   background: var(--surface); border: 1px solid var(--line);
-  display: grid; place-items: center; padding: clamp(18px, 3.5vw, 40px);
+  display: grid; place-items: center; padding: clamp(1.125rem, 3.5vw, 2.5rem);
   transition: border-color 0.3s var(--ease);
 }
 .card:hover .card__art { border-color: var(--line-strong); }
 .card__art .shot { width: 100%; transition: transform 0.6s var(--ease); }
 .card:hover .card__art .shot { transform: translateY(-6px); }
 .card__art--mc { background: radial-gradient(120% 90% at 80% 0%, rgba(245, 196, 81, 0.18), transparent 60%), var(--surface); }
-.card__body { display: grid; gap: 14px; align-content: start; }
-.card__meta { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.card__body { display: grid; gap: 0.875rem; align-content: start; }
+.card__meta { display: flex; flex-wrap: wrap; gap: 0.5rem 1.125rem; }
 .card__title { font-size: clamp(1.7rem, 1.2rem + 1.6vw, 2.4rem); letter-spacing: -0.025em; transition: color 0.3s var(--ease); }
 .card__title .arrow { display: inline-block; color: inherit; transition: transform 0.25s var(--ease); }
 .card:hover .card__title .arrow, .card:focus-visible .card__title .arrow { transform: translateX(6px); }
@@ -55,26 +125,26 @@
 .card:hover .card__title, .card:focus-visible .card__title { color: var(--proj, var(--accent)); }
 .card:hover .card__art, .card:focus-visible .card__art { border-color: color-mix(in srgb, var(--proj, var(--accent)) 40%, transparent); }
 .card__desc { color: var(--muted); max-width: 32em; }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-.chip { font-size: 0.78rem; font-weight: 400; border: 1px solid var(--line-strong); border-radius: 999px; padding: 5px 12px; color: var(--ink-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.25rem; }
+.chip { font-size: 0.78rem; font-weight: 400; border: 1px solid var(--line-strong); border-radius: 999px; padding: 0.3125rem 0.75rem; color: var(--ink-2); }
 .chip--status { border-color: rgba(245, 196, 81, 0.5); color: var(--accent); background: var(--accent-soft); }
-.chip--status::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-right: 8px; vertical-align: 2px; }
+.chip--status::before { content: ""; display: inline-block; width: 0.375rem; height: 0.375rem; border-radius: 50%; background: var(--accent); margin-right: 0.5rem; vertical-align: 2px; }
 
 .card__art--nt { background: radial-gradient(120% 90% at 20% 0%, rgba(35, 108, 255, 0.2), transparent 60%), var(--surface); }
 
-.more { margin-top: clamp(56px, 7vw, 96px); border-top: 1px solid var(--line-strong); list-style: none; }
-.more li { display: grid; gap: 4px 24px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.more { margin-top: clamp(3.5rem, 7vw, 6rem); border-top: 1px solid var(--line-strong); list-style: none; }
+.more li { display: grid; gap: 0.25rem 1.5rem; padding: 1.125rem 0; border-bottom: 1px solid var(--line); }
 @media (min-width: 720px) { .more li { grid-template-columns: 1fr auto; align-items: baseline; } }
 .more h3 { font-size: 1.1rem; font-weight: 400; letter-spacing: -0.01em; }
 
 /* ---------- approach ---------- */
 .steps { list-style: none; border-top: 1px solid var(--line-strong); }
-.step { display: grid; gap: 10px 32px; padding: 26px 0; border-bottom: 1px solid var(--line); }
-@media (min-width: 900px) { .step { grid-template-columns: 64px minmax(0, 3fr) minmax(0, 4fr) minmax(0, 4fr); align-items: baseline; } }
+.step { display: grid; gap: 0.625rem 2rem; padding: 1.625rem 0; border-bottom: 1px solid var(--line); }
+@media (min-width: 900px) { .step { grid-template-columns: 4rem minmax(0, 3fr) minmax(0, 4fr) minmax(0, 4fr); align-items: baseline; } }
 .step__n { font-size: var(--fs-label); font-weight: 500; color: var(--accent); letter-spacing: 0.08em; }
 .step h3 { font-size: var(--fs-h3); }
 .step p { color: var(--ink-2); }
-.step .who { display: block; margin-bottom: 4px; }
+.step .who { display: block; margin-bottom: 0.25rem; }
 .step .ai { color: var(--muted); }
-.approach-note { margin-top: 32px; color: var(--muted); max-width: 46em; }
+.approach-note { margin-top: 2rem; color: var(--muted); max-width: 46em; }
 

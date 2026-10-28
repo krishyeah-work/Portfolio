@@ -483,11 +483,13 @@
     back + metro + front + seller + auto;
   footer.before(strip);
 
-  // scale: 1 on desktop, 0.72 on phones, and larger on screens wider than the drawing so the movers stay on their ground.
+  // scale: 1 on wide monitors, smaller on laptops like the rest of the site, 0.72 on phones, and larger on screens wider
+  // than the drawing so the movers stay on their ground.
   // Speeds stay true on any screen: the metro 50 km/h, the auto 18 km/h in traffic, the seller walking, clouds drifting.
   const phone = window.matchMedia("(max-width: 599px)");
   const pace = () => {
-    const w = strip.clientWidth, k = Math.max(phone.matches ? 0.72 : 1, w / (X1 - X0));
+    const z = (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16) / 16; // smaller on laptops (base.css)
+    const w = strip.clientWidth, k = Math.max(Math.min(phone.matches ? 0.72 : 1, z), w / (X1 - X0));
     strip.style.setProperty("--k", k.toFixed(3));
     const set = (name, px, speed) => strip.style.setProperty(name, `${((w + px * k) / (speed * k)).toFixed(1)}s`);
     set("--t-metro", 330, 70); set("--t-auto", 84, 90); set("--t-seller", 72, 16); set("--t-cloud", 92, 7);

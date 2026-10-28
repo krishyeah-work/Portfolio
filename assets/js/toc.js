@@ -86,11 +86,13 @@ if (crumb && toc && back) {
   };
 
   const wides = [...document.querySelectorAll("[data-wide]")];
-  const TOP = 104, GAP = 40, EDGE = 16;
+  const rem = () => parseFloat(getComputedStyle(document.documentElement).fontSize) || 16; // smaller on laptops (base.css)
+  const GAP = 40, EDGE = 16;
+  let TOP = 104; // the rail's top: 6.5rem in case-study.css
   const makeRoom = () => {
     let shift = 0, cramped = false;
     if (rail.matches) {
-      const home = document.documentElement.clientWidth / 2 - 796; // the contents' usual left edge (see case-study.css)
+      const home = document.documentElement.clientWidth / 2 - 49.75 * rem(); // the contents' usual left edge (see case-study.css)
       const bottom = TOP + toc.offsetHeight;
       wides.forEach((el) => {
         const r = el.getBoundingClientRect();
@@ -106,6 +108,7 @@ if (crumb && toc && back) {
 
   const update = () => {
     const next = wide.matches && window.scrollY > 60;
+    TOP = 6.5 * rem();
     if (rail.matches && article) toc.classList.toggle("is-past", article.getBoundingClientRect().bottom < TOP + toc.offsetHeight + 40);
     makeRoom();
     if (next === away) return;

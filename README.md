@@ -12,6 +12,7 @@ about/index.html               More about me: story, experience, education, tool
 404.html
 assets/
   css/base.css                 Shared: tokens (dark + light themes), type, header and phone menu, footer, buttons, screenshot frame
+                               Sizes are in rem; with a mouse or trackpad 1rem shrinks on laptop-width windows (12px up to 1440px wide, 16px from 2400px)
   css/home.css                 Home page only
   css/about.css                About page only
   css/case-study.css           Shared case-study layout and components (carousel, lightbox, toc, reveal, "Also check out"…)
@@ -21,6 +22,8 @@ assets/
                                light/dark switch, phone menu, arrival highlight (marker on the heading you
                                jumped to; colour from --hl; [data-hl-group] + [data-hl] for groups of links)
   js/bangalore.js              Van Gogh-style Bangalore above every footer, drawn to scale; sky follows Bangalore time (?sky=dawn|day|dusk|night to preview)
+  js/intro.js                  Home intro: words fade in on load, then (first visit per session) the nav and the work;
+                               letters near the pointer thicken along that line (mouse only); Email hover copies the address
   js/about.js                  About page: loads the Spotify player only when "Listen here" is pressed
   js/clock.js                  Live Bengaluru clock, 12-hour, with sliding digits ([data-clock])
   js/pal.js                    Pal: asleep 11:00 PM–6:30 AM IST, local-language hello ([data-pal]); ?pal=awake|asleep to preview

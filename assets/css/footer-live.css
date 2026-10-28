@@ -36,7 +36,7 @@
 }
 .pal-target:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: var(--radius); }
 .pal-target:hover { --pal-ink: var(--ink-2); }
-.pal { display: flex; flex-direction: column; align-items: center; gap: 0; font: 600 19px/1.02 "SFMono-Regular", Consolas, "Liberation Mono", monospace; letter-spacing: -0.08em; transform-origin: 50% 80%; animation: pal-float 2.7s ease-in-out infinite; user-select: none; }
+.pal { display: flex; flex-direction: column; align-items: center; gap: 0; font: 600 1.1875rem/1.02 "SFMono-Regular", Consolas, "Liberation Mono", monospace; letter-spacing: -0.08em; transform-origin: 50% 80%; animation: pal-float 2.7s ease-in-out infinite; user-select: none; }
 .pal .ears { display: flex; align-items: center; height: 1.02em; width: 4.55ch; padding-left: 1ch; gap: 0; white-space: pre; }
 .pal .ear { display: inline-block; width: 1.75ch; font-size: 1.1em; font-weight: inherit; letter-spacing: -0.3em; transform-origin: 55% 90%; }
 .pal .ear.left { animation: pal-ear-left 3.4s ease-in-out infinite; }
@@ -63,9 +63,9 @@
 
 /* the bubble opens to the right of Pal, and to the left on phones, where Pal sits at the right edge, so it never runs off the screen */
 .pal-target .bubble {
-  position: absolute; z-index: 2; left: -6px; bottom: calc(100% + 4px); width: max-content; max-width: min(250px, 72vw);
+  position: absolute; z-index: 2; left: -6px; bottom: calc(100% + 4px); width: max-content; max-width: min(15.625rem, 72vw);
   padding: 9px 12px; border: 1px solid var(--bubble-border); border-radius: var(--radius); background: var(--bubble-bg); color: var(--bubble-ink);
-  font: 500 13.5px/1.4 var(--font); text-align: left; white-space: normal; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+  font: 500 max(0.84rem, 12px)/1.4 var(--font); text-align: left; white-space: normal; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
   opacity: 0; visibility: hidden; transform: translateY(5px) scale(0.98); transform-origin: 10% 100%;
   transition: opacity 0.35s ease, transform 0.35s ease, visibility 0s linear 0.35s; pointer-events: none;
 }

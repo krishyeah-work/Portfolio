@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <script>(function(h){var t;try{t=localStorage.getItem("theme")}catch(e){}if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";h.setAttribute("data-theme",t)})(document.documentElement)</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>(function(h){h.classList.add("intro-wait");try{if(!sessionStorage.getItem("introSeen")&&!location.hash&&!matchMedia("(prefers-reduced-motion: reduce)").matches){h.classList.add("first-visit");setTimeout(function(){h.classList.add("intro-ready")},4500)}}catch(e){}})(document.documentElement)</script>
   <title>Krishna Revanth — UX Designer</title>
   <meta name="description" content="Krishna Revanth is a UX designer who makes purchase, billing and pricing experiences easier to understand. Recent work with Intuit's GTM Tech team on MailChimp and QuickBooks.">
   <meta property="og:title" content="Krishna Revanth — UX Designer">
@@ -14,15 +15,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..600&display=swap">
-  <link rel="stylesheet" href="/assets/css/base.css?v=20261026c">
-  <link rel="stylesheet" href="/assets/css/footer-live.css?v=20261028a">
+  <link rel="stylesheet" href="/assets/css/base.css?v=20261028l">
+  <link rel="stylesheet" href="/assets/css/footer-live.css?v=20261028b">
   <link rel="stylesheet" href="/assets/css/work-art.css?v=20261023c">
-  <link rel="stylesheet" href="/assets/css/home.css?v=20261027a">
+  <link rel="stylesheet" href="/assets/css/home.css?v=20261028k">
   <link rel="stylesheet" href="/work/mailchimp/cover.css?v=20261023c">
-  <script src="/assets/js/site.js?v=20261023c" defer></script>
+  <script src="/assets/js/site.js?v=20261028k" defer></script>
+  <script src="/assets/js/intro.js?v=20261028g" defer></script>
   <script src="/assets/js/clock.js?v=20261023b" defer></script>
   <script src="/assets/js/pal.js?v=20261023c" defer></script>
-  <script src="/assets/js/bangalore.js?v=20261028a" defer></script>
+  <script src="/assets/js/bangalore.js?v=20261028b" defer></script>
   <script src="/work/mailchimp/cover.js?v=20261023c" defer></script>
 </head>
 <body>
@@ -31,7 +33,7 @@
   <header class="site-header">
     <div class="wrap">
       <a class="brand" href="/" aria-label="Krishna Revanth, home">
-        <span class="brand-name" data-scramble-hover="KRISHNA">KRISHNA REVANTH</span>
+        <span class="brand-name" data-scramble-hover="KRISHNA REVANTH">KRISHNA</span>
       </a>
       <nav class="nav" id="site-nav" aria-label="Primary">
         <a href="#work">Work</a>
@@ -48,22 +50,46 @@
   </header>
 
   <main id="main">
-    <!-- ============ INTRO: a short introduction and the ways to reach me (the "Contact" target) ============ -->
+    <!-- ============ INTRO: who I am in four short lines, and the ways to reach me (the "Contact" target).
+         intro.js fades it in word by word and thickens the letters near the pointer. Underlined words link to more;
+         the two marked "later" will open photos or notes once they exist. Names never break across lines (.nb). ============ -->
     <section class="intro" id="contact" aria-labelledby="hero-title" data-hl-group data-hl-time="2500">
       <div class="wrap">
-        <h1 class="intro__lead" id="hero-title">
-          <span class="intro__line" style="--i: 0">Hi, I'm Krishna, a UX designer in Bangalore.</span>
-          <span class="intro__line" style="--i: 1">I design the moments customers commit to paying: carts, billing, invoices and pricing.</span>
-          <span class="intro__line" style="--i: 2">Most recently at Intuit, on MailChimp, QuickBooks and Intuit Enterprise Suite.</span>
-          <span class="intro__line" style="--i: 3">I prototype in code with AI, so ideas get tested, not just shown.</span>
-        </h1>
-        <div class="intro__reach" style="--i: 4">
-          <a href="https://www.linkedin.com/in/krishna-revanth/" target="_blank" rel="noopener noreferrer" data-hl>LinkedIn</a>
-          <a href="mailto:revanth.tallapaka@gmail.com" data-hl>Email</a>
-          <a href="/assets/Krishna-Revanth-Resume.pdf" target="_blank" rel="noopener" data-hl>Résumé</a>
-          <span class="intro__note">that's it, no other socials :)</span>
+        <h1 class="sr-only" id="hero-title">Krishna Revanth, UX designer</h1>
+        <div class="intro__text" data-ripple>
+          <p>I'm Krishna, based in Bangalore.</p>
+          <p>Currently, I'm a <span class="nb">UX designer</span> at Cognizant.</p>
+          <p>Previously, I worked with Intuit's design team on <a href="/work/mailchimp/">MailChimp</a>, <a href="/work/quickbooks-rate-tables/">QuickBooks</a> and <a href="/work/net-terms/">Intuit Enterprise Suite</a>, making buying, pricing and invoicing easier to understand.</p>
+          <p>Before that, I studied design at <a href="/about/#education">IIT Guwahati</a>, after training as an architect.</p>
+          <p>I'm curious by nature: lately that means <span class="u" data-later>building things with AI</span>, and away from the screen, <span class="u" data-later>travelling with a camera</span>.</p>
         </div>
-        <a class="intro__next" href="#work" style="--i: 5">Selected work <span aria-hidden="true">↓</span></a>
+        <!-- reach me (left) and the résumé (right). Hovering Email shows the address with a copy button (intro.js) -->
+        <div class="intro__reach" style="--i: 4">
+          <div class="reach">
+            <span class="reach__cap">reach out to me at</span>
+            <div class="reach__row">
+              <a href="https://www.linkedin.com/in/krishna-revanth/" target="_blank" rel="noopener noreferrer" data-hl>LinkedIn</a>
+              <span class="mail">
+                <a href="mailto:revanth.tallapaka@gmail.com" data-hl>Email</a>
+                <span class="mail__pop">
+                  <span class="mail__box">
+                    <span class="mail__addr">revanth.tallapaka@gmail.com</span>
+                    <button type="button" class="mail__copy" data-copy="revanth.tallapaka@gmail.com" aria-label="Copy email address">Copy</button>
+                  </span>
+                </span>
+              </span>
+              <span class="intro__note">that's it, no other socials :)</span>
+            </div>
+          </div>
+          <div class="reach reach--cv">
+            <span class="reach__cap">here's my</span>
+            <div class="reach__row">
+              <a href="/assets/Krishna-Revanth-Resume.pdf?v=20261028" download="Krishna-Revanth-Resume.pdf" data-hl>Résumé</a>
+            </div>
+          </div>
+        </div>
+        <!-- jump to the work; gone once you scroll (intro.js) -->
+        <div class="peek-cue"><a class="intro__next" href="#work">Selected work <span aria-hidden="true">↓</span></a></div>
       </div>
     </section>
 

@@ -162,22 +162,28 @@ function scramble(el, to, { duration = 700, upper = true } = {}) {
   el._scrDone = setTimeout(() => { cancelAnimationFrame(el._scr); el.textContent = to; }, duration + 150);
 }
 
-// Header name: hover shows "KRISHNA", leaving restores the full name.
-// The link keeps the full name's width, so the hover area never shrinks under the cursor
+// Header name: shows "KRISHNA"; hovering scrambles it into the full name, leaving turns it back.
+// The link keeps the longer name's width, so the hover area never changes under the cursor
 // (otherwise the pointer would "leave" mid-animation and the effect would loop).
 document.querySelectorAll("[data-scramble-hover]").forEach((el) => {
-  const full = el.textContent.trim();
-  const short = el.dataset.scrambleHover;
+  const rest = el.textContent.trim();
+  const hover = el.dataset.scrambleHover;
   const link = el.closest("a") || el;
-  const lock = () => { link.style.minWidth = ""; link.style.minWidth = `${Math.ceil(link.getBoundingClientRect().width)}px`; };
+  const lock = () => {
+    link.style.minWidth = "";
+    const now = el.textContent;
+    el.textContent = hover.length > rest.length ? hover : rest;
+    link.style.minWidth = `${Math.ceil(link.getBoundingClientRect().width)}px`;
+    el.textContent = now;
+  };
   lock();
   document.fonts?.ready.then(lock);
-  let shown = full;
+  let shown = rest;
   const show = (t, d) => { if (shown === t) return; shown = t; scramble(el, t, { duration: d }); };
-  link.addEventListener("pointerenter", () => show(short, 450));
-  link.addEventListener("pointerleave", () => show(full, 550));
-  link.addEventListener("focus", () => show(short, 450));
-  link.addEventListener("blur", () => show(full, 550));
+  link.addEventListener("pointerenter", () => show(hover, 550));
+  link.addEventListener("pointerleave", () => show(rest, 450));
+  link.addEventListener("focus", () => show(hover, 550));
+  link.addEventListener("blur", () => show(rest, 450));
 });
 
 // Animated tabs hover: a pill slides between nav links (vanilla take on motion-primitives' AnimatedBackground).
@@ -198,6 +204,7 @@ document.querySelectorAll(".nav").forEach((nav) => {
     pill.style.height = `${a.offsetHeight}px`;
     pill.style.transform = `translate(${a.offsetLeft}px, ${a.offsetTop}px)`;
     pill.classList.add("is-on");
+    nav.classList.add("has-pill"); // the pill takes over from the static mark (base.css)
     if (instant) { pill.offsetWidth; pill.style.transition = ""; }
   };
   links.forEach((a) => {
