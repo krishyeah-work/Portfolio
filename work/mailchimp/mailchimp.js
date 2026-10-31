@@ -165,3 +165,34 @@ document.querySelectorAll(".seq__tip-btn").forEach((btn) => {
   document.fonts?.ready.then(relayout);
   relayout();
 })();
+
+// Success measures: each figure counts up from zero (2× from 1×) when the band comes into view, rising into place,
+// so the results read as growth. The final value is in the HTML, so without scripts or with reduced motion it just shows.
+(() => {
+  const nums = [...document.querySelectorAll(".mb-num[data-to]")];
+  if (!nums.length || !("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const show = (el, v) => {
+    const step = parseFloat(el.dataset.step || "1"), to = parseFloat(el.dataset.to);
+    const text = v >= to ? String(to) : step < 1 ? v.toFixed(1) : String(Math.floor(v));
+    el.textContent = (el.dataset.prefix || "") + text + (el.dataset.suffix || "");
+  };
+  nums.forEach((el) => {
+    show(el, parseFloat(el.dataset.from || "0"));
+  });
+  const run = () => nums.forEach((el, i) => {
+    const from = parseFloat(el.dataset.from || "0"), to = parseFloat(el.dataset.to), start = performance.now() + i * 160, dur = 1400;
+    el.classList.add("is-counting");
+    const tick = (t) => {
+      const k = Math.min(1, Math.max(0, (t - start) / dur)), eased = 1 - Math.pow(1 - k, 3);
+      show(el, from + (to - from) * eased);
+      if (k < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  });
+  const io = new IntersectionObserver((entries) => {
+    if (!entries.some((e) => e.isIntersecting)) return;
+    io.disconnect();
+    run();
+  }, { threshold: 0.35 });
+  io.observe(nums[0].closest(".measures-band"));
+})();
