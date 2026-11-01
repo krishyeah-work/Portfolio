@@ -21,7 +21,11 @@ assets/
   js/site.js                   Every page: name scramble, nav hover pill, scroll-to-top, image retry,
                                light/dark switch, phone menu, arrival highlight (marker on the heading you
                                jumped to; colour from --hl; [data-hl-group] + [data-hl] for groups of links)
-  js/bangalore.js              Van Gogh-style Bangalore above every footer, drawn to scale; sky follows Bangalore time (?sky=dawn|day|dusk|night to preview)
+  js/bangalore.js              Bangalore above every footer, painted like Van Gogh on one canvas: the sky in rows of brush marks along a
+                               flow (whirls, rings round the sun or moon), every building and surface in marks lit from the upper right,
+                               Cubbon Park beside Vidhana Soudha; people, animals and vehicles outlined in Prussian blue and painted in
+                               brush marks, drawn once into small images; headlamps light the road after dark. The pointer paints a stroke
+                               that fades into the wind; the marks it nudges flow back in ~3 s. Light theme = day, dark = Starry Night
   js/intro.js                  Home intro: words fade in on load, then (first visit per session) the nav and the work;
                                letters near the pointer thicken along that line (mouse only); Email hover copies the address
   js/about.js                  About page: loads the Spotify player only when "Listen here" is pressed
@@ -68,7 +72,7 @@ portfolio-context/             Brief, case-study notes, decisions log (local onl
 | Clock | `assets/js/clock.js` + `assets/css/footer-live.css` |
 | Home page | `index.html` + `assets/css/home.css` |
 | About page (story, experience, education, tools, playlist) | `about/index.html` + `assets/css/about.css` |
-| Bangalore strip above the footer (skyline, movers, sky times) | `assets/js/bangalore.js` + the "Bangalore strip" block in `assets/css/footer-live.css` |
+| Bangalore strip above the footer (palettes, whirls, buildings, the garden, people and vehicles, headlamps, how stirring feels) | `assets/js/bangalore.js` (sections are headed `// ----------`); its height is the "Bangalore strip" block in `assets/css/footer-live.css` |
 
 ### Adding a new case study
 
