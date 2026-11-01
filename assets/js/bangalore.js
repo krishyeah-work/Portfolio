@@ -30,12 +30,14 @@
   strip.append(view);
   footer.before(strip);
 
-  const soon = new IntersectionObserver((entries) => {
-    if (!entries.some((e) => e.isIntersecting)) return;
-    soon.disconnect();
-    paint();
-  }, { rootMargin: "60% 0px" });
+  // paint once the page has loaded and the browser is idle, so it's ready before anyone scrolls down (or straight away
+  // if the footer comes near first); the work is split into small slices, so it never holds up the page
+  let started = false;
+  const start = () => { if (started) return; started = true; soon.disconnect(); paint(); };
+  const soon = new IntersectionObserver((entries) => { if (entries.some((e) => e.isIntersecting)) start(); }, { rootMargin: "100% 0px" });
   soon.observe(strip);
+  const idle = () => (window.requestIdleCallback ? requestIdleCallback(start, { timeout: 3000 }) : setTimeout(start, 1200));
+  if (document.readyState === "complete") idle(); else addEventListener("load", idle, { once: true });
 
   async function paint() {
     // ---------- the world, in drawing units (320 tall), centred on Vidhana Soudha ----------
@@ -382,19 +384,45 @@
       return t < 0.26 ? 0 : t < 0.48 ? 1 : t < 0.68 ? 2 : t < 0.87 ? 3 : 7;
     };
 
-    rnd = rng(5);
-    const skyDabs = [];
-    marks(await streamsSoon({ x0: X0, y0: 2, x1: X1, y1: SKY, flow: skyFlow, sep: 4.6,
-      inside: (x, y) => Math.hypot(x - ORB[0], y - ORB[1]) > 14 && whirls.every(([cx, cy]) => Math.abs(x - cx) + Math.abs(y - cy) > 3) && stars.every(([sx, sy]) => Math.hypot(x - sx, y - sy) > 13.5) }),
-    { len: 11.5, gap: 2.2, tone: skyTone, out: skyDabs, keep: (x, y) => y > 40 || rnd() < (y - 4) / 40 }); // the top thins out into the page
-    // each star wears two rings of broken strokes (by day they're little eddies)
-    for (const [sx, sy] of stars) for (const [rr, c] of [[5.8, 11], [10.2, 12]]) {
-      const n = Math.round((2 * Math.PI * rr) / 9), span = ((2 * Math.PI) / n) * 0.7, ph = rnd() * 6;
-      for (let k = 0; k < n; k++) {
-        const am = ph + (k / n) * 2 * Math.PI;
-        skyDabs.push(mark(sx + Math.cos(am) * rr, sy + Math.sin(am) * rr, am + Math.PI / 2, 2 * rr * Math.sin(span / 2), -rr * (1 - Math.cos(span / 2)), c));
+    // the sky's marks only as wide as the strip shows (its height is the clamp in footer-live.css); if the window grows
+    // past that, the sky is painted again, wider
+    const reach = (w) => w / 2 / Math.max(Math.min(400, Math.max(230, 0.15 * w + 100)) / H, w / (X1 - X0 - 40)) + 80;
+    // the wind worked out once on a grid and looked up between its points, rather than summed over every whirl at every step
+    const gridded = (fn, x0, y0, x1, y1, d) => {
+      const nx = Math.ceil((x1 - x0) / d) + 2, ny = Math.ceil((y1 - y0) / d) + 2, gx = new Float32Array(nx * ny), gy = new Float32Array(nx * ny);
+      for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) { const v = fn(x0 + i * d, y0 + j * d); gx[j * nx + i] = v[0]; gy[j * nx + i] = v[1]; }
+      return (x, y) => {
+        const fx = Math.max(0, Math.min(nx - 1.001, (x - x0) / d)), fy = Math.max(0, Math.min(ny - 1.001, (y - y0) / d)), i = fx | 0, j = fy | 0, u = fx - i, v = fy - j, k = j * nx + i;
+        const ax = gx[k] + (gx[k + 1] - gx[k]) * u, bx = gx[k + nx] + (gx[k + nx + 1] - gx[k + nx]) * u, ay = gy[k] + (gy[k + 1] - gy[k]) * u, by = gy[k + nx] + (gy[k + nx + 1] - gy[k + nx]) * u;
+        const vx = ax + (bx - ax) * v, vy = ay + (by - ay) * v, n = Math.hypot(vx, vy) || 1;
+        return [vx / n, vy / n];
+      };
+    };
+    const open = (x, y) => {
+      const ox = x - ORB[0], oy = y - ORB[1];
+      if (ox * ox + oy * oy < 196) return false;
+      for (const [cx, cy] of whirls) if (Math.abs(x - cx) + Math.abs(y - cy) <= 3) return false;
+      for (const [sx, sy] of stars) { const dx = x - sx, dy = y - sy; if (dx * dx + dy * dy < 182.25) return false; }
+      return true;
+    };
+    let skySpan = [MID, MID];
+    const skyMarks = async (w) => {
+      const half = reach(w), x0 = Math.max(X0, MID - half), x1 = Math.min(X1, MID + half), out = [];
+      rnd = rng(5);
+      marks(await streamsSoon({ x0, y0: 2, x1, y1: SKY, flow: gridded(skyFlow, x0 - 4, 0, x1 + 4, SKY + 2, 2.5), sep: 4.6, step: 1.8, inside: open }),
+        { len: 11.5, gap: 2.2, tone: skyTone, out, keep: (x, y) => y > 40 || rnd() < (y - 4) / 40 }); // the top thins out into the page
+      // each star wears two rings of broken strokes (by day they're little eddies)
+      for (const [sx, sy] of stars) for (const [rr, c] of [[5.8, 11], [10.2, 12]]) {
+        const n = Math.round((2 * Math.PI * rr) / 9), span = ((2 * Math.PI) / n) * 0.7, ph = rnd() * 6;
+        for (let k = 0; k < n; k++) {
+          const am = ph + (k / n) * 2 * Math.PI;
+          out.push(mark(sx + Math.cos(am) * rr, sy + Math.sin(am) * rr, am + Math.PI / 2, 2 * rr * Math.sin(span / 2), -rr * (1 - Math.cos(span / 2)), c));
+        }
       }
-    }
+      skySpan = [x0, x1];
+      return out;
+    };
+    const skyDabs = await skyMarks(strip.clientWidth);
     const sky = { draw: drawing(), sets: [brush(skyDabs, "sky", 3.3)] };
     sky.draw("skyBase||", box(X0 - 40, -10, X1 - X0 + 80, SKY + 10));
     // the sun or moon sits on top of its rings
@@ -1400,7 +1428,7 @@
       c.moveTo(x - 7, y + flap * 0.5); c.quadraticCurveTo(x - 3.4, y - 2.6 - flap, x, y); c.quadraticCurveTo(x + 3.4, y - 2.6 - flap, x + 7, y + flap * 0.5);
       c.stroke();
     };
-    const buildSprites = () => {
+    const buildSprites = function* () {
       spr.metro = metroSprite();
       spr.auto = autoSprite();
       spr.scooter = scooterSprite();
@@ -1410,12 +1438,15 @@
       spr.beamS = beamSprite(67 * SK, 150, "255,222,165");
       spr.beamM = beamSprite(16, 90, "255,240,214", false);
       spr.tail = glowSprite(6, "255,70,50");
+      yield;
       spr.cart = cartSprite();
       spr.heap = heapSprite();
       spr.seller = Array.from({ length: 8 }, (_, k) => sellerFrame((k / 8) * Math.PI * 2, true));
       spr.sellerStill = sellerFrame(0, false);
+      yield;
       spr.walker = Array.from({ length: 8 }, (_, k) => walkerFrame((k / 8) * Math.PI * 2));
       spr.coco = [0, 1, 2, 3, 4].map(cocoFrame);
+      yield;
       spr.cowBody = cowSprite("body");
       spr.cowHead = cowSprite("head");
       spr.dog = dogSprite();
@@ -1447,7 +1478,11 @@
       if (Lr.over) Lr.over(c);
       c.restore();
     };
-    const repaint = () => {
+    // painting the layers and the figures, in steps: all at once on a resize or a theme change, or giving the browser a
+    // turn between steps the first time, so a phone never stutters while it's scrolling
+    const finish = (steps) => { for (const _ of steps); };
+    const finishSoon = async (steps) => { for (const _ of steps) await new Promise((ok) => setTimeout(ok, 0)); };
+    const repaint = function* () {
       orb = orbSprite();
       for (const Lr of layers) {
         for (const c of [Lr.base, Lr.comp]) { c.width = view.width; c.height = view.height; }
@@ -1461,11 +1496,12 @@
         }
         render(b, Lr.draw.list);
         compose(Lr, null);
+        yield;
       }
-      buildSprites();
+      yield* buildSprites();
     };
     let shape = "";
-    const size = () => {
+    const size = (slowly) => {
       const w = strip.clientWidth, h = strip.clientHeight;
       if (!w || !h) return;
       // sharp on retina screens, but no layer bigger than 2.5 million pixels (seven layers on a wide 4K screen add up)
@@ -1477,8 +1513,16 @@
       wx0 = MID - w / 2 / s; wx1 = MID + w / 2 / s;
       S = s * dpr; OY = oy * dpr;
       view.width = Math.round(w * dpr); view.height = Math.round(h * dpr);
-      repaint();
-      draw();
+      const done = () => {
+        draw();
+        if ((wx0 < skySpan[0] && skySpan[0] > X0) || (wx1 > skySpan[1] && skySpan[1] < X1)) {
+          skySpan = [X0, X1]; // asked for once; filled in when it's painted
+          skyMarks(w).then((dabs) => { sky.sets = [brush(dabs, "sky", 3.3)]; compose(sky, null); draw(); });
+        }
+      };
+      if (slowly) return finishSoon(repaint()).then(done);
+      finish(repaint());
+      done();
     };
 
     // ---------- the pointer paints: its own stroke, which fades into the wind, and nearby marks nudged aside that flow
@@ -1632,7 +1676,7 @@
     const frameOf = (d, stride) => Math.floor((((d / stride) % 1) + 1) % 1 * 8) % 8;
     const kites = [[1260, 78, 46, 0.32, 0], [2420, 62, 60, -0.24, 2]];
     const draw = () => {
-      if (!view.width || !spr.auto) return;
+      if (!view.width || !spr.dog) return; // the figures are painted last; nothing to draw until they are
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, view.width, view.height);
       ctx.drawImage(sky.comp, 0, 0);
@@ -1702,14 +1746,14 @@
       if (!view.width) return;
       if (!reduce) { const c = document.createElement("canvas"); c.width = view.width; c.height = view.height; c.getContext("2d").drawImage(view, 0, 0); fade = { c, t: performance.now() }; }
       setPalette();
-      repaint();
+      finish(repaint());
       wake();
     }).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
 
     if (reduce) { // a still scene, everyone in view
       metro.x = STOP; metro.state = "dwell"; metro.wait = 4;
     }
-    size();
+    await size(true);
     strip.classList.add("is-ready");
     wake();
   }

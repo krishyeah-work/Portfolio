@@ -110,7 +110,7 @@
 /* painted on one canvas in thick brush marks; its top dissolves into the page and the road meets the footer's line */
 .blr { position: relative; height: clamp(230px, 15vw + 100px, 400px); overflow: hidden; pointer-events: none; }
 .blr canvas {
-  display: block; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s var(--ease);
+  display: block; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s var(--ease);
   -webkit-mask-image: linear-gradient(to bottom, transparent, #000 24%); mask-image: linear-gradient(to bottom, transparent, #000 24%);
 }
 .blr.is-ready canvas { opacity: 1; }
