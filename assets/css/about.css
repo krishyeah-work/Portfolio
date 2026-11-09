@@ -1,8 +1,74 @@
-/* about.css — the "More about me" page: short story, the record (experience, education, tools), and the playlist. */
+/* about.css — the About page: a short hello and a photo, the travel ring and its viewer, the record, the playlist. */
 
-.about-hero { padding-block: clamp(3.5rem, 9vw, 7.5rem) clamp(0.5rem, 2vw, 1.5rem); }
-.about-hero h1 { font-size: var(--fs-h1); letter-spacing: -0.035em; line-height: 1.02; }
-.about-copy { display: grid; gap: 1.1em; max-width: 36em; margin-top: clamp(1.5rem, 3vw, 2.25rem); font-size: var(--fs-lead); line-height: 1.6; color: var(--ink-2); }
+.hello { padding-block: clamp(3rem, 8vw, 6.5rem) clamp(2.5rem, 6vw, 4.5rem); }
+.hello__grid { display: grid; gap: clamp(1.75rem, 5vw, 4.5rem); }
+.hello__copy { display: grid; gap: 1em; max-width: 30em; font-size: clamp(1.2rem, 1rem + 0.8vw, 1.6rem); line-height: 1.45; letter-spacing: -0.01em; color: var(--ink-2); }
+.hello__copy p:first-child { color: var(--ink); }
+.hello__copy .w { display: inline-block; } /* words the entrance brings in one by one (about.js) */
+.hello__links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 1.5rem; }
+.hello__links a { color: var(--ink); text-underline-offset: 0.2em; text-decoration-color: var(--line-strong); }
+.hello__links a:hover { text-decoration-color: currentColor; }
+
+/* the entrance: hidden until about.js plays it (the script in <head> sets this, and takes it off after 3 s whatever happens) */
+.is-arriving .snap, .is-arriving .hello__copy, .is-arriving .hello__links, .is-arriving .away, .is-arriving .about-more { opacity: 0; }
+
+/* the photo: on phones it comes first and smaller */
+.snap { order: -1; width: min(14rem, 60vw); margin: 0; }
+.snap img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius-lg); background: var(--surface); }
+@media (min-width: 900px) {
+  .hello__grid { grid-template-columns: minmax(0, 1fr) clamp(17rem, 26vw, 24rem); align-items: center; }
+  .snap { order: 0; width: 100%; }
+}
+
+/* away from the screen: a ring of photos turning slowly across the full width of the page (about.js places each card);
+   without JavaScript, a plain grid */
+.away { padding-top: clamp(2.5rem, 6vw, 4.5rem); border-top: 1px solid var(--line); overflow: hidden; }
+.away__title { max-width: none; color: var(--ink-2); font-size: var(--fs-lead); font-weight: 400; line-height: 1.45; letter-spacing: -0.005em; }
+.away__lead { color: var(--muted); }
+.ring { --cw: clamp(150px, 19vw, 290px); position: relative; margin-top: 1rem; }
+.ring__list { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; width: min(100% - 2 * var(--gutter), var(--max)); margin-inline: auto; padding: 0; list-style: none; }
+.ring__card { position: relative; display: block; width: 100%; padding: 0; border: 0; border-radius: var(--radius-lg); overflow: hidden; background: var(--surface); cursor: pointer; aspect-ratio: 4 / 5; box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.55); }
+.ring__card img, .ring__card video { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.ring__card:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.ring__cap { min-height: 1.4em; margin-top: 0.5rem; color: var(--muted); font-size: var(--fs-small); text-align: center; transition: opacity 0.25s var(--ease); }
+/* turning: every card dimmed and greyed until you point at it */
+.ring.is-on { height: calc(var(--cw) * 1.85); touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.ring.is-on .ring__cap { position: absolute; left: 0; right: 0; bottom: 0; margin: 0; }
+.ring.is-on .ring__list { display: block; position: absolute; inset: 0; width: auto; }
+.ring.is-on .ring__item { position: absolute; left: 50%; top: 52%; width: var(--cw); will-change: transform, opacity; }
+.ring.is-on .ring__card img, .ring.is-on .ring__card video { filter: grayscale(0.7) brightness(0.72); transition: filter 0.4s var(--ease); }
+.ring.is-on .ring__item.is-lit .ring__card img, .ring.is-on .ring__item.is-lit .ring__card video { filter: none; }
+.ring.is-on.is-dragging .ring__card { cursor: grabbing; }
+
+/* the viewer: a row of full photos over a dark shade; about.js sizes and places each one */
+.viewer { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: transparent; color: #f2f1ed; overflow: hidden; }
+.viewer[open] { display: block; }
+.viewer::backdrop { background: transparent; }
+.viewer__shade { position: absolute; inset: 0; background: rgba(8, 8, 10, 0.94); }
+.viewer__stage { position: absolute; inset: 0; touch-action: none; }
+.viewer__slide { position: absolute; margin: 0; will-change: transform; }
+.viewer__media { position: relative; overflow: hidden; border-radius: var(--radius-lg); background: #16161a no-repeat center / cover; }
+.viewer__media img, .viewer__media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s var(--ease); }
+.viewer__media .is-in { opacity: 1; }
+.viewer__cap { margin-top: 0.85rem; color: rgba(242, 241, 237, 0.78); font-size: var(--fs-small); line-height: 1.35; text-align: left; }
+.viewer__btn { position: absolute; z-index: 2; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 999px; background: rgba(20, 20, 24, 0.6); color: inherit; cursor: pointer; transition: background-color 0.2s var(--ease); }
+.viewer__btn:hover { background: rgba(255, 255, 255, 0.16); }
+.viewer__btn:focus-visible { outline: 2px solid #f2f1ed; outline-offset: 2px; }
+.viewer__btn svg { width: 1.2rem; height: 1.2rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.viewer__close { top: 1rem; right: 1rem; }
+.viewer__prev, .viewer__next { top: 50%; margin-top: -1.375rem; }
+.viewer__prev { left: clamp(1rem, 2.5vw, 2rem); }
+.viewer__next { right: clamp(1rem, 2.5vw, 2rem); }
+@media (max-width: 599px) {
+  .viewer__prev, .viewer__next { top: auto; bottom: 1.75rem; margin-top: 0; }
+  .viewer__prev { left: calc(50% - 3.25rem); }
+  .viewer__next { right: calc(50% - 3.25rem); }
+}
+html.is-viewing { overflow: hidden; scrollbar-gutter: stable; } /* no jump when the scrollbar goes */
+
+@media (prefers-reduced-motion: reduce) {
+  .ring.is-on .ring__card img, .ring.is-on .ring__card video { transition: none; }
+}
 
 .about-more { padding-top: clamp(2.5rem, 6vw, 4.5rem); }
 /* the record reads first; the playlist sits beside it on wide screens and after it on phones */

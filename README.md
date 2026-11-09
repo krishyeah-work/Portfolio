@@ -8,7 +8,7 @@ Every page and every project is self-contained, so an edit only touches the file
 
 ```
 index.html                     Home (intro with contact links, work list)
-about/index.html               More about me: story, experience, education, tools, playlist
+about/index.html               About: a short hello and photo, the "Away from the screen" ring, experience and education, playlist
 404.html
 assets/
   css/base.css                 Shared: tokens (dark + light themes), type, header and phone menu, footer, buttons, screenshot frame
@@ -28,7 +28,8 @@ assets/
                                that fades into the wind; the marks it nudges flow back in ~3 s. Light theme = day, dark = Starry Night
   js/intro.js                  Home intro: words fade in on load, then (first visit per session) the nav and the work;
                                letters near the pointer thicken along that line (mouse only); Email hover copies the address
-  js/about.js                  About page: loads the Spotify player only when "Listen here" is pressed
+  js/about.js                  About page: the entrance (photo in the middle, then into place), the travel ring (turns, stops on hover, drag to spin; the caption scrambles), its viewer
+                               (photos grow out of the ring and slide sideways), the Spotify player (on "Listen here")
   js/clock.js                  Live Bengaluru clock, 12-hour, with sliding digits ([data-clock])
   js/pal.js                    Pal: asleep 11:00 PM–6:30 AM IST, local-language hello ([data-pal]); ?pal=awake|asleep to preview
   js/reveal.js                 Case studies: title text effect ([data-text-fade]) and in-view reveal
@@ -57,6 +58,7 @@ work/
                                recreated payment widget, email inbox), net-terms.js (hero toggle, apply stepper,
                                widget states, email player), img/ (cleaned Figma exports: prototype buttons and
                                connector arrows removed)
+lab/                           Experiments, on this computer only (ignored by git, never deployed): see lab/README.md
 portfolio-context/             Brief, case-study notes, decisions log (local only, not pushed)
 ```
 
@@ -71,7 +73,7 @@ portfolio-context/             Brief, case-study notes, decisions log (local onl
 | Pal's lines, greetings or sleep hours | `assets/js/pal.js` |
 | Clock | `assets/js/clock.js` + `assets/css/footer-live.css` |
 | Home page | `index.html` + `assets/css/home.css` |
-| About page (story, experience, education, tools, playlist) | `about/index.html` + `assets/css/about.css` |
+| About page (hello, photos, the travel ring and its captions, the record, playlist) | `about/index.html` (+ `assets/img/about/`; originals in `01/`, not published), `assets/css/about.css` |
 | Bangalore strip above the footer (palettes, whirls, buildings, the garden, people and vehicles, headlamps, how stirring feels) | `assets/js/bangalore.js` (sections are headed `// ----------`); its height is the "Bangalore strip" block in `assets/css/footer-live.css` |
 
 ### Adding a new case study

@@ -3,11 +3,12 @@
 <head>
   <meta charset="utf-8">
   <script>(function(h){var t;try{t=localStorage.getItem("theme")}catch(e){}if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";h.setAttribute("data-theme",t)})(document.documentElement)</script>
+  <script>(function(h){if(!location.hash&&!matchMedia("(prefers-reduced-motion: reduce)").matches){h.classList.add("is-arriving");setTimeout(function(){h.classList.remove("is-arriving")},3000)}})(document.documentElement) // the entrance (about.js) hides the page until it plays; never longer than 3 s</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>More about me — Krishna Revanth</title>
-  <meta name="description" content="Krishna Revanth: UX designer in Bangalore. Background, experience, education, tools, and what is on repeat.">
-  <meta property="og:title" content="More about me — Krishna Revanth">
-  <meta property="og:description" content="Background, experience, education, tools, and what is on repeat.">
+  <title>About — Krishna Revanth</title>
+  <meta name="description" content="Krishna Revanth: an architect turned UX designer in Bangalore, who likes making useful, fun things for the people around him.">
+  <meta property="og:title" content="About — Krishna Revanth">
+  <meta property="og:description" content="An architect turned UX designer in Bangalore, who likes making useful, fun things for the people around him.">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#0c0c0e">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
@@ -16,12 +17,12 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..600&display=swap">
   <link rel="stylesheet" href="/assets/css/base.css?v=20261029a">
   <link rel="stylesheet" href="/assets/css/footer-live.css?v=20261101b">
-  <link rel="stylesheet" href="/assets/css/about.css?v=20261028b">
+  <link rel="stylesheet" href="/assets/css/about.css?v=20261110i">
   <script src="/assets/js/site.js?v=20261029b" defer></script>
   <script src="/assets/js/clock.js?v=20261023b" defer></script>
   <script src="/assets/js/pal.js?v=20261023c" defer></script>
   <script src="/assets/js/bangalore.js?v=20261101e" defer></script>
-  <script src="/assets/js/about.js?v=20261027b" defer></script>
+  <script src="/assets/js/about.js?v=20261110g" defer></script>
   <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
   <script src="/_vercel/insights/script.js" defer></script>
 </head>
@@ -48,15 +49,41 @@
   </header>
 
   <main id="main">
-    <!-- ============ MORE ABOUT ME: who I am, what I'm listening to, then the record ============ -->
-    <section class="about-hero" aria-labelledby="about-title">
-      <div class="wrap">
-        <h1 id="about-title">More about me</h1>
-        <div class="about-copy">
-          <p>I trained as an architect at Christ University, Bengaluru, then moved into UX with a Master of Design at IIT Guwahati.</p>
-          <p>At Intuit I worked with design leads, product managers, engineers, and legal and finance partners on sales enablement, subscriptions, payment methods and pricing.</p>
-          <p>Next, I'm looking for a role in fintech, payments, AI or health, remote or hybrid.</p>
+    <!-- ============ ABOUT: a short hello and a photo; then the travel ring; then the record ============ -->
+    <section class="hello" aria-labelledby="about-title">
+      <div class="wrap hello__grid">
+        <div class="hello__text">
+          <h1 class="sr-only" id="about-title">About Krishna Revanth</h1>
+          <div class="hello__copy">
+            <p>I'm Krishna. I love designing things that are useful, and a little fun, for the people around me. I've always been the one noticing how things work and tinkering with them until they work better.</p>
+            <p>I'm a UX designer at Cognizant in Bangalore. Before that I trained as an architect, studied design at IIT Guwahati, and worked with Intuit's design team on MailChimp, QuickBooks and Intuit Enterprise Suite.</p>
+          </div>
+          <p class="hello__links">
+            <a href="/#work">See the work</a>
+            <a href="/assets/Krishna-Revanth-Resume.pdf?v=20261028" download="Krishna-Revanth-Resume.pdf">Résumé</a>
+            <a href="mailto:revanth.tallapaka@gmail.com">Email</a>
+          </p>
         </div>
+        <figure class="snap"><img src="/assets/img/about/me.webp" width="800" height="1000" fetchpriority="high" alt="Krishna smiling on a bamboo bridge in a Meghalaya forest"></figure>
+      </div>
+    </section>
+
+    <!-- away from the screen: a ring of thumbnails and silent loops turning slowly, dimmed; point at one and it stops and lights up,
+         click it and it grows into the full photo (about.js). Without JavaScript it's a plain grid -->
+    <section class="away" id="away" aria-labelledby="away-title">
+      <div class="wrap">
+        <h2 class="away__title" id="away-title"><span class="away__lead">Away from the screen,</span> I travel <span aria-hidden="true">✈️</span>, play games <span aria-hidden="true">🕹️</span>, play sports <span aria-hidden="true">🏸</span>, and create artwork or write something <span aria-hidden="true">🎨</span></h2>
+      </div>
+      <div class="ring" data-ring>
+        <ul class="ring__list">
+          <li class="ring__item"><button type="button" class="ring__card" data-kind="photo" data-thumb="/assets/img/about/away-meghalaya-me.webp" data-full="/assets/img/about/away-meghalaya-me-full.webp" data-cap="Bamboo trek, Meghalaya" data-alt="Krishna standing on a rock above green hills" data-w="1350" data-h="1800" data-pos="50% 100%" aria-label="Bamboo trek, Meghalaya. Open the photo"><img src="/assets/img/about/away-meghalaya-me.webp" width="560" height="700" loading="lazy" alt=""></button></li>
+          <li class="ring__item"><button type="button" class="ring__card" data-kind="video" data-thumb="/assets/img/about/away-laitlum.webp" data-full="/assets/img/about/away-laitlum-full.mp4" data-poster-full="/assets/img/about/away-laitlum-full.webp" data-cap="Laitlum Canyon, Meghalaya" data-alt="Clouds rolling over the green slopes of a canyon" data-w="720" data-h="1280" data-pos="50% 43.9%" aria-label="Laitlum Canyon, Meghalaya. Open the photo"><video muted loop playsinline preload="none" poster="/assets/img/about/away-laitlum.webp" width="560" height="700" aria-hidden="true"><source src="/assets/img/about/away-laitlum.mp4" type="video/mp4"></video></button></li>
+          <li class="ring__item"><button type="button" class="ring__card" data-kind="photo" data-thumb="/assets/img/about/away-waichin.webp" data-full="/assets/img/about/away-waichin-full.webp" data-cap="Waichin Valley, Himachal Pradesh" data-alt="Colourful huts on a green hillside below a pine forest" data-w="1800" data-h="1350" data-pos="37.5% 50%" aria-label="Waichin Valley, Himachal Pradesh. Open the photo"><img src="/assets/img/about/away-waichin.webp" width="560" height="700" loading="lazy" alt=""></button></li>
+          <li class="ring__item"><button type="button" class="ring__card" data-kind="photo" data-thumb="/assets/img/about/away-root-bridge.webp" data-full="/assets/img/about/away-root-bridge-full.webp" data-cap="Living root bridge, Meghalaya" data-alt="Krishna standing on a bridge grown from tree roots" data-w="1800" data-h="1350" data-pos="55.8% 50%" aria-label="Living root bridge, Meghalaya. Open the photo"><img src="/assets/img/about/away-root-bridge.webp" width="560" height="700" loading="lazy" alt=""></button></li>
+          <li class="ring__item"><button type="button" class="ring__card" data-kind="video" data-thumb="/assets/img/about/away-sikkim-ride.webp" data-full="/assets/img/about/away-sikkim-ride-full.mp4" data-poster-full="/assets/img/about/away-sikkim-ride-full.webp" data-cap="Snow ride, Sikkim" data-alt="Riding a motorbike down a snowy mountain road" data-w="720" data-h="1280" data-pos="50% 66.7%" aria-label="Snow ride, Sikkim. Open the photo"><video muted loop playsinline preload="none" poster="/assets/img/about/away-sikkim-ride.webp" width="560" height="700" aria-hidden="true"><source src="/assets/img/about/away-sikkim-ride.mp4" type="video/mp4"></video></button></li>
+          <li class="ring__item"><button type="button" class="ring__card" data-kind="photo" data-thumb="/assets/img/about/away-meghalaya-view.webp" data-full="/assets/img/about/away-meghalaya-view-full.webp" data-cap="The view from the trek, Meghalaya" data-alt="A rock face rising out of forested hills under low cloud" data-w="1350" data-h="1800" data-pos="50% 50%" aria-label="The view from the trek, Meghalaya. Open the photo"><img src="/assets/img/about/away-meghalaya-view.webp" width="560" height="700" loading="lazy" alt=""></button></li>
+        </ul>
+        <p class="ring__cap" data-ring-cap aria-hidden="true"></p>
       </div>
     </section>
 
@@ -64,8 +91,8 @@
       <div class="wrap about-grid">
         <!-- the Spotify player loads only when someone presses play (about.js); until then it is a plain card -->
         <aside class="tune" aria-labelledby="tune-label">
-          <p class="label" id="tune-label">Off the clock</p>
-          <p class="tune__note">Competitive games, kitchen experiments, travel when I can, and this playlist on repeat while I work.</p>
+          <p class="label" id="tune-label">Music</p>
+          <p class="tune__note">This is what's on repeat while I travel, work or just vibe.</p>
           <div class="tune__card" data-spotify="3TFFx5wJIXsCf20r7NcJ2B">
             <img class="tune__cover" src="/assets/img/playlist-cover.jpg" width="300" height="300" alt="">
             <div class="tune__body">
@@ -84,31 +111,27 @@
           <p class="label ledger-title" id="experience">Experience</p>
           <ul class="ledger">
             <li><span class="label">2025 – Current</span><div><strong>Associate UX Designer · Cognizant</strong><span class="d">Joined through campus placement</span></div></li>
-            <li><span class="label">2025 – 26</span><div><strong>Intuit · GTM Tech design team</strong><span class="d">Via Cognizant, Nov 2025 – Jul 2026. MailChimp and QuickBooks sales-channel experiences.</span></div></li>
+            <li><span class="label">2025 – 26</span><div><strong>Intuit · GTM Tech design team</strong><span class="d">Via Cognizant, Nov 2025 – Aug 2026. MailChimp and QuickBooks sales-channel experiences.</span></div></li>
           </ul>
           <p class="label ledger-title" id="education">Education</p>
           <ul class="ledger">
             <li><span class="label">2025</span><div><strong>Master of Design (M.Des)</strong><span class="d">Indian Institute of Technology Guwahati</span></div></li>
             <li><span class="label">2022</span><div><strong>Bachelor of Architecture (B.Arch)</strong><span class="d">Christ University, Bengaluru</span></div></li>
           </ul>
-          <p class="label ledger-title">Tools</p>
-          <ul class="ledger">
-            <li><span class="label">Design</span><div><strong>Figma, Framer, Webflow, Storybook, Miro</strong><span class="d">Flows, prototypes, design systems and workshops</span></div></li>
-            <li><span class="label">Visual</span><div><strong>Photoshop, Illustrator, InDesign, Procreate, Blender, SketchUp</strong><span class="d">Visual design, illustration and 3D</span></div></li>
-            <li><span class="label">AI &amp; code</span><div><strong>Claude, ChatGPT, GitHub, HTML, JavaScript, Python</strong><span class="d">AI-assisted prototyping and code-ready handoff</span></div></li>
-            <li><span class="label">Always</span><div><strong>Whatever the work needs</strong><span class="d">I pick up new tools quickly when a project calls for them</span></div></li>
-          </ul>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="wrap">
-      <div class="footer-live"><span data-clock></span></div>
-      <span data-pal></span>
-      <p class="reach-out"><span class="reach-out__thin">Looking to</span> <a class="reach-out__link" href="/#contact">Contact<svg class="i-up" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V4.5M5.5 11 12 4.5l6.5 6.5"/></svg></a></p>
-    </div>
-  </footer>
+  <!-- the photo viewer: a row of full photos slid sideways; arrows, swipes or the scroll wheel move along, Esc or a tap
+       outside closes, and the photo flies back into the ring (about.js fills it) -->
+  <dialog class="viewer" data-viewer aria-label="Photos from my travels">
+    <div class="viewer__shade" data-viewer-shade></div>
+    <div class="viewer__stage" data-viewer-stage></div>
+    <p class="sr-only" aria-live="polite" data-viewer-live></p>
+    <button type="button" class="viewer__btn viewer__close" data-viewer-close aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <button type="button" class="viewer__btn viewer__prev" data-viewer-prev aria-label="Previous photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button type="button" class="viewer__btn viewer__next" data-viewer-next aria-label="Next photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+  </dialog>
 </body>
 </html>
