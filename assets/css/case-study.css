@@ -279,6 +279,20 @@
 .carousel__pill.is-on { width: 2.5rem; }
 .carousel__pill.is-on::before { background: var(--accent); }
 .carousel__count { color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+/* the pager (carousel.js): ‹ 1 / 5 › in one rounded control beside the pills. Each arrow is a full-height half of the
+   control, so it's an easy target; it darkens on hover and its chevron nudges the way it will go. At either end the
+   arrow fades, which also tells you there's nothing further that way. */
+.carousel__pager { display: inline-flex; align-items: center; height: 2.25rem; border: 1px solid var(--line-strong); border-radius: 999px; background: var(--surface); }
+.carousel__pager .carousel__count { min-width: 3.4em; padding: 0 0.15rem; color: var(--ink-2); text-align: center; }
+.carousel__arrow {
+  display: grid; place-items: center; width: 2.25rem; height: 100%; padding: 0; border: 0; border-radius: 999px; background: none; color: var(--ink);
+  cursor: pointer; transition: background-color 0.2s var(--ease), opacity 0.2s var(--ease);
+}
+.carousel__arrow svg { width: 1.05rem; height: 1.05rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s var(--ease); }
+.carousel__arrow:hover:not(:disabled) { background: rgba(var(--fg), 0.07); }
+.carousel__arrow--prev:hover:not(:disabled) svg { transform: translateX(-2px); }
+.carousel__arrow--next:hover:not(:disabled) svg { transform: translateX(2px); }
+.carousel__arrow:disabled { opacity: 0.25; cursor: default; }
 
 /* lightbox (enlarge any screen) — the image always fits the area between the close button and the hint */
 img.is-zoomable { cursor: zoom-in; }

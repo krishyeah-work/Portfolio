@@ -1,14 +1,16 @@
-/* work-art.css — the small animated thumbnails for each project, shared by the homepage cards and the
-   "Also check out" previews on case studies. They play while their card or link is hovered.
-   (The MailChimp one lives in /work/mailchimp/cover.css + cover.js.) */
+/* work-art.css — the small animated pieces for each project, shared by the homepage hover previews and the
+   "Also check out" previews on case studies. Each hints at what the project is about without giving it away,
+   and plays only while its row or link is pointed at (or focused). Still for reduced motion. */
 
-/* each project's colour: MailChimp yellow, QuickBooks green, Intuit blue */
+/* each project's colour: Mailchimp yellow, QuickBooks green, Intuit blue, Picto blue */
 .card--mc, .also--mc { --proj: #f5c451; }
+.card--pc, .also--pc { --proj: #8c9dff; }
 .card--qb, .also--qb { --proj: #2ca01c; --qb-row-ink: #8be27a; }
 .card--nt, .also--nt { --proj: #236cff; }
 :root[data-theme="light"] .card--mc, :root[data-theme="light"] .also--mc { --proj: #8a6500; }
 :root[data-theme="light"] .card--qb, :root[data-theme="light"] .also--qb { --proj: #23861a; --qb-row-ink: #1e7a12; }
 :root[data-theme="light"] .card--nt, :root[data-theme="light"] .also--nt { --proj: #1d5be6; }
+:root[data-theme="light"] .card--pc, :root[data-theme="light"] .also--pc { --proj: #3a5aff; }
 
 /* schematic rate table (QuickBooks card art): muted gray at rest; on hover a green highlight scans the rows */
 .art-table { width: min(100%, 460px); border-collapse: collapse; font-size: clamp(0.66rem, 0.55rem + 0.4vw, 0.82rem); color: var(--ink-2); }
@@ -50,6 +52,108 @@
 @keyframes nt-dot-net { 0%, 10%, 100% { border-color: var(--muted); box-shadow: none; } 16%, 92% { border-color: #236cff; box-shadow: inset 0 0 0 3px var(--bg-2), inset 0 0 0 8px #236cff; } }
 @keyframes nt-fill { 0%, 18% { width: 0; } 30%, 42% { width: 33.333%; } 54%, 66% { width: 66.667%; } 78%, 94% { width: 100%; } 100% { width: 0; } }
 @keyframes nt-move { 0%, 18% { left: 0; background: var(--ink); } 30%, 42% { left: 33.333%; background: #236cff; } 54%, 66% { left: 66.667%; background: #236cff; } 78%, 94% { left: 100%; background: #236cff; box-shadow: 0 0 16px rgba(35, 108, 255, 0.8); } 100% { left: 0; background: var(--ink); } }
-@media (prefers-reduced-motion: reduce) {
-  .art-nt *, .art-table * { animation: none !important; }
+
+/* Mailchimp art: a small sales dashboard. Three products sit on the left; one by one they slide into the cart on the
+   right; then the cart splits in two, SMS drops into its own part, and the two parts are named: "Charged today" and
+   "Charged after approval". One cart, two billing timelines, which is what the case study is about.
+   Everything is placed in container units (cqw: hundredths of the drawing's width), so it scales as one picture.
+   It plays while its row or link is pointed at; .mcx--auto (the case-study hero) plays all the time.
+   Reduced motion shows the end state, still. */
+.mcx { position: relative; container-type: inline-size; aspect-ratio: 16 / 10; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); color: var(--ink-2); line-height: 1.2; letter-spacing: 0; }
+.mcx__top { position: absolute; inset: 0 0 auto; height: 9cqw; display: flex; align-items: center; gap: 1.5cqw; padding: 0 3.5cqw; border-bottom: 1px solid var(--line); }
+.mcx__logo { width: 3.4cqw; height: auto; fill: var(--ink); }
+.mcx__top i { width: 5cqw; height: 1.1cqw; border-radius: 1cqw; background: rgba(var(--fg), 0.1); }
+.mcx__top i:first-of-type { margin-left: 1.5cqw; }
+.mcx__top u { margin-left: auto; width: 3cqw; height: 3cqw; border-radius: 50%; background: rgba(var(--fg), 0.1); }
+.mcx__col { position: absolute; top: 11.4cqw; color: var(--muted); font-size: 2.2cqw; }
+.mcx__col--a { left: 4cqw; }
+.mcx__col--b { left: 54cqw; }
+.mcx__ghost { position: absolute; left: 4cqw; top: calc(18.5cqw + var(--r) * 9.5cqw); width: 38cqw; height: 7.5cqw; border: 1px dashed var(--line-strong); border-radius: 1.6cqw; }
+.mcx__move { position: absolute; inset: 0; }
+.mcx__box { position: absolute; left: 52cqw; width: 44cqw; border-radius: 2cqw; }
+.mcx__box--now { top: 15cqw; height: 33cqw; border: 1px solid var(--line-strong); }
+.mcx__box--later { top: 42cqw; height: 17cqw; border: 1px dashed color-mix(in srgb, #e0b400 65%, var(--line-strong)); opacity: 0; transform: translateY(-3cqw); }
+.mcx__chip {
+  position: absolute; left: 4cqw; top: calc(18.5cqw + var(--r) * 9.5cqw); width: 38cqw; height: 7.5cqw; display: flex; align-items: center; gap: 1.6cqw; padding: 0 2cqw;
+  border: 1px solid var(--line-strong); border-radius: 1.6cqw; background: var(--surface); color: var(--ink); font-size: 2.4cqw; white-space: nowrap;
+  box-shadow: 0 0.6cqw 1.6cqw -1cqw rgba(0, 0, 0, 0.25);
 }
+.mcx__chip i { flex: none; width: 2.2cqw; height: 2.2cqw; border-radius: 0.6cqw; background: #ffe01b; }
+.mcx__chip--tx i { background: var(--ink); }
+.mcx__chip--sms i { background: #007c89; }
+.mcx__chip b { margin-left: auto; width: 5cqw; height: 1.1cqw; border-radius: 1cqw; background: rgba(var(--fg), 0.12); }
+.mcx__tag { position: absolute; left: 54.5cqw; padding: 0.5cqw 1.4cqw; border-radius: 999px; font-size: 2cqw; font-style: normal; line-height: 1.3; white-space: nowrap; opacity: 0; transform-origin: left center; }
+.mcx__tag--now { top: 13.2cqw; border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink); }
+.mcx__tag--later { top: 40.2cqw; border: 1px solid #e8c400; background: #fff4b8; color: #3b3000; }
+:root:not([data-theme="light"]) .mcx__tag--later { border-color: #8a7400; background: #3a3110; color: #ffe27a; }
+:is(.card--mc:hover, .card--mc:focus-visible, .also--mc:hover, .also--mc:focus-visible, .mcx--auto) .mcx__move { animation: mcx-move 8.5s var(--ease) infinite; }
+:is(.card--mc:hover, .card--mc:focus-visible, .also--mc:hover, .also--mc:focus-visible, .mcx--auto) .mcx__chip--em { animation: mcx-em 8.5s var(--ease) infinite; }
+:is(.card--mc:hover, .card--mc:focus-visible, .also--mc:hover, .also--mc:focus-visible, .mcx--auto) .mcx__chip--tx { animation: mcx-tx 8.5s var(--ease) infinite; }
+:is(.card--mc:hover, .card--mc:focus-visible, .also--mc:hover, .also--mc:focus-visible, .mcx--auto) .mcx__chip--sms { animation: mcx-sms 8.5s var(--ease) infinite; }
+:is(.card--mc:hover, .card--mc:focus-visible, .also--mc:hover, .also--mc:focus-visible, .mcx--auto) .mcx__col--b { animation: mcx-col 8.5s var(--ease) infinite; }
+:is(.card--mc:hover, .card--mc:focus-visible, .also--mc:hover, .also--mc:focus-visible, .mcx--auto) .mcx__box--now { animation: mcx-now 8.5s var(--ease) infinite; }
+:is(.card--mc:hover, .card--mc:focus-visible, .also--mc:hover, .also--mc:focus-visible, .mcx--auto) .mcx__box--later { animation: mcx-later 8.5s var(--ease) infinite; }
+:is(.card--mc:hover, .card--mc:focus-visible, .also--mc:hover, .also--mc:focus-visible, .mcx--auto) .mcx__tag { animation: mcx-tag 8.5s var(--ease) infinite; }
+:is(.card--mc:hover, .card--mc:focus-visible, .also--mc:hover, .also--mc:focus-visible, .mcx--auto) .mcx__tag--later { animation-delay: 0.2s; }
+@keyframes mcx-move { 0% { opacity: 0; } 4%, 90% { opacity: 1; } 95%, 100% { opacity: 0; } }
+@keyframes mcx-em { 0%, 6% { transform: none; } 15%, 100% { transform: translate(51cqw, 0); } }
+@keyframes mcx-tx { 0%, 15% { transform: none; } 24%, 100% { transform: translate(51cqw, 0); } }
+@keyframes mcx-sms { 0%, 24% { transform: none; } 33%, 40% { transform: translate(51cqw, 0); } 52%, 100% { transform: translate(51cqw, 10.5cqw); } }
+@keyframes mcx-col { 0%, 36% { opacity: 1; } 42%, 100% { opacity: 0; } }
+@keyframes mcx-now { 0%, 40% { height: 33cqw; } 52%, 100% { height: 23.5cqw; } }
+@keyframes mcx-later { 0%, 40% { opacity: 0; transform: translateY(-3cqw); } 52%, 100% { opacity: 1; transform: none; } }
+@keyframes mcx-tag { 0%, 54% { opacity: 0; transform: scale(0.85); } 60%, 100% { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .mcx * { animation: none !important; }
+  .mcx .mcx__chip { transform: translate(51cqw, 0); }
+  .mcx .mcx__chip--sms { transform: translate(51cqw, 10.5cqw); }
+  .mcx .mcx__col--b { opacity: 0; }
+  .mcx .mcx__box--now { height: 23.5cqw; }
+  .mcx .mcx__box--later, .mcx .mcx__tag { opacity: 1; transform: none; }
+}
+/* in a hover preview the dashboard fills the preview's picture area, with no frame of its own */
+.peek__art--mcx { display: block; padding: 0 !important; }
+.peek__art--mcx .mcx { width: 100%; border: 0; border-radius: 0; }
+/* in the case study's hero it sits on a soft panel, like a screen on a desk */
+.mcx-stage { display: grid; place-items: center; margin-top: clamp(2.25rem, 5vw, 3.5rem); padding: clamp(1rem, 4vw, 3rem); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-2); }
+.mcx-stage .mcx { width: min(100%, 46rem); box-shadow: var(--shadow-shot); }
+
+/* Picto art: a trip. A small traveller hops along a dotted route from Barcelona to Madrid; at each stop a picture
+   card pops up with the word it teaches (café, pan, mesa), and Madrid lights up at the end. Pictures first, a word
+   under each. Placed in container units (cqw) so it scales as one picture. Plays while its row is pointed at. */
+.pcx { position: relative; container-type: inline-size; width: 100%; aspect-ratio: 16 / 10; color: var(--ink); }
+.pcx__route { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.pcx__route path { fill: none; stroke: rgba(var(--fg), 0.28); stroke-width: 0.5; stroke-dasharray: 1 1.6; stroke-linecap: round; }
+.pcx__route circle { fill: var(--surface); stroke: rgba(var(--fg), 0.35); stroke-width: 0.45; }
+.pcx__city { position: absolute; top: 48cqw; font-size: 2.6cqw; color: var(--muted); transform: translateX(-50%); white-space: nowrap; }
+.pcx__city--a { left: 12cqw; }
+.pcx__city--b { left: 88cqw; padding: 0.3cqw 1.2cqw; border-radius: 999px; }
+.pcx__card {
+  position: absolute; left: var(--x); top: calc(var(--y) - 24cqw); width: 15cqw; transform: translateX(-50%) scale(0.6); transform-origin: 50% 100%; opacity: 0;
+  display: grid; justify-items: center; gap: 0.8cqw; padding: 1.6cqw 0 1.2cqw; border: 0.35cqw solid #0b0b0b; border-radius: 2.4cqw; background: var(--t); color: #0b0b0b;
+  font-size: 2.6cqw; font-weight: 600;
+}
+.pcx__card svg { width: 7.5cqw; height: 7.5cqw; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.pcx__me { position: absolute; left: 12cqw; top: 40cqw; width: 5cqw; height: 5cqw; margin: -3.6cqw 0 0 -2.5cqw; border: 0.4cqw solid #0b0b0b; border-radius: 50% 50% 46% 46%; background: #c6f432; }
+.pcx__me::before, .pcx__me::after { content: ""; position: absolute; top: 1.5cqw; width: 0.9cqw; height: 0.9cqw; border-radius: 50%; background: #0b0b0b; }
+.pcx__me::before { left: 1.1cqw; } .pcx__me::after { right: 1.1cqw; }
+:is(.card--pc:hover, .card--pc:focus-visible, .also--pc:hover, .also--pc:focus-visible) .pcx__me { animation: pcx-me 7s var(--ease) infinite; }
+:is(.card--pc:hover, .card--pc:focus-visible, .also--pc:hover, .also--pc:focus-visible) .pcx__card { animation: pcx-card 7s var(--ease) infinite; animation-delay: var(--d); }
+:is(.card--pc:hover, .card--pc:focus-visible, .also--pc:hover, .also--pc:focus-visible) .pcx__city--b { animation: pcx-end 7s var(--ease) infinite; }
+@keyframes pcx-me {
+  0%, 10% { transform: none; } 15% { transform: translate(13cqw, -9cqw); } 20%, 30% { transform: translate(26cqw, -6cqw); }
+  35% { transform: translate(38cqw, -13cqw); } 40%, 50% { transform: translate(50cqw, 0); }
+  55% { transform: translate(63cqw, -11cqw); } 60%, 92% { transform: translate(76cqw, -8cqw); } 100% { transform: translate(76cqw, -8cqw); }
+}
+@keyframes pcx-card { 0% { opacity: 0; transform: translateX(-50%) scale(0.6); } 4%, 72% { opacity: 1; transform: translateX(-50%) scale(1); } 78%, 100% { opacity: 0; transform: translateX(-50%) scale(0.9); } }
+@keyframes pcx-end { 0%, 58% { background: transparent; color: var(--muted); } 62%, 92% { background: #c6f432; color: #0b0b0b; } 100% { background: transparent; color: var(--muted); } }
+@media (prefers-reduced-motion: reduce) {
+  .pcx__me { transform: translate(76cqw, -8cqw); }
+  .pcx__card { opacity: 1; transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art-nt *, .art-table *, .pcx * { animation: none !important; }
+}
+/* in a hover preview the trip fills the preview's picture area */
+.peek__art--pcx { display: block; padding: 0 !important; }

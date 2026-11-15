@@ -1,6 +1,7 @@
 // intro.js — the homepage intro ([data-ripple]) and the ways to reach me.
-// - On load the words come into focus one after another (home.css). On the first visit in a session, the nav and the
-//   work wait while the intro is read, then come into view; scrolling or a key press brings them in at once.
+// - On the first visit in a session the words come into focus one after another (home.css); the contact row and the
+//   work follow straight after. Later in the same visit Home is simply there, and clicking my name at the top while on
+//   Home glides back to the top instead of reloading the page and playing it all again.
 // - With a mouse or trackpad, letters near the pointer thicken in a soft swell along that line only and ease back as
 //   it moves on. They thicken with an outline stroke, which never changes their width, so nothing around them moves.
 // - Hovering Email shows the address with a Copy button.
@@ -10,28 +11,16 @@
   const root = document.documentElement;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // ---------- first visit: let the intro breathe before the nav and the work arrive ----------
-  try { sessionStorage.setItem("introSeen", "1"); } catch (e) {}
-  if (root.classList.contains("first-visit")) {
-    const kinds = ["wheel", "touchstart", "keydown", "pointerdown", "scroll"];
-    const show = (quick) => {
-      if (root.classList.contains("intro-ready")) return;
-      root.classList.toggle("intro-quick", quick);
-      root.classList.add("intro-ready");
-      kinds.forEach((k) => removeEventListener(k, now, true));
-      setTimeout(() => root.classList.remove("first-visit", "intro-ready", "intro-quick"), quick ? 600 : 1700);
-    };
-    const now = () => show(true);
-    kinds.forEach((k) => addEventListener(k, now, { capture: true, passive: true }));
-    setTimeout(() => show(false), 2600); // the intro takes about 2s to come in, then a short pause
-  }
+  // ---------- the intro plays once per visit ----------
+  try { sessionStorage.setItem("introPlayed", "1"); } catch (e) { /* storage blocked: it plays each time */ }
 
-  // ---------- "Selected work" cue: shown at the top of the page, gone once you scroll ----------
-  if (document.querySelector(".peek-cue")) {
-    const scrolled = () => root.classList.toggle("is-scrolled", scrollY > 40);
-    scrolled();
-    addEventListener("scroll", scrolled, { passive: true });
-  }
+  // ---------- my name, on Home: back to the top, no reload ----------
+  document.querySelector(".brand")?.addEventListener("click", (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return; // a new tab still works as usual
+    e.preventDefault();
+    if (location.hash) history.replaceState(null, "", location.pathname);
+    scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+  });
 
   // ---------- copy the email address ----------
   // on touch screens a tap on Email opens the address and Copy button instead of the mail app; tapping elsewhere closes it

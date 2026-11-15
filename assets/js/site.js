@@ -8,6 +8,8 @@
 // 7. Arrival highlight: after a jump to a section (contents link, nav link, page load with #hash), its heading
 //    gets a hand-drawn marker stroke in the project colour that fades away. Groups marked [data-hl-group]
 //    highlight their [data-hl] children instead, e.g. the contact links on the homepage.
+// 8. Moving between pages: the name, the nav and the theme button glide from their place on the last page to their place
+//    on this one (base.css does it with a view transition; this is the same glide for browsers without one).
 
 window.__siteOK = true; // tells the inline guard in <head> that scripts arrived, so scroll-revealed content may stay hidden until it animates in
 document.documentElement.classList.add("has-js");
@@ -32,12 +34,6 @@ const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     apply(next);
     try { localStorage.setItem("theme", next); } catch (e) { /* private mode: the choice lasts for this page only */ }
     setTimeout(() => root.classList.remove("theme-anim"), 400);
-  });
-  // follow the system while the visitor hasn't picked a theme themselves
-  matchMedia("(prefers-color-scheme: light)").addEventListener?.("change", (e) => {
-    let saved = null;
-    try { saved = localStorage.getItem("theme"); } catch (err) { /* ignore */ }
-    if (!saved) apply(e.matches ? "light" : "dark");
   });
 })();
 
@@ -265,4 +261,33 @@ document.querySelectorAll(".nav").forEach((nav) => {
     // an image that failed before this script ran (complete, but empty) gets its retry now
     if (img.complete && img.naturalWidth === 0 && img.getAttribute("loading") !== "lazy") img.dispatchEvent(new Event("error"));
   });
+})();
+
+// Moving between pages, for browsers without cross-document view transitions (those use base.css instead).
+// Clicking a link to another page of the site notes where the name, the nav and the theme button are; the next page
+// starts them there and glides them to their own places.
+(() => {
+  const parts = { brand: ".site-header .brand", nav: ".site-header .nav", tools: ".site-header .header-tools" };
+  const KEY = "navFrom";
+  const where = () => Object.fromEntries(Object.entries(parts).map(([k, sel]) => { const el = document.querySelector(sel); return [k, el ? el.getBoundingClientRect().left : null]; }));
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a[href]");
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === "_blank" || a.hasAttribute("download")) return;
+    const url = new URL(a.href, location.href);
+    if (url.origin !== location.origin || url.pathname === location.pathname) return;
+    try { sessionStorage.setItem(KEY, JSON.stringify({ t: Date.now(), at: where() })); } catch (err) { /* storage blocked: no glide */ }
+  });
+  let from = null;
+  try { from = JSON.parse(sessionStorage.getItem(KEY)); sessionStorage.removeItem(KEY); } catch (err) { /* nothing noted */ }
+  if (!from || Date.now() - from.t > 4000 || "onpagereveal" in window || matchMedia("(prefers-reduced-motion: reduce)").matches || innerWidth < 700) return;
+  const now = where();
+  for (const [k, sel] of Object.entries(parts)) {
+    const el = document.querySelector(sel), dx = (from.at[k] ?? now[k]) - now[k];
+    if (!el || !dx || Math.abs(dx) < 1) continue;
+    el.style.transform = `translateX(${dx}px)`;
+    el.getBoundingClientRect(); // start from the old place before gliding
+    el.style.transition = "transform 0.75s cubic-bezier(0.45, 0.05, 0.25, 1)";
+    el.style.transform = "";
+    el.addEventListener("transitionend", () => { el.style.transition = ""; }, { once: true });
+  }
 })();

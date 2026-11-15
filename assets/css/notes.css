@@ -1,0 +1,37 @@
+/* notes.css — handwritten notes on top of a page: short lines of text (.note) and pen strokes (.ink: arrows, circles).
+   The notes are real text set in a handwriting font, so they can be read, selected and translated like any other text.
+   The switch in the header hides them all (notes.js sets <html data-notes="off"> and remembers the choice).
+   To change the hand, change --font-hand. To change the pen, change --pen (one value per theme). */
+
+:root { --font-hand: "Caveat", "Segoe Print", "Bradley Hand", cursive; --pen: #a9baff; }
+:root[data-theme="light"] { --pen: #2b4fc7; }
+
+.note {
+  display: inline-block; font-family: var(--font-hand); font-size: clamp(1.25rem, 1.1rem + 0.9vw, 1.75rem); font-weight: 500; line-height: 1.05; letter-spacing: 0;
+  text-transform: none; white-space: nowrap; color: var(--pen); rotate: var(--tilt, -2deg);
+  animation: note-in 0.5s var(--ease) both; animation-delay: var(--d, 0.6s);
+}
+@keyframes note-in { from { opacity: 0; translate: 0 4px; } to { opacity: 1; translate: 0 0; } }
+
+/* pen strokes: every path has pathLength="1", so one rule draws any of them in from start to end */
+.ink { overflow: visible; fill: none; stroke: var(--pen); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
+.ink path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: ink-draw 0.6s var(--ease) forwards; animation-delay: var(--d, 0.8s); }
+@keyframes ink-draw { to { stroke-dashoffset: 0; } }
+
+/* a loop drawn around a word or figure */
+.circled { position: relative; margin-right: 0.45em; white-space: nowrap; color: var(--ink); font-weight: 500; }
+.circled .ink { position: absolute; left: -0.6em; top: -0.32em; width: calc(100% + 1.2em); height: calc(100% + 0.64em); max-width: none; }
+
+/* notes off */
+[data-notes="off"] .note, [data-notes="off"] .ink { display: none; }
+
+/* the switch: a pencil; faded while the notes are hidden */
+.notes-toggle[aria-pressed="false"] svg { opacity: 0.38; }
+
+/* reduced motion: the notes are simply there, with no drawing in and no wait */
+@media (prefers-reduced-motion: reduce) {
+  .note, .ink path { animation: none; }
+  .ink path { stroke-dashoffset: 0; }
+}
+
+@media print { .note, .ink { display: none; } }

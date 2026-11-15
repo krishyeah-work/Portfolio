@@ -1,4 +1,4 @@
-/* mailchimp.css — styles used only by the MailChimp case study.
+/* mailchimp.css — styles used only by the Mailchimp case study.
    Shared case-study styles live in /assets/css/case-study.css. */
 
 /* ---------- 03: how customers buy (three channels) ---------- */
@@ -197,7 +197,7 @@
 /* dashboard stages in a carousel: no rounded clipping, so the dashboard's own yellow corners stay visible */
 .carousel--stage .carousel__track { border-radius: 0; }
 
-/* ---------- themes: MailChimp keeps its yellow; light mode uses a deeper shade so text stays readable ---------- */
+/* ---------- themes: Mailchimp keeps its yellow; light mode uses a deeper shade so text stays readable ---------- */
 body.cs-mc { --accent: #f5c451; --accent-ink: #1a1508; --accent-soft: rgba(245, 196, 81, 0.12); --hl: rgba(245, 196, 81, 0.34); }
 :root[data-theme="light"] body.cs-mc { --accent: #8a6500; --accent-ink: #ffffff; --accent-soft: rgba(138, 101, 0, 0.1); --hl: rgba(245, 196, 81, 0.55); }
 /* light mode: Krishna's yellow line-art dashboards are drawn for dark; deepen the lines so they read on paper */

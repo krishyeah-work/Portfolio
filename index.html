@@ -2,34 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <script>(function(h){var t;try{t=localStorage.getItem("theme")}catch(e){}if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";h.setAttribute("data-theme",t)})(document.documentElement)</script>
+  <script>(function(h){var t;try{t=localStorage.getItem("theme")}catch(e){}if(t!=="dark")t="light";h.setAttribute("data-theme",t)})(document.documentElement)</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script>(function(h){h.classList.add("intro-wait");try{if(!sessionStorage.getItem("introSeen")&&!location.hash&&!matchMedia("(prefers-reduced-motion: reduce)").matches){h.classList.add("first-visit");setTimeout(function(){h.classList.add("intro-ready")},4500)}}catch(e){}})(document.documentElement)</script>
-  <title>Krishna Revanth — UX Designer</title>
-  <meta name="description" content="Krishna Revanth is a UX designer who makes purchase, billing and pricing experiences easier to understand. Recent work with Intuit's GTM Tech team on MailChimp and QuickBooks.">
-  <meta property="og:title" content="Krishna Revanth — UX Designer">
+  <script>(function(h){var s;try{s=sessionStorage.getItem("introPlayed")}catch(e){}if(!s)h.classList.add("intro-wait","intro-anim")})(document.documentElement)</script>
+  <title>Krishna Revanth — Designer</title>
+  <meta name="description" content="Krishna Revanth is a designer who makes purchase, billing and pricing experiences easier to understand. Recent work with Intuit's GTM Tech team on Mailchimp and QuickBooks.">
+  <meta property="og:title" content="Krishna Revanth — Designer">
   <meta property="og:description" content="Purchase, billing and pricing experiences, made clear. Recent work with Intuit's GTM Tech team.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#0c0c0e">
+  <meta property="og:image" content="https://www.krishyeah.com/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#f6f6f3">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..600&display=swap">
-  <link rel="stylesheet" href="/assets/css/base.css?v=20261029a">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Geist:wght@300..600&display=swap">
+  <link rel="stylesheet" href="/assets/css/base.css?v=20261116b">
   <link rel="stylesheet" href="/assets/css/footer-live.css?v=20261101b">
-  <link rel="stylesheet" href="/assets/css/work-art.css?v=20261023c">
-  <link rel="stylesheet" href="/assets/css/home.css?v=20261029a">
-  <link rel="stylesheet" href="/work/mailchimp/cover.css?v=20261023c">
-  <script src="/assets/js/site.js?v=20261029b" defer></script>
-  <script src="/assets/js/intro.js?v=20261029b" defer></script>
+  <link rel="stylesheet" href="/assets/css/notes.css?v=20261115a">
+  <link rel="stylesheet" href="/assets/css/work-art.css?v=20261115c">
+  <link rel="stylesheet" href="/assets/css/home.css?v=20261116f">
+  <script src="/assets/js/site.js?v=20261116b" defer></script>
+  <script src="/assets/js/intro.js?v=20261115b" defer></script>
+  <script src="/assets/js/strings.js?v=20261116a" defer></script>
+  <script src="/assets/js/dots.js?v=20261116b" defer></script>
   <script src="/assets/js/clock.js?v=20261023b" defer></script>
   <script src="/assets/js/pal.js?v=20261023c" defer></script>
-  <script src="/assets/js/bangalore.js?v=20261101e" defer></script>
-  <script src="/work/mailchimp/cover.js?v=20261023c" defer></script>
   <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
   <script src="/_vercel/insights/script.js" defer></script>
 </head>
-<body>
+<body class="home">
   <a class="skip" href="#main">Skip to content</a>
 
   <header class="site-header">
@@ -38,7 +42,7 @@
         <span class="brand-name" data-scramble-hover="KRISHNA REVANTH">KRISHNA</span>
       </a>
       <nav class="nav" id="site-nav" aria-label="Primary">
-        <a href="#work">Work</a>
+        <a href="/work/">Work</a>
         <a href="/about/">About</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -52,21 +56,21 @@
   </header>
 
   <main id="main">
-    <!-- ============ INTRO: who I am in four short lines, and the ways to reach me (the "Contact" target).
-         intro.js fades it in word by word and thickens the letters near the pointer. Underlined words link to more;
-         the two marked "later" will open photos or notes once they exist. Names never break across lines (.nb). ============ -->
+    <!-- ============ INTRO: who I am in a few short lines, and the ways to reach me (the "Contact" target).
+         The words come into focus one after another on load; with a mouse, letters near the pointer thicken (intro.js).
+         Names never break across lines (.nb). ============ -->
     <section class="intro" id="contact" aria-labelledby="hero-title" data-hl-group data-hl-time="2500">
       <div class="wrap">
-        <h1 class="sr-only" id="hero-title">Krishna Revanth, UX designer</h1>
+        <h1 class="sr-only" id="hero-title">Krishna Revanth, designer</h1>
         <div class="intro__text" data-ripple>
           <p>I'm Krishna, based in Bangalore.</p>
-          <p>Currently, I'm a <span class="nb">UX designer</span> at Cognizant.</p>
-          <p>Previously, I worked with Intuit's design team on <a href="/work/mailchimp/">MailChimp</a>, <a href="/work/quickbooks-rate-tables/">QuickBooks</a> and <a href="/work/net-terms/">Intuit Enterprise Suite</a>, making buying, pricing and invoicing easier to understand.</p>
-          <p>Before that, I studied design at <a href="/about/#education">IIT Guwahati</a>, after training as an architect.</p>
-          <p>I'm curious by nature: lately that means <span class="u" data-later>building things with AI</span>, and away from the screen, <span class="u" data-later>travelling with a camera</span>.</p>
+          <p>Currently, I'm a designer at Cognizant.</p>
+          <p>Previously, I worked with Intuit's design team on <a href="/work/mailchimp/">Mailchimp</a>, <a href="/work/quickbooks-rate-tables/">QuickBooks</a> and <a href="/work/net-terms/">Intuit Enterprise Suite</a>, making buying, pricing and invoicing easier to understand.</p>
+          <p>Before that, I studied design at <a href="/about/#education">IIT Guwahati</a>.</p>
+          <p>I'm curious by nature: lately that means building things with AI, and away from the screen, <a href="/about/#away">travelling with a camera</a>.</p>
         </div>
         <!-- reach me (left) and the résumé (right). Hovering Email shows the address with a copy button (intro.js) -->
-        <div class="intro__reach" style="--i: 4">
+        <div class="intro__reach">
           <div class="reach">
             <span class="reach__cap">reach out to me at</span>
             <div class="reach__row">
@@ -80,7 +84,7 @@
                   </span>
                 </span>
               </span>
-              <span class="intro__note">that's it, no other socials :)</span>
+              <span class="note" style="--d: 1.5s; --tilt: -2deg">that's it, no other socials :)</span>
             </div>
           </div>
           <div class="reach reach--cv">
@@ -90,92 +94,89 @@
             </div>
           </div>
         </div>
-        <!-- jump to the work; gone once you scroll (intro.js) -->
-        <div class="peek-cue"><a class="intro__next" href="#work">Selected work <span aria-hidden="true">↓</span></a></div>
       </div>
     </section>
 
-    <!-- ============ WORK ============ -->
-    <section class="section" id="work" aria-labelledby="work-title">
+    <!-- ============ WORK: a few hand-picked case studies, then a link to every project (/work/).
+         To feature a different project, move its <li> here from work/index.html (and add where, in .row__place).
+         - Each row shows the title, where and when. On wide screens with a mouse, pointing at a row shows that project's
+           small animation, a one-line summary and its tags beside the list (.row__peek; art in assets/css/work-art.css).
+         - The lines between the rows are strings: cross one with the pointer and it plucks (strings.js). ============ -->
+    <section class="work" id="work" aria-labelledby="work-title">
       <div class="wrap">
-        <div class="section-head">
-          <div>
-            <span class="label kicker">Selected work</span>
-            <h2 id="work-title">Commerce and payments at Intuit.</h2>
-          </div>
-        </div>
-
-        <ol class="work-list" role="list">
-          <li>
-            <a class="card card--mc" href="/work/mailchimp/">
-              <div class="card__art mc-stage" data-dust="hover">
-                <canvas aria-hidden="true"></canvas>
-                <div class="mc-stage__float"><svg class="mc-stage__logo" viewBox="0 0 246.24 261.34" aria-hidden="true" focusable="false"><path d="M185.23,123.5c1.91-.23,3.74-.24,5.41,0,.97-2.23,1.14-6.07,.26-10.26-1.3-6.22-3.06-9.98-6.69-9.4-3.63,.59-3.77,5.09-2.47,11.31,.73,3.5,2.03,6.49,3.48,8.34Z"/><path d="M154.03,128.42c2.6,1.14,4.2,1.9,4.82,1.24,.4-.41,.28-1.2-.34-2.21-1.28-2.09-3.92-4.22-6.72-5.41-5.73-2.47-12.56-1.65-17.83,2.14-1.74,1.27-3.39,3.04-3.15,4.11,.08,.35,.34,.61,.95,.69,1.43,.16,6.45-2.37,12.22-2.72,4.08-.25,7.45,1.02,10.05,2.17Z"/><path d="M148.79,131.4c-3.39,.53-5.25,1.65-6.45,2.69-1.02,.89-1.66,1.88-1.65,2.58,0,.33,.15,.52,.26,.62,.15,.14,.34,.21,.56,.21,.76,0,2.48-.69,2.48-.69,4.71-1.69,7.82-1.48,10.9-1.13,1.7,.19,2.51,.3,2.88-.29,.11-.17,.24-.53-.1-1.08-.79-1.29-4.21-3.46-8.88-2.91Z"/><path d="M174.69,142.36c2.3,1.13,4.83,.69,5.66-.99s-.37-3.95-2.67-5.08c-2.3-1.13-4.83-.69-5.66,.99-.82,1.68,.37,3.95,2.67,5.08Z"/><path d="M189.48,129.44c-1.87-.03-3.42,2.02-3.46,4.58-.04,2.56,1.44,4.66,3.3,4.7,1.87,.03,3.42-2.02,3.46-4.58,.04-2.56-1.44-4.66-3.3-4.7Z"/><path d="M62.02,175.4c-.52,.12-1.1,.26-1.74,.25-1.37-.03-2.54-.61-3.19-1.62-.85-1.31-.8-3.26,.14-5.49,.13-.3,.28-.63,.44-1,1.5-3.36,4.01-8.99,1.19-14.35-2.12-4.04-5.57-6.55-9.73-7.08-3.99-.51-8.1,.97-10.72,3.86-4.13,4.56-4.78,10.76-3.98,12.96,.29,.8,.75,1.03,1.08,1.07,.7,.09,1.74-.42,2.39-2.17,.05-.13,.11-.32,.19-.57,.29-.93,.83-2.65,1.72-4.03,1.07-1.67,2.73-2.82,4.68-3.23,1.99-.43,4.02-.05,5.72,1.07,2.89,1.89,4.01,5.44,2.77,8.83-.64,1.75-1.68,5.1-1.45,7.85,.46,5.57,3.89,7.8,6.96,8.04,2.99,.11,5.08-1.57,5.61-2.79,.31-.73,.05-1.17-.12-1.36-.46-.58-1.23-.4-1.97-.23Z"/><path d="M236.61,165.46c-.11-.4-.86-3.11-1.87-6.38-1.02-3.27-2.07-5.57-2.07-5.57,4.09-6.12,4.16-11.59,3.62-14.69-.58-3.84-2.18-7.12-5.4-10.5-3.22-3.38-9.82-6.85-19.08-9.45-1.06-.3-4.55-1.26-4.86-1.35-.02-.2-.26-11.46-.47-16.3-.15-3.49-.45-8.95-2.15-14.32-2.02-7.27-5.53-13.64-9.92-17.71,12.11-12.55,19.67-26.38,19.65-38.24-.03-22.81-28.05-29.71-62.57-15.42-.04,.02-7.26,3.08-7.31,3.11-.03-.03-13.22-12.97-13.42-13.15C91.38-28.85-31.69,107.94,7.66,141.16l8.6,7.28c-2.23,5.78-3.11,12.4-2.39,19.52,.92,9.14,5.64,17.91,13.28,24.68,7.26,6.43,16.8,10.5,26.06,10.49,15.31,35.28,50.3,56.93,91.32,58.15,44,1.31,80.94-19.34,96.41-56.43,1.01-2.6,5.31-14.33,5.31-24.68s-5.88-14.72-9.63-14.72Zm-180.03,27.77c-1.34,.23-2.7,.32-4.08,.29-13.29-.36-27.65-12.32-29.07-26.51-1.58-15.68,6.44-27.75,20.63-30.61,1.7-.34,3.75-.54,5.96-.42,7.95,.44,19.66,6.54,22.34,23.86,2.37,15.34-1.39,30.95-15.77,33.41Zm-14.84-66.22c-8.83,1.72-16.62,6.72-21.38,13.64-2.85-2.37-8.15-6.97-9.08-8.76-7.6-14.43,8.29-42.49,19.4-58.33C58.12,34.39,101.1,4.76,121,10.13c3.23,.92,13.95,13.34,13.95,13.34,0,0-19.89,11.03-38.33,26.42-24.85,19.13-43.62,46.94-54.87,77.12Zm50.68-53.61c9.75-11.27,21.76-21.07,32.52-26.58,.37-.19,.77,.21,.56,.58-.85,1.55-2.5,4.86-3.02,7.37-.08,.39,.35,.69,.68,.46,6.69-4.56,18.34-9.45,28.55-10.08,.44-.03,.65,.54,.3,.8-1.55,1.19-3.25,2.84-4.49,4.51-.21,.28-.01,.69,.34,.69,7.17,.05,17.28,2.56,23.87,6.26,.45,.25,.13,1.11-.37,1-9.97-2.29-26.29-4.02-43.24,.12-15.13,3.69-26.68,9.39-35.11,15.52-.43,.31-.94-.25-.59-.65Zm144.64,110.29c-1.91,11.58-6.83,20.97-15.1,29.62-5.03,5.42-11.15,10.13-18.14,13.56-3.71,1.95-7.67,3.64-11.84,5-31.18,10.18-63.09-1.01-73.37-25.05-.82-1.81-1.52-3.7-2.06-5.68-4.38-15.84-.66-34.85,10.97-46.81,0,0,0,0,0,0,.72-.76,1.45-1.66,1.45-2.79,0-.94-.6-1.94-1.12-2.65-4.07-5.9-18.17-15.96-15.34-35.43,2.03-13.98,14.26-23.83,25.67-23.25,.96,.05,1.93,.11,2.89,.17,4.94,.29,9.25,.93,13.32,1.1,6.81,.29,12.93-.7,20.18-6.74,2.45-2.04,4.41-3.81,7.73-4.37,.35-.06,1.22-.37,2.95-.29,1.77,.09,3.46,.58,4.97,1.59,5.81,3.87,6.64,13.24,6.94,20.09,.17,3.91,.64,13.38,.81,16.1,.37,6.21,2,7.09,5.31,8.18,1.86,.61,3.58,1.07,6.13,1.78,7.7,2.16,12.26,4.35,15.13,7.17,1.72,1.76,2.51,3.63,2.76,5.41,.91,6.62-5.14,14.8-21.15,22.23-17.5,8.12-38.73,10.18-53.39,8.54-1.13-.13-5.12-.58-5.14-.58-11.73-1.58-18.43,13.58-11.38,23.97,4.54,6.69,16.9,11.05,29.27,11.05,28.36,0,50.15-12.11,58.26-22.56,.24-.31,.27-.35,.65-.92,.4-.6,.07-.93-.43-.59-6.62,4.53-36.05,22.53-67.52,17.11,0,0-3.82-.63-7.31-1.99-2.77-1.08-8.58-3.75-9.29-9.71,25.4,7.85,41.39,.43,41.39,.43,.29-.12,.49-.45,.45-.78-.04-.4-.4-.7-.8-.66,0,0-20.82,3.08-40.49-4.12,2.14-6.96,7.84-4.45,16.45-3.75,15.52,.92,29.43-1.34,39.71-4.29,8.91-2.56,20.61-7.6,29.69-14.77,3.06,6.73,4.15,14.14,4.15,14.14,0,0,2.37-.42,4.35,.8,1.87,1.15,3.25,3.55,2.31,9.75Zm-96.05-1.07s0,0,0,0c0,0,0,0,0,.01,0,0,0-.01,0-.02Z"/></svg></div>
-              </div>
-              <div class="card__body">
-                <div class="card__meta label"><span>01</span><span>Intuit · MailChimp</span><span>2026</span></div>
-                <h3 class="card__title">MailChimp on Sales Agent Channel <span class="arrow" aria-hidden="true">→</span></h3>
-                <p class="card__desc">Helping Intuit sales agents sell MailChimp from the same dashboard they use for QuickBooks.</p>
-                <div class="chips">
-                  <span class="chip">Purchase flow</span>
-                  <span class="chip">B2B sales tool</span>
+        <h2 class="label work__label" id="work-title">Selected work</h2>
+        <ol class="rows" role="list">
+            <li>
+              <a class="row card card--mc" href="/work/mailchimp/">
+                <h3 class="row__title">Mailchimp on Sales Agent Channel</h3>
+                <span class="row__meta"><span class="row__place">Intuit</span>Jan – Mar 2026 <span class="row__arrow" aria-hidden="true">→</span></span>
+                <div class="row__peek" aria-hidden="true">
+                  <div class="peek__art peek__art--mcx"><div class="mcx" aria-hidden="true"><div class="mcx__top"><svg class="mcx__logo" viewBox="0 0 246.24 261.34"><path d="M185.23,123.5c1.91-.23,3.74-.24,5.41,0,.97-2.23,1.14-6.07,.26-10.26-1.3-6.22-3.06-9.98-6.69-9.4-3.63,.59-3.77,5.09-2.47,11.31,.73,3.5,2.03,6.49,3.48,8.34Z"/><path d="M154.03,128.42c2.6,1.14,4.2,1.9,4.82,1.24,.4-.41,.28-1.2-.34-2.21-1.28-2.09-3.92-4.22-6.72-5.41-5.73-2.47-12.56-1.65-17.83,2.14-1.74,1.27-3.39,3.04-3.15,4.11,.08,.35,.34,.61,.95,.69,1.43,.16,6.45-2.37,12.22-2.72,4.08-.25,7.45,1.02,10.05,2.17Z"/><path d="M148.79,131.4c-3.39,.53-5.25,1.65-6.45,2.69-1.02,.89-1.66,1.88-1.65,2.58,0,.33,.15,.52,.26,.62,.15,.14,.34,.21,.56,.21,.76,0,2.48-.69,2.48-.69,4.71-1.69,7.82-1.48,10.9-1.13,1.7,.19,2.51,.3,2.88-.29,.11-.17,.24-.53-.1-1.08-.79-1.29-4.21-3.46-8.88-2.91Z"/><path d="M174.69,142.36c2.3,1.13,4.83,.69,5.66-.99s-.37-3.95-2.67-5.08c-2.3-1.13-4.83-.69-5.66,.99-.82,1.68,.37,3.95,2.67,5.08Z"/><path d="M189.48,129.44c-1.87-.03-3.42,2.02-3.46,4.58-.04,2.56,1.44,4.66,3.3,4.7,1.87,.03,3.42-2.02,3.46-4.58,.04-2.56-1.44-4.66-3.3-4.7Z"/><path d="M62.02,175.4c-.52,.12-1.1,.26-1.74,.25-1.37-.03-2.54-.61-3.19-1.62-.85-1.31-.8-3.26,.14-5.49,.13-.3,.28-.63,.44-1,1.5-3.36,4.01-8.99,1.19-14.35-2.12-4.04-5.57-6.55-9.73-7.08-3.99-.51-8.1,.97-10.72,3.86-4.13,4.56-4.78,10.76-3.98,12.96,.29,.8,.75,1.03,1.08,1.07,.7,.09,1.74-.42,2.39-2.17,.05-.13,.11-.32,.19-.57,.29-.93,.83-2.65,1.72-4.03,1.07-1.67,2.73-2.82,4.68-3.23,1.99-.43,4.02-.05,5.72,1.07,2.89,1.89,4.01,5.44,2.77,8.83-.64,1.75-1.68,5.1-1.45,7.85,.46,5.57,3.89,7.8,6.96,8.04,2.99,.11,5.08-1.57,5.61-2.79,.31-.73,.05-1.17-.12-1.36-.46-.58-1.23-.4-1.97-.23Z"/><path d="M236.61,165.46c-.11-.4-.86-3.11-1.87-6.38-1.02-3.27-2.07-5.57-2.07-5.57,4.09-6.12,4.16-11.59,3.62-14.69-.58-3.84-2.18-7.12-5.4-10.5-3.22-3.38-9.82-6.85-19.08-9.45-1.06-.3-4.55-1.26-4.86-1.35-.02-.2-.26-11.46-.47-16.3-.15-3.49-.45-8.95-2.15-14.32-2.02-7.27-5.53-13.64-9.92-17.71,12.11-12.55,19.67-26.38,19.65-38.24-.03-22.81-28.05-29.71-62.57-15.42-.04,.02-7.26,3.08-7.31,3.11-.03-.03-13.22-12.97-13.42-13.15C91.38-28.85-31.69,107.94,7.66,141.16l8.6,7.28c-2.23,5.78-3.11,12.4-2.39,19.52,.92,9.14,5.64,17.91,13.28,24.68,7.26,6.43,16.8,10.5,26.06,10.49,15.31,35.28,50.3,56.93,91.32,58.15,44,1.31,80.94-19.34,96.41-56.43,1.01-2.6,5.31-14.33,5.31-24.68s-5.88-14.72-9.63-14.72Zm-180.03,27.77c-1.34,.23-2.7,.32-4.08,.29-13.29-.36-27.65-12.32-29.07-26.51-1.58-15.68,6.44-27.75,20.63-30.61,1.7-.34,3.75-.54,5.96-.42,7.95,.44,19.66,6.54,22.34,23.86,2.37,15.34-1.39,30.95-15.77,33.41Zm-14.84-66.22c-8.83,1.72-16.62,6.72-21.38,13.64-2.85-2.37-8.15-6.97-9.08-8.76-7.6-14.43,8.29-42.49,19.4-58.33C58.12,34.39,101.1,4.76,121,10.13c3.23,.92,13.95,13.34,13.95,13.34,0,0-19.89,11.03-38.33,26.42-24.85,19.13-43.62,46.94-54.87,77.12Zm50.68-53.61c9.75-11.27,21.76-21.07,32.52-26.58,.37-.19,.77,.21,.56,.58-.85,1.55-2.5,4.86-3.02,7.37-.08,.39,.35,.69,.68,.46,6.69-4.56,18.34-9.45,28.55-10.08,.44-.03,.65,.54,.3,.8-1.55,1.19-3.25,2.84-4.49,4.51-.21,.28-.01,.69,.34,.69,7.17,.05,17.28,2.56,23.87,6.26,.45,.25,.13,1.11-.37,1-9.97-2.29-26.29-4.02-43.24,.12-15.13,3.69-26.68,9.39-35.11,15.52-.43,.31-.94-.25-.59-.65Zm144.64,110.29c-1.91,11.58-6.83,20.97-15.1,29.62-5.03,5.42-11.15,10.13-18.14,13.56-3.71,1.95-7.67,3.64-11.84,5-31.18,10.18-63.09-1.01-73.37-25.05-.82-1.81-1.52-3.7-2.06-5.68-4.38-15.84-.66-34.85,10.97-46.81,0,0,0,0,0,0,.72-.76,1.45-1.66,1.45-2.79,0-.94-.6-1.94-1.12-2.65-4.07-5.9-18.17-15.96-15.34-35.43,2.03-13.98,14.26-23.83,25.67-23.25,.96,.05,1.93,.11,2.89,.17,4.94,.29,9.25,.93,13.32,1.1,6.81,.29,12.93-.7,20.18-6.74,2.45-2.04,4.41-3.81,7.73-4.37,.35-.06,1.22-.37,2.95-.29,1.77,.09,3.46,.58,4.97,1.59,5.81,3.87,6.64,13.24,6.94,20.09,.17,3.91,.64,13.38,.81,16.1,.37,6.21,2,7.09,5.31,8.18,1.86,.61,3.58,1.07,6.13,1.78,7.7,2.16,12.26,4.35,15.13,7.17,1.72,1.76,2.51,3.63,2.76,5.41,.91,6.62-5.14,14.8-21.15,22.23-17.5,8.12-38.73,10.18-53.39,8.54-1.13-.13-5.12-.58-5.14-.58-11.73-1.58-18.43,13.58-11.38,23.97,4.54,6.69,16.9,11.05,29.27,11.05,28.36,0,50.15-12.11,58.26-22.56,.24-.31,.27-.35,.65-.92,.4-.6,.07-.93-.43-.59-6.62,4.53-36.05,22.53-67.52,17.11,0,0-3.82-.63-7.31-1.99-2.77-1.08-8.58-3.75-9.29-9.71,25.4,7.85,41.39,.43,41.39,.43,.29-.12,.49-.45,.45-.78-.04-.4-.4-.7-.8-.66,0,0-20.82,3.08-40.49-4.12,2.14-6.96,7.84-4.45,16.45-3.75,15.52,.92,29.43-1.34,39.71-4.29,8.91-2.56,20.61-7.6,29.69-14.77,3.06,6.73,4.15,14.14,4.15,14.14,0,0,2.37-.42,4.35,.8,1.87,1.15,3.25,3.55,2.31,9.75Zm-96.05-1.07s0,0,0,0c0,0,0,0,0,.01,0,0,0-.01,0-.02Z"/></svg><i></i><i></i><i></i><u></u></div><span class="mcx__col mcx__col--a">Products</span><span class="mcx__ghost" style="--r: 0"></span><span class="mcx__ghost" style="--r: 1"></span><span class="mcx__ghost" style="--r: 2"></span><div class="mcx__move"><span class="mcx__col mcx__col--b">Cart</span><span class="mcx__box mcx__box--now"></span><span class="mcx__box mcx__box--later"></span><span class="mcx__chip mcx__chip--em" style="--r: 0"><i></i>Email Marketing<b></b></span><span class="mcx__chip mcx__chip--tx" style="--r: 1"><i></i>Transactional Email<b></b></span><span class="mcx__chip mcx__chip--sms" style="--r: 2"><i></i>SMS<b></b></span><em class="mcx__tag mcx__tag--now">Charged today</em><em class="mcx__tag mcx__tag--later">Charged after approval</em></div></div></div>
+                  <div class="peek__cap">
+                    <p>Helping Intuit sales agents sell Mailchimp from the same dashboard they use for QuickBooks.</p>
+                    <div class="chips"><span class="chip">Purchase flow</span><span class="chip">B2B sales tool</span></div>
+                  </div>
                 </div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="card card--qb" href="/work/quickbooks-rate-tables/">
-              <div class="card__art" aria-hidden="true">
-                <table class="art-table">
-                  <thead><tr><th>Method</th><th>Network</th><th>Type</th><th>Fee</th></tr></thead>
-                  <tbody>
-                    <tr style="--r: 0"><td>Card</td><td>Visa</td><td>Keyed</td><td><span class="bar" style="width:38px"></span></td></tr>
-                    <tr style="--r: 1"><td>Card</td><td>Amex</td><td>Swiped</td><td><span class="bar" style="width:26px"></span></td></tr>
-                    <tr style="--r: 2"><td>ACH</td><td>Bank</td><td>Transfer</td><td><span class="bar" style="width:14px"></span></td></tr>
-                    <tr style="--r: 3"><td>Check</td><td>Mail</td><td>Vendor</td><td><span class="bar" style="width:20px"></span></td></tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="card__body">
-                <div class="card__meta label"><span>02</span><span>Intuit · QuickBooks</span><span>2026</span></div>
-                <h3 class="card__title">QuickBooks Payments and Bill Pay Rate Tables <span class="arrow" aria-hidden="true">→</span></h3>
-                <p class="card__desc">One readable fee table for every way a QuickBooks merchant gets paid and pays suppliers.</p>
-                <div class="chips">
-                  <span class="chip">Pricing UX</span>
-                  <span class="chip">Information architecture</span>
-                  <span class="chip">Coded prototype</span>
+              </a>
+            </li>
+            <li>
+              <a class="row card card--qb" href="/work/quickbooks-rate-tables/">
+                <h3 class="row__title">QuickBooks Payments and Bill Pay Rate Tables</h3>
+                <span class="row__meta"><span class="row__place">Intuit</span>May – Jun 2026 <span class="row__arrow" aria-hidden="true">→</span></span>
+                <div class="row__peek" aria-hidden="true">
+                  <div class="peek__art">
+                    <table class="art-table">
+                      <thead><tr><th>Method</th><th>Network</th><th>Type</th><th>Fee</th></tr></thead>
+                      <tbody>
+                        <tr style="--r: 0"><td>Card</td><td>Visa</td><td>Keyed</td><td><span class="bar" style="width:38px"></span></td></tr>
+                        <tr style="--r: 1"><td>Card</td><td>Amex</td><td>Swiped</td><td><span class="bar" style="width:26px"></span></td></tr>
+                        <tr style="--r: 2"><td>ACH</td><td>Bank</td><td>Transfer</td><td><span class="bar" style="width:14px"></span></td></tr>
+                        <tr style="--r: 3"><td>Check</td><td>Mail</td><td>Vendor</td><td><span class="bar" style="width:20px"></span></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="peek__cap">
+                    <p>One readable fee table for every way a QuickBooks merchant gets paid and pays suppliers.</p>
+                    <div class="chips"><span class="chip">Pricing UX</span><span class="chip">Information architecture</span><span class="chip">Coded prototype</span></div>
+                  </div>
                 </div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a class="card card--nt" href="/work/net-terms/">
-              <div class="card__art card__art--nt" aria-hidden="true">
-                <div class="art-nt">
-                  <p class="art-nt__q">How would you like to pay?</p>
-                  <div class="art-nt__opts"><span class="art-nt__opt art-nt__opt--imm"><i></i>Immediate</span><span class="art-nt__opt art-nt__opt--net"><i></i>Net Terms</span></div>
-                  <div class="art-nt__rail"><b></b><u style="--at: 33.333%"></u><u style="--at: 66.667%"></u><i></i></div>
-                  <div class="art-nt__ends"><span>Day 0</span><span>Net 30</span><span>Net 60</span><span>Net 90</span></div>
+              </a>
+            </li>
+            <li>
+              <a class="row card card--nt" href="/work/net-terms/">
+                <h3 class="row__title">Net Terms for Intuit Enterprise Suite</h3>
+                <span class="row__meta"><span class="row__place">Intuit</span>Nov 2025 – Jan 2026 <span class="row__arrow" aria-hidden="true">→</span></span>
+                <div class="row__peek" aria-hidden="true">
+                  <div class="peek__art">
+                    <div class="art-nt">
+                      <p class="art-nt__q">How would you like to pay?</p>
+                      <div class="art-nt__opts"><span class="art-nt__opt art-nt__opt--imm"><i></i>Immediate</span><span class="art-nt__opt art-nt__opt--net"><i></i>Net Terms</span></div>
+                      <div class="art-nt__rail"><b></b><u style="--at: 33.333%"></u><u style="--at: 66.667%"></u><i></i></div>
+                      <div class="art-nt__ends"><span>Day 0</span><span>Net 30</span><span>Net 60</span><span>Net 90</span></div>
+                    </div>
+                  </div>
+                  <div class="peek__cap">
+                    <p>Invoice billing on approved terms for enterprise customers, inside QuickBooks' shared payment widget.</p>
+                    <div class="chips"><span class="chip">Payments UX</span><span class="chip">B2B billing</span><span class="chip">State design</span></div>
+                  </div>
                 </div>
-              </div>
-              <div class="card__body">
-                <div class="card__meta label"><span>03</span><span>Intuit · Enterprise Suite</span><span>2026</span></div>
-                <h3 class="card__title">Net Terms for Intuit Enterprise Suite <span class="arrow" aria-hidden="true">→</span></h3>
-                <p class="card__desc">Invoice billing on approved terms for enterprise customers, inside QuickBooks' shared payment widget.</p>
-                <div class="chips">
-                  <span class="chip">Payments UX</span>
-                  <span class="chip">B2B billing</span>
-                  <span class="chip">State design</span>
+              </a>
+            </li>
+            <li>
+              <a class="row card card--pc" href="/work/picto/">
+                <h3 class="row__title">Picto: learn a language by living it</h3>
+                <span class="row__meta"><span class="row__place">Experiment</span>Nov 2026 <span class="row__arrow" aria-hidden="true">→</span></span>
+                <div class="row__peek" aria-hidden="true">
+                  <div class="peek__art peek__art--pcx"><div class="pcx"><svg class="pcx__route" viewBox="0 0 100 62.5" preserveAspectRatio="none"><path d="M12 40C20 30 30 30 38 34S52 44 62 40S80 28 88 32"/><circle cx="12" cy="40" r="1.3"/><circle cx="38" cy="34" r="1.3"/><circle cx="62" cy="40" r="1.3"/><circle cx="88" cy="32" r="1.3"/></svg><span class="pcx__card" style="--x: 12cqw; --y: 40cqw; --t: #ffe0ef; --d: 0s"><svg viewBox="0 0 32 32"><path d="M7 13h15v5a7 7 0 0 1-7 7h-1a7 7 0 0 1-7-7z"/><path d="M22 15h2a3 3 0 0 1 0 6h-2.4"/><path d="M12 5c-1.2 1.8 1.2 2.8 0 5M17 5c-1.2 1.8 1.2 2.8 0 5"/></svg>café</span><span class="pcx__card" style="--x: 38cqw; --y: 34cqw; --t: #effbc6; --d: 1.4s"><svg viewBox="0 0 32 32"><path d="M5 19c0-5 5-8 11-8s11 3 11 8v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M11 14l1.6 3M16 13l1.6 3M21 14l1.6 3"/></svg>pan</span><span class="pcx__card" style="--x: 62cqw; --y: 40cqw; --t: #e3e8ff; --d: 2.8s"><svg viewBox="0 0 32 32"><ellipse cx="16" cy="11" rx="12" ry="3.6"/><path d="M16 14.6V26M10.5 27h11"/></svg>mesa</span><span class="pcx__city pcx__city--a">Barcelona</span><span class="pcx__city pcx__city--b">Madrid</span><span class="pcx__me"></span></div></div>
+                  <div class="peek__cap">
+                    <p>A language app for adults 40 and up: new words come from short real-life scenes, worked out from pictures and context, not translation.</p>
+                    <div class="chips"><span class="chip">Product concept</span><span class="chip">Language learning</span><span class="chip">Coded prototype</span></div>
+                  </div>
                 </div>
-              </div>
-            </a>
-          </li>
+              </a>
+            </li>
         </ol>
-
-        <ul class="more" aria-label="More work">
-          <li><h3>Subscriptions &amp; account transitions · Intuit</h3><span class="label">Case study in preparation</span></li>
-          <li><h3>Payment methods · Intuit</h3><span class="label">Case study in preparation</span></li>
-        </ul>
+        <a class="all-work" href="/work/">All work <span class="row__arrow" aria-hidden="true">→</span></a>
       </div>
     </section>
 
@@ -185,7 +186,7 @@
     <div class="wrap">
       <div class="footer-live"><span data-clock></span></div>
       <span data-pal></span>
-      <p class="reach-out"><span class="reach-out__thin">Looking to</span> <a class="reach-out__link" href="#contact">Contact<svg class="i-up" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V4.5M5.5 11 12 4.5l6.5 6.5"/></svg></a></p>
+      <p class="reach-out"><span class="reach-out__thin">Looking to</span> <a class="reach-out__link" href="#contact">contact<svg class="i-up" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V4.5M5.5 11 12 4.5l6.5 6.5"/></svg></a></p>
     </div>
   </footer>
 </body>

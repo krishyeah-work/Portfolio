@@ -1,4 +1,4 @@
-// mailchimp.js — interactions used only by the MailChimp case study.
+// mailchimp.js — interactions used only by the Mailchimp case study.
 // 2. Cart explorations: a pinned stage where each cart lands, in turn, in the cart slot of the dashboard,
 //    with a minimal stepper, and a final cart whose status header cycles through other information types.
 // (The logo cover lives in cover.js, shared with the homepage card.)

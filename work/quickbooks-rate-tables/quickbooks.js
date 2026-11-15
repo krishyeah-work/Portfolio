@@ -215,7 +215,7 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
       <div class="dash__brand"><span class="dash__mark"><i></i></span>Accountant</div>
       <div class="dash__top"><span>☰</span><span>Accountant tools</span><span class="dash__search"></span><span class="dash__dot"></span><span class="dash__dot"></span></div>
       <div class="dash__side"><span class="dash__new">+ New</span><small>Your practice</small><span>Clients</span><span>Team</span><span>Billing</span><span>Work</span><small>Your books</small><span>Overview</span><span>Banking</span><span>Expenses</span><span>Sales</span><span>Reports</span></div>
-      <div class="dash__main"><h1>Subscriptions and billing</h1>
+      <div class="dash__main"><p class="dash__title">Subscriptions and billing</p>
         <div class="dash__tabs"><span>All clients</span><span>Firm subscriptions</span><span>Billing details</span></div>
         <div class="dash__pills"><span>Show only accountant-billed</span><span>Show only client-billed</span></div>
         <table class="dash__table"><thead><tr><th>Client</th><th>Products</th><th>Price</th><th>Billed to</th><th>Action</th></tr></thead><tbody>

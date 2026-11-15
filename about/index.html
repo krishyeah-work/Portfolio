@@ -2,26 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <script>(function(h){var t;try{t=localStorage.getItem("theme")}catch(e){}if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";h.setAttribute("data-theme",t)})(document.documentElement)</script>
+  <script>(function(h){var t;try{t=localStorage.getItem("theme")}catch(e){}if(t!=="dark")t="light";h.setAttribute("data-theme",t)})(document.documentElement)</script>
   <script>(function(h){if(!location.hash&&!matchMedia("(prefers-reduced-motion: reduce)").matches){h.classList.add("is-arriving");setTimeout(function(){h.classList.remove("is-arriving")},3000)}})(document.documentElement) // the entrance (about.js) hides the page until it plays; never longer than 3 s</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About — Krishna Revanth</title>
-  <meta name="description" content="Krishna Revanth: an architect turned UX designer in Bangalore, who likes making useful, fun things for the people around him.">
+  <meta name="description" content="Krishna Revanth, a designer in Bangalore who likes making useful, fun things for the people around him.">
   <meta property="og:title" content="About — Krishna Revanth">
-  <meta property="og:description" content="An architect turned UX designer in Bangalore, who likes making useful, fun things for the people around him.">
+  <meta property="og:description" content="A designer in Bangalore who likes making useful, fun things for the people around him.">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.krishyeah.com/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#0c0c0e">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..600&display=swap">
-  <link rel="stylesheet" href="/assets/css/base.css?v=20261029a">
+  <link rel="stylesheet" href="/assets/css/base.css?v=20261116b">
   <link rel="stylesheet" href="/assets/css/footer-live.css?v=20261101b">
   <link rel="stylesheet" href="/assets/css/about.css?v=20261110i">
-  <script src="/assets/js/site.js?v=20261029b" defer></script>
+  <script src="/assets/js/site.js?v=20261116b" defer></script>
   <script src="/assets/js/clock.js?v=20261023b" defer></script>
   <script src="/assets/js/pal.js?v=20261023c" defer></script>
-  <script src="/assets/js/bangalore.js?v=20261101e" defer></script>
   <script src="/assets/js/about.js?v=20261110g" defer></script>
   <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
   <script src="/_vercel/insights/script.js" defer></script>
@@ -35,7 +38,7 @@
         <span class="brand-name" data-scramble-hover="KRISHNA REVANTH">KRISHNA</span>
       </a>
       <nav class="nav" id="site-nav" aria-label="Primary">
-        <a href="/#work">Work</a>
+        <a href="/work/">Work</a>
         <a href="/about/" aria-current="page">About</a>
         <a href="/#contact">Contact</a>
       </nav>
@@ -56,10 +59,10 @@
           <h1 class="sr-only" id="about-title">About Krishna Revanth</h1>
           <div class="hello__copy">
             <p>I'm Krishna. I love designing things that are useful, and a little fun, for the people around me. I've always been the one noticing how things work and tinkering with them until they work better.</p>
-            <p>I'm a UX designer at Cognizant in Bangalore. Before that I trained as an architect, studied design at IIT Guwahati, and worked with Intuit's design team on MailChimp, QuickBooks and Intuit Enterprise Suite.</p>
+            <p>I'm a designer at Cognizant in Bangalore. Before that I studied design at IIT Guwahati and worked with Intuit's design team on Mailchimp, QuickBooks and Intuit Enterprise Suite.</p>
           </div>
           <p class="hello__links">
-            <a href="/#work">See the work</a>
+            <a href="/work/">See the work</a>
             <a href="/assets/Krishna-Revanth-Resume.pdf?v=20261028" download="Krishna-Revanth-Resume.pdf">Résumé</a>
             <a href="mailto:revanth.tallapaka@gmail.com">Email</a>
           </p>
@@ -111,7 +114,7 @@
           <p class="label ledger-title" id="experience">Experience</p>
           <ul class="ledger">
             <li><span class="label">2025 – Current</span><div><strong>Associate UX Designer · Cognizant</strong><span class="d">Joined through campus placement</span></div></li>
-            <li><span class="label">2025 – 26</span><div><strong>Intuit · GTM Tech design team</strong><span class="d">Via Cognizant, Nov 2025 – Aug 2026. MailChimp and QuickBooks sales-channel experiences.</span></div></li>
+            <li><span class="label">2025 – 26</span><div><strong>Intuit · GTM Tech design team</strong><span class="d">Via Cognizant, Nov 2025 – Aug 2026. Mailchimp and QuickBooks sales-channel experiences.</span></div></li>
           </ul>
           <p class="label ledger-title" id="education">Education</p>
           <ul class="ledger">
@@ -122,6 +125,14 @@
       </div>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-live"><span data-clock></span></div>
+      <span data-pal></span>
+      <p class="reach-out"><span class="reach-out__thin">Looking to</span> <a class="reach-out__link" href="/#contact">contact<svg class="i-up" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V4.5M5.5 11 12 4.5l6.5 6.5"/></svg></a></p>
+    </div>
+  </footer>
 
   <!-- the photo viewer: a row of full photos slid sideways; arrows, swipes or the scroll wheel move along, Esc or a tap
        outside closes, and the photo flies back into the ring (about.js fills it) -->
