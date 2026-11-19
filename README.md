@@ -8,7 +8,7 @@ Every page and every project is self-contained, so an edit only touches the file
 
 ```
 index.html                     Home: the intro and ways to reach me, four featured case studies, "All work →"
-work/index.html                Work: every project in one list, newest first, with tabs (All, At Intuit, Experiments)
+work/index.html                Work: every project in one list, newest first, with tabs (All, At Intuit, Experiments, At IIT Guwahati)
 about/index.html               About: a short hello and photo, the "Away from the screen" ring, experience and education, playlist
 404.html
 assets/
@@ -21,7 +21,7 @@ assets/
   css/about.css                About page only
   css/case-study.css           Shared case-study layout and components (carousel, lightbox, toc, reveal, "Also check out"…)
   css/work-art.css             Project colours and the small animated pieces for Mailchimp (a dashboard, also the case-study hero),
-                               QuickBooks, Net Terms and Picto (Home hover previews + "Also check out")
+                               QuickBooks, Net Terms, Picto and TEDxIITGuwahati (Home hover previews + "Also check out")
   css/footer-live.css          Footer: clock (left), Pal (centre), "Looking to contact" (right). (Its Bangalore strip rules are unused now.)
   js/site.js                   Every page: name scramble, nav hover pill, scroll-to-top, image retry,
                                light/dark switch, phone menu, arrival highlight (marker on the heading you
@@ -73,6 +73,17 @@ work/
   picto/                       Case study 04 (an experiment of my own), on the shared case-study template: index.html, picto.css (Picto blue),
                                picto.js (clips play only while on screen; pause buttons), media/ (WebM clips recorded from the
                                live prototype + a still poster each), img/phone.webp. Prototype: krishyeah-work.github.io/seen/
+  tedx-iitg/                   Case study 05, the TEDxIITGuwahati 2025 identity (IIT Guwahati, Jan – Feb 2025), in Krishna's own
+                               words: hero (logo reveal) → overview (the event, facts, results) → 01 the theme wordmark over the
+                               waves footage → 02 sketches, sun/citadel/waves, construction grid, colour, type → 03 collaterals
+                               (social, on the day, merch, web) → a dark closing band (photos from the day, thank-you, signature).
+                               tedx.css (TEDx red; the dark "stage"), tedx.js (reveal, pointer wash, parts and grid drawing in,
+                               the looping mark, swatches that copy, clips that play on screen, the signature writing in).
+                               The logo is his Figma SVG; the wordmark and TEDx name are traced from his exports; all kept once
+                               in a hidden <svg> at the top of <main> and placed with <use>. media/ (waves + sketch timelapse,
+                               WebM/MP4 from his After Effects files), img/ (mockups as WebP, *-lg for zoom; type-*.svg specimens;
+                               event.webp + signature.svg from his old results frame). Raw exports stay local in
+                               "Old files for TedX_IiTG/" (ignored by git)
 lab/                           Experiments, on this computer only (ignored by git, never deployed): see lab/README.md
 portfolio-context/             Brief, case-study notes, decisions log (local only, not pushed)
 ```
@@ -83,6 +94,8 @@ portfolio-context/             Brief, case-study notes, decisions log (local onl
 |---|---|
 | Mailchimp case study text or images | `work/mailchimp/index.html` (+ `img/`) |
 | Mailchimp-only visuals (channels, tabs, SMS flow, cart sequence, dialogs on the dashboard, spacing) | `work/mailchimp/mailchimp.css` / `.js` |
+| TEDxIITGuwahati text, mockups or clips | `work/tedx-iitg/index.html` (+ `img/`, `media/`) |
+| TEDxIITGuwahati motion (reveal timing, wash strength, the looping mark, grid) | `work/tedx-iitg/tedx.css` (keyframes) / `tedx.js` |
 | The Mailchimp dashboard animation (Home preview, "Also check out", the case study's hero) | the `.mcx` markup in each page + "Mailchimp art" in `assets/css/work-art.css` |
 | The share image | `assets/og.png` (made from a small HTML card; keep 1200×630) |
 | Anything shared by all case studies | `assets/css/case-study.css` |
@@ -91,7 +104,7 @@ portfolio-context/             Brief, case-study notes, decisions log (local onl
 | Clock | `assets/js/clock.js` + `assets/css/footer-live.css` |
 | Home page | `index.html` + `assets/css/home.css` |
 | How the header glides between pages (timing, which parts move) | "moving between pages" in `assets/css/base.css`; the fallback is the last block of `assets/js/site.js` |
-| Work page: every project in one list, newest first, with tabs (All, At Intuit, Experiments) | `work/index.html` (each row's `data-group`; the counts in the tabs) + `assets/js/work-filter.js` + `assets/css/home.css` ("the Work page" section). Adding a case study: add its row there with its group, update the tab counts, and copy it to Home if featured |
+| Work page: every project in one list, newest first, with tabs (All, At Intuit, Experiments, At IIT Guwahati) | `work/index.html` (each row's `data-group`; the counts in the tabs) + `assets/js/work-filter.js` + `assets/css/home.css` ("the Work page" section). Adding a case study: add its row there with its group, update the tab counts, and copy it to Home if featured |
 | A work row on Home: title, dates, and the preview beside it (animation, one-line summary, tags) | the `<li>` in `index.html`; the animations are in `assets/css/work-art.css` |
 | Handwritten notes (wording in the page's HTML; the hand and ink colour in the CSS) | the page's HTML + `assets/css/notes.css` |
 | About page (hello, photos, the travel ring and its captions, the record, playlist) | `about/index.html` (+ `assets/img/about/`; originals in `01/`, not published), `assets/css/about.css` |

@@ -157,3 +157,25 @@
 }
 /* in a hover preview the trip fills the preview's picture area */
 .peek__art--pcx { display: block; padding: 0 !important; }
+
+/* TEDxIITGuwahati (rows on Home and Work, "Also check out"): the mark in pieces on its dark ground, the sun off to the
+   left and the waves out to the right; pointed at, they come in and it builds, then the tide goes out again. */
+.card--tx, .also--tx { --proj: #ff7078; }
+:root[data-theme="light"] .card--tx, :root[data-theme="light"] .also--tx { --proj: #c1111e; }
+.peek__art--txx { display: block; padding: 0 !important; }
+.txx { display: grid; place-items: center; width: 100%; height: 100%; min-height: 100%; aspect-ratio: 16 / 10; overflow: hidden; background: #191919; }
+.txx svg { display: block; width: 30%; height: auto; overflow: visible; }
+.txx__sun { fill: #c1111e; transform: translate(-190px, 10px); }
+.txx__cit { fill: #ffdcaa; }
+.txx__spl { fill: #659aba; transform: translateX(230px); }
+.txx__dep { fill: #054d73; transform: translateX(280px); }
+:is(.card--tx:hover, .card--tx:focus-visible, .also--tx:hover, .also--tx:focus-visible) :is(.txx__sun, .txx__spl, .txx__dep) { animation: 5.5s cubic-bezier(0.62, 0, 0.3, 1) infinite; }
+:is(.card--tx:hover, .card--tx:focus-visible, .also--tx:hover, .also--tx:focus-visible) .txx__sun { animation-name: txx-sun; }
+:is(.card--tx:hover, .card--tx:focus-visible, .also--tx:hover, .also--tx:focus-visible) .txx__spl { animation-name: txx-spl; }
+:is(.card--tx:hover, .card--tx:focus-visible, .also--tx:hover, .also--tx:focus-visible) .txx__dep { animation-name: txx-dep; }
+@keyframes txx-sun { 0% { transform: translate(-190px, 10px); } 34%, 80% { transform: none; } 100% { transform: translate(-190px, 10px); } }
+@keyframes txx-spl { 0%, 6% { transform: translateX(230px); } 38%, 80% { transform: none; } 100% { transform: translateX(230px); } }
+@keyframes txx-dep { 0%, 12% { transform: translateX(280px); } 44%, 80% { transform: none; } 100% { transform: translateX(280px); } }
+@media (prefers-reduced-motion: reduce) {
+  .txx * { animation: none !important; transform: none !important; }
+}

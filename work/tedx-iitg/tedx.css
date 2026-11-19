@@ -1,0 +1,268 @@
+/* tedx.css — styles used only by the TEDxIITGuwahati case study, on the shared case-study template
+   (/assets/css/case-study.css). Krishna's own words, each said once: hero (what it is + the logo reveal) → overview
+   (the idea, the event, facts, results) → 01 the theme over the sea → 02 the system (sketches, the three parts,
+   construction, colour, type) → 03 collaterals by where people met them → a dark closing band with photos from the day,
+   a thank-you and his signature.
+   The logo is the Figma SVG (scaled to a 100-unit grid square); the wordmark and the TEDx name are traced from the
+   7680px exports. All are kept once in a hidden <svg> at the top of <main> and placed with <use>. The identity sits on a
+   dark "stage" (the frames' #191919) in both themes. Motion is in tedx.js. */
+
+body.cs-tx {
+  --tx-bg: #191919;
+  --tx-umber: #770101;
+  --tx-red: #c1111e;
+  --tx-sand: #ffdcaa;
+  --tx-wave: #054d73;
+  --tx-splash: #659aba;
+  --tx-sea: #7cafc9;          /* "Seaside" in the theme wordmark */
+  --tx-ted: #ed1c34;          /* TEDx red in the name, the i-dot and the signature */
+  --tx-grid: #791b25;         /* the mark on the construction grid */
+  --tx-line: rgba(255, 255, 255, 0.38);
+  --tx-sand-ink: #ffdcaa;     /* sand and sea as text: as they are on dark, deepened on light (4.5:1 or better) */
+  --tx-sea-ink: #8bbbd6;
+  --accent: #c1111e;
+  --accent-soft: rgba(193, 17, 30, 0.12);
+  --accent-ink: #ffffff;
+  --accent-text: #ff7078;
+  --hl: rgba(255, 220, 170, 0.32); /* arrival marker (site.js): citadel sand */
+}
+:root[data-theme="light"] body.cs-tx { --accent-text: #c1111e; --hl: rgba(255, 205, 140, 0.75); --tx-sand-ink: #8f560e; --tx-sea-ink: #24678f; }
+.cs-tx .cs-section > .label, .cs-tx .kicker, .cs-tx .overview .label, .cs-tx .toc a.is-active .n { color: var(--accent-text); }
+.cs-tx a:hover, .cs-tx .brand:hover { color: var(--accent-text); }
+
+.tx-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* rhythm: a visual sits a little way under its heading or text; stacked visuals share one small gap;
+   each part of a section opens with a small heading (.tx-sub) */
+.tx-block { margin-top: 1rem; }
+.prose + .tx-block { margin-top: clamp(1.75rem, 4vw, 2.5rem); }
+.tx-sub { margin: clamp(2.75rem, 6vw, 4rem) 0 1rem; color: var(--muted); font-size: var(--fs-label); font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; }
+.cs-section > h2 + .tx-sub { margin-top: clamp(1.75rem, 4vw, 2.5rem); }
+
+/* ---------- the stage: the identity's own dark ground ---------- */
+.tx-stage { position: relative; overflow: hidden; border-radius: var(--radius-lg); background: var(--tx-bg); color: #fff; }
+:root[data-theme="dark"] .tx-stage { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); }
+.tx-stage > svg { display: block; width: 100%; height: auto; }
+.tx-sun { fill: var(--tx-red); }
+.tx-cit { fill: var(--tx-sand); }
+.tx-spl { fill: var(--tx-splash); }
+.tx-dep { fill: var(--tx-wave); }
+.tx-sea { fill: var(--tx-sea); }
+.tx-cita { fill: var(--tx-sand); }
+.tx-dot, .tx-ted { fill: var(--tx-ted); }
+.tx-iitg { fill: #fff; }
+.tx-btn {
+  position: absolute; right: 0.75rem; bottom: 0.75rem; z-index: 2; display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.4rem 0.8rem; border: 0; border-radius: 999px; background: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.82);
+  font: inherit; font-size: var(--fs-label); letter-spacing: 0.02em; cursor: pointer;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease), opacity 0.3s var(--ease);
+}
+.tx-btn:hover { background: rgba(255, 255, 255, 0.18); color: #fff; }
+.tx-btn svg { width: 0.85rem; height: 0.85rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- hero: the logo reveal ---------- */
+.tx-hero { margin-top: clamp(2.25rem, 5vw, 3.5rem); aspect-ratio: 16 / 9; }
+.tx-hero > svg { height: 100%; }
+@media (max-width: 640px) { .tx-hero { aspect-ratio: 4 / 3; } }
+.txh-wm use, .txh-dot { opacity: 0; }            /* the wordmark only shows while the reveal plays */
+.txh-wm use, .txh-dot, .txh-logo > *, .txh-lk { transform-box: fill-box; }
+.js .tx-hero:not(.is-play):not(.is-still) :is(.txh-logo, .txh-lk) { opacity: 0; } /* hidden until the reveal starts, so it doesn't flash */
+.tx-hero.is-play .txh-wm use { animation: txh-letter 3s var(--ease) calc(var(--i) * 45ms) both; }
+.tx-hero.is-play .txh-dot { transform-origin: 50% 50%; animation: txh-dot 3s var(--ease) both; }
+.tx-hero.is-play .txh-spl { transform-origin: 100% 50%; animation: txh-wave 1.05s cubic-bezier(0.2, 0.8, 0.2, 1) 2.2s both; }
+.tx-hero.is-play .txh-dep { transform-origin: 100% 50%; animation: txh-wave 1.05s cubic-bezier(0.2, 0.8, 0.2, 1) 2.42s both; }
+.tx-hero.is-play .txh-cit { transform-origin: 62.5% 0%; animation: txh-cit 0.95s var(--ease) 2.55s both; }
+.tx-hero.is-play .txh-sun { transform-origin: 50% 50%; animation: txh-sun 0.6s var(--ease) 3.3s both; }
+.tx-hero.is-play .txh-lk { animation: txh-lk 0.8s var(--ease) 3.65s both; }
+@keyframes txh-letter {
+  0% { opacity: 0; transform: translateY(26px); }
+  17% { opacity: 1; transform: none; }
+  56% { opacity: 1; transform: none; }
+  84%, 100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--r)); }
+}
+@keyframes txh-dot {
+  0%, 16% { opacity: 0; transform: scale(0); }
+  24% { opacity: 1; transform: scale(1.25); }
+  30%, 58% { opacity: 1; transform: none; }
+  76%, 100% { opacity: 0; transform: translate(60px, 30px) scale(0.2); }
+}
+@keyframes txh-wave {
+  0% { opacity: 0; transform: translateX(-420px) skewX(-28deg) scaleX(1.8); }
+  25% { opacity: 1; }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes txh-cit {
+  0% { opacity: 0; transform: scale(0.14); }
+  28% { opacity: 1; transform: scale(0.14); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes txh-sun {
+  0% { opacity: 0; transform: scale(0); }
+  65% { opacity: 1; transform: scale(1.12); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes txh-lk { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.tx-hero .tx-btn { opacity: 0; }
+.tx-hero.is-done .tx-btn, .tx-hero .tx-btn:focus-visible { opacity: 1; }
+
+/* ---------- overview: the event beside the facts, then the results ---------- */
+.tx-ov { display: grid; gap: 1.75rem 4rem; margin-top: clamp(1.75rem, 4vw, 2.5rem); }
+@media (min-width: 860px) { .tx-ov { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); } }
+.tx-ov .label { display: block; margin-bottom: 0.6rem; }
+.tx-ov p { margin: 0; max-width: 36em; color: var(--ink-2); line-height: 1.65; }
+.tx-facts { display: grid; gap: 0; margin: 0; align-content: start; }
+.tx-facts div { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1rem; padding: 0.7rem 0; border-top: 1px solid var(--line); }
+.tx-facts div:last-child { border-bottom: 1px solid var(--line); }
+.tx-facts dt { color: var(--muted); font-size: var(--fs-small); }
+.tx-facts dd { margin: 0; color: var(--ink); font-size: var(--fs-small); font-weight: 500; }
+.tx-stats { display: grid; gap: 1.25rem 2rem; margin-top: clamp(2rem, 5vw, 3rem); padding: 0; list-style: none; }
+@media (min-width: 760px) { .tx-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.tx-stats li { display: grid; gap: 0.35rem; align-content: start; padding-top: 1rem; border-top: 1px solid var(--line-strong); }
+.tx-stats b { font-size: clamp(1.8rem, 1.3rem + 1.6vw, 2.7rem); font-weight: 500; letter-spacing: -0.03em; line-height: 1; color: var(--ink); }
+.tx-stats span { color: var(--muted); font-size: var(--fs-small); line-height: 1.5; }
+
+/* ---------- 01: the theme wordmark over the sea (it ripples like water under the pointer) ---------- */
+.tx-shore { aspect-ratio: 12 / 5; touch-action: pan-y; }
+.tx-shore video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.tx-shore::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(25, 25, 25, 0.5) 0%, rgba(25, 25, 25, 0.68) 55%, rgba(25, 25, 25, 0.86) 100%); pointer-events: none; }
+.tx-shore > svg { position: relative; z-index: 1; height: 100%; padding: 9% 13%; }
+.tx-shore .tx-btn { z-index: 3; }
+
+/* ---------- 02: logo & identity system ---------- */
+.tx-sketch { background: #000; aspect-ratio: 16 / 9; }
+.tx-sketch video { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* small pause / play button on each clip (tedx.js) */
+.tx-clip .tx-btn { width: 2.25rem; height: 2.25rem; padding: 0; justify-content: center; opacity: 0; background: rgba(11, 11, 11, 0.55); }
+.tx-clip:hover .tx-btn, .tx-clip .tx-btn:focus-visible, .tx-clip .tx-btn[aria-pressed="true"] { opacity: 1; }
+.tx-clip .tx-btn svg { fill: currentColor; stroke: none; }
+@media (hover: none) { .tx-clip .tx-btn { opacity: 0.8; } }
+
+/* sun, citadel, waves: a label and his words above, one part filled in each square */
+.tx-parts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(0.5rem, 2vw, 1rem); align-items: end; }
+.tx-part p { margin: 0 0 0.9rem; color: var(--ink-2); font-size: var(--fs-small); line-height: 1.5; }
+.tx-part p b { display: block; margin-bottom: 0.2rem; font-weight: 500; }
+.tx-part em { font-style: normal; color: var(--ink); font-weight: 500; }
+.tx-part--sun b { color: var(--accent-text); }
+.tx-part--cit b { color: var(--tx-sand-ink); }
+.tx-part--wav b { color: var(--tx-sea-ink); }
+.tx-part .tx-stage svg { padding: 18% 20% 16%; overflow: visible; }
+.is-line { fill: none; stroke: var(--tx-line); stroke-width: 1.25px; vector-effect: non-scaling-stroke; transition: stroke 0.4s var(--ease); }
+.tx-part .is-fill { transform-box: fill-box; transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1); }
+/* drawing in: each part fades in from a short way off (the "translate" property, so hover's "transform" stays free) */
+.js .tx-parts:not(.is-in) .is-fill { opacity: 0; }
+.tx-parts.is-in .is-fill { animation: txp-in 0.9s var(--ease) var(--d, 0s) both; }
+@keyframes txp-in { from { opacity: 0; translate: var(--from); } to { opacity: 1; translate: 0 0; } }
+.tx-part--sun .is-fill { --from: 0 -36px; --d: 0.1s; }
+.tx-part--cit .is-fill { --from: 0 28px; --d: 0.3s; }
+.tx-part--wav .is-fill { --from: 40px 0; --d: 0.5s; }
+/* pointed at: the part eases a little way outward, and back when the pointer leaves */
+.tx-part:hover .is-line { stroke: rgba(255, 255, 255, 0.55); }
+.tx-part--sun:hover .is-fill { transform: translateY(-14px); }
+.tx-part--cit:hover .is-fill { transform: translateY(-10px); }
+.tx-part--wav:hover .is-fill { transform: translateX(14px); }
+
+/* the three parts come together (after "Logo Moving Final"): the sun from the left, the waves from the right, then back out */
+.tx-moving { aspect-ratio: 1600 / 500; }
+.txa-sun, .txa-spl, .txa-dep { animation: 7.5s cubic-bezier(0.62, 0, 0.3, 1) infinite paused; }
+.tx-moving.is-run :is(.txa-sun, .txa-spl, .txa-dep) { animation-play-state: running; }
+.txa-sun { animation-name: txa-sun; }
+.txa-spl { animation-name: txa-spl; }
+.txa-dep { animation-name: txa-dep; }
+@keyframes txa-sun { 0% { transform: translate(-470px, 8px); } 37%, 84% { transform: none; } 100% { transform: translate(-470px, 8px); } }
+@keyframes txa-spl { 0%, 8% { transform: translateX(560px); } 40%, 84% { transform: none; } 100% { transform: translateX(560px); } }
+@keyframes txa-dep { 0%, 14% { transform: translateX(660px); } 45%, 84% { transform: none; } 100% { transform: translateX(660px); } }
+
+/* the construction grid */
+.tx-grid { aspect-ratio: 920 / 600; }
+.txg-line { stroke: rgba(255, 255, 255, 0.55); stroke-width: 1px; stroke-dasharray: 5 5; vector-effect: non-scaling-stroke; fill: none; }
+.txg-ring { fill: none; stroke: rgba(255, 255, 255, 0.85); stroke-width: 1px; stroke-dasharray: 4 3.5; vector-effect: non-scaling-stroke; transform-box: fill-box; transform-origin: 50% 50%; }
+.txg-shape > * { fill: var(--tx-grid); transition: fill 0.7s var(--ease); }
+.txg-lines, .txg-rings { transition: opacity 0.6s var(--ease); }
+.tx-grid.is-colour .txg-sun { fill: var(--tx-red); }
+.tx-grid.is-colour .txg-cit { fill: var(--tx-sand); }
+.tx-grid.is-colour .txg-spl { fill: var(--tx-splash); }
+.tx-grid.is-colour .txg-dep { fill: var(--tx-wave); }
+.tx-grid.is-colour :is(.txg-lines, .txg-rings) { opacity: 0; }
+.js .tx-grid:not(.is-in) :is(.txg-line, .txg-ring, .txg-shape) { opacity: 0; }
+.tx-grid.is-in .txg-line { animation: tx-fade 0.7s var(--ease) calc(var(--i) * 70ms) both; }
+.tx-grid.is-in .txg-ring { animation: txg-ring 0.7s var(--ease) calc(0.8s + var(--i) * 90ms) both; }
+.tx-grid.is-in .txg-shape { animation: tx-fade 0.9s var(--ease) 0.55s both; }
+@keyframes tx-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes txg-ring { from { opacity: 0; transform: scale(0.4); } to { opacity: 1; transform: none; } }
+
+/* colour: the name above each swatch, the hex below (as in the frame); a click copies the hex, and says so */
+.tx-swatches { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(0.5rem, 1.5vw, 0.9rem); margin: 0; padding: 0; list-style: none; }
+.tx-sw { display: grid; width: 100%; gap: 0.55rem; padding: 0; border: 0; background: none; color: var(--ink); font: inherit; text-align: left; cursor: copy; }
+.tx-sw__chip { display: block; aspect-ratio: 1; border-radius: var(--radius-lg); background: var(--c); box-shadow: inset 0 0 0 1px rgba(var(--fg), 0.08); transition: transform 0.35s var(--ease); }
+.tx-sw:hover .tx-sw__chip, .tx-sw:focus-visible .tx-sw__chip { transform: translateY(-3px); }
+.tx-sw__name { font-size: var(--fs-small); font-weight: 500; }
+.tx-sw__hex { color: var(--muted); font-size: var(--fs-small); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+@media (hover: hover) { .tx-sw:hover .tx-sw__hex::after { content: "  Copy"; color: var(--accent-text); white-space: pre; } }
+.tx-sw.is-copied .tx-sw__hex { color: var(--accent-text); }
+.tx-sw.is-copied .tx-sw__hex::after { content: none; }
+@media (max-width: 559px) { .tx-sw__name, .tx-sw__hex { font-size: var(--fs-label); } }
+
+/* type: as in the frame — name and use at the top, numerals bottom left, the alphabet bottom right */
+.tx-type { display: grid; gap: 0.75rem; }
+@media (min-width: 760px) { .tx-type { grid-template-columns: 5fr 7fr; } .tx-tc--arr { grid-column: 1 / -1; } }
+.tx-tc {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: 1fr auto; align-items: end; gap: 1.75rem 1.25rem;
+  min-height: 13rem; padding: clamp(1rem, 2.5vw, 1.5rem); border-radius: var(--radius-lg); font-size: var(--fs-small);
+}
+.tx-tc--helv { background: var(--tx-red); color: #fff; }
+.tx-tc--kross { background: var(--tx-sand); color: #141416; }
+.tx-tc--arr { background: var(--tx-wave); color: #fff; }
+.tx-tc__head { grid-column: 1 / -1; align-self: start; }
+.tx-tc__name { display: block; height: clamp(1.4rem, 1.1rem + 1vw, 2rem); width: auto; max-width: 100%; fill: currentColor; }
+.tx-tc__use { margin: 0.55rem 0 0; line-height: 1.4; font-weight: 400; }
+.tx-tc__use b { color: inherit; font-weight: 700; }
+.tx-tc--helv .tx-tc__use { font-family: "Helvetica Neue", Helvetica, Arial, var(--font); }
+.tx-tc--kross .tx-tc__use { font-family: "Kross Neue Grotesk", var(--font); }
+.tx-tc--arr .tx-tc__use { font-family: "Arial Rounded MT Bold", "Arial Rounded MT", var(--font); font-weight: 700; }
+.tx-tc picture { display: contents; }
+.tx-tc source { display: none; }
+.tx-tc img { display: block; width: auto; max-width: 100%; object-fit: contain; }
+.tx-tc__num { grid-column: 1; height: 1.4em; object-position: left bottom; }
+.tx-tc__abc { grid-column: 2; justify-self: end; object-position: right bottom; }
+.tx-tc--helv .tx-tc__abc { height: 4.97em; }
+.tx-tc--kross .tx-tc__abc { height: 3.66em; }
+.tx-tc--arr .tx-tc__abc { height: 0.99em; }
+@media (max-width: 759px) { .tx-tc--arr .tx-tc__abc { height: 2.31em; } }
+
+/* ---------- 03: collaterals — rows of pictures, each row one height ---------- */
+.tx-row { display: flex; gap: 1rem; margin-top: 1rem; }
+.tx-sub + .tx-row { margin-top: 0; }
+.tx-row > .fig { flex: var(--ar) 1 0; min-width: 0; margin: 0; }
+.tx-row .shot { background: #e6e6e6; }
+.tx-row .shot--dark { background: #191919; }
+.tx-row .shot--white { background: #fff; }
+@media (max-width: 699px) { .tx-row { flex-direction: column; } .tx-row > .fig { flex: none; } }
+
+/* ---------- the end: photos from the day fading into the dark, a thank-you and the signature ---------- */
+.tx-end { position: relative; overflow: hidden; margin-top: clamp(1rem, 3vw, 2rem); background: var(--tx-bg); color: #f2f1ed; }
+.tx-end__photos {
+  display: block; width: 100%; height: clamp(15rem, 30vw, 28rem); object-fit: cover; object-position: 50% 40%;
+  -webkit-mask-image: linear-gradient(180deg, #000 30%, rgba(0, 0, 0, 0.55) 62%, transparent 100%); mask-image: linear-gradient(180deg, #000 30%, rgba(0, 0, 0, 0.55) 62%, transparent 100%);
+  opacity: 0.85;
+}
+.tx-end__in { position: relative; margin-top: clamp(-7rem, -9vw, -4rem); padding-bottom: clamp(4rem, 9vw, 7rem); }
+.tx-end .label { display: block; color: #ff7078; }
+.tx-end h2 { margin: 0.6rem 0 0; font-size: var(--fs-h2); font-weight: 500; letter-spacing: -0.02em; color: #fff; }
+.tx-end p { max-width: 34em; margin: 1rem 0 0; color: rgba(242, 241, 237, 0.78); line-height: 1.65; }
+.tx-end__sig { display: block; width: clamp(14rem, 24vw, 22rem); height: auto; margin-top: clamp(1.5rem, 3vw, 2.25rem); }
+/* the signature writes itself in, left to right, when the band comes on screen */
+.js .tx-end:not(.is-in) .tx-end__sig { clip-path: inset(0 100% 0 0); }
+.tx-end.is-in .tx-end__sig { animation: tx-sign 1.6s cubic-bezier(0.45, 0.05, 0.35, 1) 0.3s both; }
+@keyframes tx-sign { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.tx-end + .wrap .also { border-top: 0; }
+
+/* ---------- reduced motion: everything rests in its final place ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .tx-hero .txh-wm { display: none; }
+  .txa-sun, .txa-spl, .txa-dep, .tx-parts.is-in .is-fill, .tx-grid.is-in :is(.txg-line, .txg-ring, .txg-shape), .tx-end.is-in .tx-end__sig { animation: none !important; }
+  .js .tx-parts:not(.is-in) .is-fill, .js .tx-grid:not(.is-in) :is(.txg-line, .txg-ring, .txg-shape) { opacity: 1; }
+  .js .tx-end:not(.is-in) .tx-end__sig { clip-path: none; }
+  .tx-part .is-fill, .tx-sw__chip { transition: none; }
+  .tx-part:hover .is-fill { transform: none; }
+}
