@@ -113,11 +113,63 @@
     });
   });
 
-  // ---------- the closing band: the signature writes itself in once it's on screen ----------
-  onView($$(".tx-end"), (el, inView) => { if (inView) el.classList.add("is-in"); }, { threshold: 0.45 });
+  // ---------- the closing card: the signature writes itself in pen order once it's on screen ----------
+  // The ink shows through a <mask> of centre-lines, one <path> per pen stroke, each with its start (--d) and length in
+  // time (--t). The lines are moved here frame by frame with attributes, because Chrome doesn't repaint a mask whose
+  // contents are animated by CSS. Without scripts or with reduced motion nothing is hidden, so the signature shows whole.
+  $$(".tx-end").forEach((end) => {
+    const strokes = [...end.querySelectorAll(".txs-strokes path")];
+    const dot = end.querySelector(".txs-dot");
+    if (!strokes.length || reduce) return;
+    const secs = (el, name) => parseFloat(el.style.getPropertyValue(name)) || 0;
+    const plan = strokes.map((el) => ({ el, d: secs(el, "--d"), t: Math.max(0.02, secs(el, "--t")), h: secs(el, "--h") || 1.05 }));
+    const cx = dot && +dot.getAttribute("cx"), cy = dot && +dot.getAttribute("cy"), dotAt = dot ? secs(dot, "--d") : 0;
+    const ease = (k) => (k < 0.5 ? 2 * k * k : 1 - 2 * (1 - k) * (1 - k));          // pen speeds up, then settles
+    const pop = (k) => 1 + 2.4 * Math.pow(k - 1, 3) + 1.4 * Math.pow(k - 1, 2);     // a small overshoot
+    const setDot = (s) => dot && dot.setAttribute("transform", `translate(${cx} ${cy}) scale(${s}) translate(${-cx} ${-cy})`);
+    const draw = (time) => {
+      plan.forEach(({ el, d, t, h }) => {
+        const k = Math.min(1, Math.max(0, (time - d) / t));
+        el.setAttribute("stroke-dashoffset", (h * (1 - ease(k))).toFixed(4));
+      });
+      const k = Math.min(1, Math.max(0, (time - dotAt) / 0.32));
+      setDot(k ? pop(k).toFixed(3) : 0);
+    };
+    draw(-1); // hidden until the card comes on screen
+    let started = false;
+    onView([end], (el, inView) => {
+      if (!inView || started) return;
+      started = true; el.classList.add("is-in");
+      const last = Math.max(dotAt + 0.32, ...plan.map((p) => p.d + p.t));
+      let t0 = 0;
+      const tick = (now) => {
+        if (!t0) t0 = now + 350;                     // a short breath before the pen touches down
+        const time = (now - t0) / 1000;
+        draw(time);
+        if (time < last) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, { threshold: 0.45 });
+  });
 
   // ---------- the mark coming together: loop only while on screen ----------
   if (!reduce) onView($$(".tx-moving"), (el, inView) => el.classList.toggle("is-run", inView), { threshold: 0.2 });
+
+  // ---------- the website in motion: run only while on screen; the button pauses it ----------
+  $$("[data-tx-web]").forEach((web) => {
+    if (reduce) return;
+    onView([web], (el, inView) => el.classList.toggle("is-run", inView), { threshold: 0.25 });
+    const btn = web.querySelector(".txw-toggle");
+    if (!btn) return;
+    const PLAY = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>';
+    const PAUSE = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5h3v11H4zM9 2.5h3v11H9z"/></svg>';
+    btn.addEventListener("click", () => {
+      const paused = web.classList.toggle("is-paused");
+      btn.innerHTML = paused ? PLAY : PAUSE;
+      btn.setAttribute("aria-pressed", String(paused));
+      btn.setAttribute("aria-label", paused ? "Play the animation" : "Pause the animation");
+    });
+  });
 
   // ---------- swatches: copy the hex code ----------
   $$(".tx-sw").forEach((sw) => {

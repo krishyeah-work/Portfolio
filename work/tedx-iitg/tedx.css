@@ -237,32 +237,142 @@ body.cs-tx {
 .tx-row .shot { background: #e6e6e6; }
 .tx-row .shot--dark { background: #191919; }
 .tx-row .shot--white { background: #fff; }
-@media (max-width: 699px) { .tx-row { flex-direction: column; } .tx-row > .fig { flex: none; } }
+@media (max-width: 699px) {
+  .tx-row { flex-direction: column; } .tx-row > .fig { flex: none; }
+  .tx-row > .fig.is-tall { width: 78%; align-self: center; } /* tall pieces don't run the full phone height */
+}
 
-/* ---------- the end: photos from the day fading into the dark, a thank-you and the signature ---------- */
-.tx-end { position: relative; overflow: hidden; margin-top: clamp(1rem, 3vw, 2rem); background: var(--tx-bg); color: #f2f1ed; }
+/* ---------- web: the event website, redesigned, played as motion inside a browser window ----------
+   Everything is sized in cqw (the window's width), so it scales as one picture. One 16 s timeline drives it all:
+   0–17% the page loads (menu, wordmark letter by letter, the mark builds, the line fades in), 14–28% the pointer
+   visits Book Now, 30–40% the page scrolls to Theme 2025, 36–52% the story reveals, 52–70% the pointer rests on
+   Theme Blog, 80–90% it scrolls back, 94–100% it fades out to begin again. tedx.js runs it only while on screen. */
+.tx-web { --T: 16s; --red: #ed1c34; position: relative; container-type: inline-size; overflow: hidden; border-radius: var(--radius-lg); background: #232326; box-shadow: var(--shadow-shot); }
+:root[data-theme="dark"] .tx-web { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); }
+.txw-chrome { display: flex; align-items: center; gap: 1.6cqw; height: 4.6cqw; padding: 0 1.8cqw; font: 400 1.15cqw/1 "Helvetica Neue", Helvetica, Arial, sans-serif; color: #d6d6d8; }
+.txw-dots { display: flex; gap: 0.75cqw; }
+.txw-dots i { width: 1.1cqw; height: 1.1cqw; border-radius: 50%; background: #ff5f57; }
+.txw-dots i:nth-child(2) { background: #febc2e; } .txw-dots i:nth-child(3) { background: #28c840; }
+.txw-tab { display: inline-flex; align-items: center; gap: 0.8cqw; align-self: flex-end; height: 3.5cqw; padding: 0 2cqw 0 1.4cqw; border-radius: 0.9cqw 0.9cqw 0 0; background: #0a0a0a; }
+.txw-tab svg { width: 1.6cqw; height: auto; }
+.txw-url { flex: 0 1 38cqw; margin-left: auto; margin-right: auto; padding: 0.7cqw 1.4cqw; border-radius: 99px; background: #161618; color: #9a9a9e; text-align: center; }
+.txw-view { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #0a0a0a; color: #f3f3f1; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+.txw-view * { animation-duration: var(--T); animation-iteration-count: infinite; animation-fill-mode: both; animation-timing-function: cubic-bezier(0.2, 0.7, 0.1, 1); }
+.txw-page { position: absolute; inset: 0 0 auto; animation-name: txw-page; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+@keyframes txw-page {
+  0% { opacity: 0; transform: none; } 3%, 30% { opacity: 1; transform: none; }
+  40%, 80% { opacity: 1; transform: translateY(-62.5cqw); }
+  90%, 94% { opacity: 1; transform: none; } 100% { opacity: 0; transform: none; }
+}
+/* menu */
+.txw-nav { position: absolute; left: 0; right: 0; top: 0; z-index: 2; display: flex; align-items: center; height: 6.6cqw; padding: 0 4cqw; background: linear-gradient(#0a0a0a 45%, rgba(10, 10, 10, 0)); font-size: 1.15cqw; animation-name: txw-nav; }
+@keyframes txw-nav { 0%, 2% { opacity: 0; transform: translateY(-2cqw); } 7%, 94% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+.txw-lk { width: 15cqw; height: auto; }
+.txw-lk .tx-iitg { fill: #fff; }
+.txw-links { display: flex; align-items: center; gap: 2.6cqw; margin-left: auto; color: rgba(243, 243, 241, 0.72); }
+.txw-links b { position: relative; color: var(--red); font-weight: 500; }
+.txw-links b::after { content: ""; position: absolute; left: 50%; bottom: -0.9cqw; width: 0.45cqw; height: 0.45cqw; border-radius: 50%; background: var(--red); transform: translateX(-50%); }
+.txw-links svg { width: 1.45cqw; height: auto; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.txw-btn { display: inline-flex; align-items: center; padding: 0.85cqw 1.7cqw; border-radius: 99px; background: var(--red); color: #fff; font-size: 1.15cqw; font-weight: 600; letter-spacing: 0.01em; }
+.txw-btn--book { margin-left: 2.6cqw; animation-name: txw-book; }
+@keyframes txw-book { 0%, 21% { transform: none; box-shadow: none; } 23%, 28% { transform: scale(1.06); box-shadow: 0 0 0 0.5cqw rgba(237, 28, 52, 0.22); } 31%, 100% { transform: none; box-shadow: none; } }
+/* hero */
+.txw-hero { position: relative; height: 62.5cqw; overflow: hidden; background: radial-gradient(48% 62% at 74% 42%, rgba(237, 28, 52, 0.14), transparent 70%), radial-gradient(60% 50% at 20% 100%, rgba(5, 77, 115, 0.35), transparent 70%); }
+.txw-hero__text { position: absolute; left: 6cqw; top: 15cqw; width: 48cqw; }
+.txw-label { display: block; color: var(--red); font-size: 1.1cqw; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; animation-name: txw-label; }
+.txw-wm { display: block; width: 46cqw; height: auto; margin-top: 2.2cqw; overflow: visible; }
+.txw-wm use, .txw-dot { transform-box: fill-box; }
+.txw-wm use { animation-name: txw-letter; animation-delay: calc(var(--i) * 70ms); }
+.txw-dot { transform-origin: 50% 50%; animation-name: txw-pop; }
+.txw-lede { margin: 2.8cqw 0 0; max-width: 37cqw; font-size: 1.6cqw; line-height: 1.45; color: rgba(243, 243, 241, 0.72); animation-name: txw-lede; }
+.txw-cue { display: inline-flex; align-items: center; gap: 1cqw; margin-top: 3.4cqw; color: rgba(243, 243, 241, 0.5); font-size: 1cqw; letter-spacing: 0.24em; text-transform: uppercase; animation-name: txw-cue; }
+.txw-cue::before { content: ""; width: 4cqw; height: 0.12cqw; background: currentColor; }
+.txw-mark { position: absolute; right: 9cqw; top: 13cqw; width: 25cqw; height: auto; overflow: visible; }
+.txw-mark > * { transform-box: fill-box; }
+.txw-cit { transform-origin: 62.5% 100%; animation-name: txw-cit; }
+.txw-spl, .txw-dep { animation-name: txw-wave; }
+.txw-dep { animation-delay: 0.15s; }
+.txw-sun { transform-origin: 50% 50%; animation-name: txw-sun; }
+@keyframes txw-label { 0%, 4% { opacity: 0; transform: translateY(1.6cqw); } 10%, 92% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
+@keyframes txw-lede { 0%, 10% { opacity: 0; transform: translateY(1.6cqw); } 16%, 92% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
+@keyframes txw-cue { 0%, 13% { opacity: 0; transform: translateY(1.6cqw); } 19%, 92% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
+@keyframes txw-letter { 0%, 4% { opacity: 0; transform: translateY(60%); } 10%, 92% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
+@keyframes txw-pop { 0%, 9% { opacity: 0; transform: scale(0); } 12% { opacity: 1; transform: scale(1.3); } 14%, 92% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
+@keyframes txw-cit { 0%, 5% { opacity: 0; transform: scaleY(0.2); } 11%, 92% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
+@keyframes txw-wave { 0%, 8% { opacity: 0; transform: translateX(60%); } 14%, 92% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
+@keyframes txw-sun { 0%, 13% { opacity: 0; transform: translateY(-80%) scale(0.5); } 17%, 92% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
+/* the sea along the bottom of the hero, always moving */
+.txw-sea { position: absolute; left: 0; right: 0; bottom: 0; height: 12cqw; }
+.txw-sea svg { position: absolute; left: 0; bottom: 0; width: 200%; height: 100%; animation-timing-function: linear !important; animation-fill-mode: none !important; }
+.txw-sea__a path { fill: #659aba; }
+.txw-sea__b path { fill: #054d73; stroke: #0a0a0a; stroke-width: 7; vector-effect: non-scaling-stroke; }
+.txw-sea__a { animation-name: txw-sea; animation-duration: 16s !important; }
+.txw-sea__b { animation-name: txw-sea; animation-duration: 8s !important; }
+@keyframes txw-sea { from { transform: none; } to { transform: translateX(-50%); } }
+/* Theme 2025 */
+.txw-theme { position: relative; height: 62.5cqw; padding: 10.5cqw 6cqw 0; background: #0a0a0a; }
+.txw-h { display: block; color: var(--red); font-size: 5.6cqw; font-weight: 700; letter-spacing: -0.02em; line-height: 1; animation-name: txw-t1; }
+.txw-quote { max-width: 62cqw; margin: 2.4cqw 0 0; font-size: 2.8cqw; font-weight: 500; line-height: 1.2; letter-spacing: -0.01em; animation-name: txw-t2; }
+.txw-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.8cqw; margin-top: 3.4cqw; padding-top: 2.2cqw; border-top: 0.1cqw solid rgba(243, 243, 241, 0.16); }
+.txw-cols p { margin: 0; font-size: 1.22cqw; line-height: 1.6; color: rgba(243, 243, 241, 0.66); }
+.txw-cols p:nth-child(1) { animation-name: txw-t3; }
+.txw-cols p:nth-child(2) { animation-name: txw-t4; }
+.txw-cols p:nth-child(3) { animation-name: txw-t5; }
+.txw-btn--blog { margin-top: 3cqw; background: transparent; box-shadow: inset 0 0 0 0.15cqw var(--red); animation-name: txw-blog; }
+@keyframes txw-t1 { 0%, 35% { opacity: 0; transform: translateY(1.8cqw); } 41%, 92% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
+@keyframes txw-t2 { 0%, 37% { opacity: 0; transform: translateY(1.8cqw); } 43%, 92% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
+@keyframes txw-t3 { 0%, 40% { opacity: 0; transform: translateY(1.8cqw); } 46%, 92% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
+@keyframes txw-t4 { 0%, 42% { opacity: 0; transform: translateY(1.8cqw); } 48%, 92% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
+@keyframes txw-t5 { 0%, 44% { opacity: 0; transform: translateY(1.8cqw); } 50%, 92% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
+@keyframes txw-blog { 0%, 44% { opacity: 0; background: transparent; } 50%, 59% { opacity: 1; background: transparent; } 62%, 72% { opacity: 1; background: var(--red); } 76%, 100% { opacity: 1; background: transparent; } }
+/* the pointer */
+.txw-cursor { position: absolute; left: 0; top: 0; z-index: 3; width: 1.9cqw; height: auto; fill: #fff; stroke: #0a0a0a; stroke-width: 1.2; opacity: 0; filter: drop-shadow(0 0.3cqw 0.6cqw rgba(0, 0, 0, 0.5)); animation-name: txw-cursor; animation-timing-function: cubic-bezier(0.45, 0, 0.25, 1); }
+@keyframes txw-cursor {
+  0%, 13% { opacity: 0; transform: translate(80cqw, 48cqw); }
+  15% { opacity: 1; transform: translate(80cqw, 48cqw); }
+  22%, 28% { opacity: 1; transform: translate(89.5cqw, 3.6cqw); }
+  33%, 50% { opacity: 1; transform: translate(62cqw, 30cqw); }
+  58%, 74% { opacity: 1; transform: translate(12.5cqw, 56.2cqw); }
+  80%, 88% { opacity: 1; transform: translate(40cqw, 40cqw); }
+  92%, 100% { opacity: 0; transform: translate(40cqw, 40cqw); }
+}
+/* the pause button sits over the window */
+.txw-toggle { width: 2.25rem; height: 2.25rem; padding: 0; justify-content: center; opacity: 0; background: rgba(11, 11, 11, 0.6); }
+.tx-web:hover .txw-toggle, .txw-toggle:focus-visible, .txw-toggle[aria-pressed="true"] { opacity: 1; }
+.txw-toggle svg { fill: currentColor; stroke: none; }
+@media (hover: none) { .txw-toggle { opacity: 0.8; } }
+.js .tx-web:not(.is-run) *, .tx-web.is-paused * { animation-play-state: paused !important; }
+
+/* ---------- the end: photos from the day fading into the dark, a thank-you and the signature (in the column) ---------- */
+.cs-section:has(+ .tx-end) { padding-bottom: 0; } /* the card follows the last pictures at the same gap as a new group */
+.tx-end { position: relative; overflow: hidden; margin-top: clamp(2.75rem, 6vw, 4rem); border-radius: var(--radius-lg); background: var(--tx-bg); color: #f2f1ed; }
+:root[data-theme="dark"] .tx-end { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); }
 .tx-end__photos {
-  display: block; width: 100%; height: clamp(15rem, 30vw, 28rem); object-fit: cover; object-position: 50% 40%;
+  display: block; width: 100%; height: clamp(11rem, 26vw, 20rem); object-fit: cover; object-position: 50% 40%;
   -webkit-mask-image: linear-gradient(180deg, #000 30%, rgba(0, 0, 0, 0.55) 62%, transparent 100%); mask-image: linear-gradient(180deg, #000 30%, rgba(0, 0, 0, 0.55) 62%, transparent 100%);
   opacity: 0.85;
 }
-.tx-end__in { position: relative; margin-top: clamp(-7rem, -9vw, -4rem); padding-bottom: clamp(4rem, 9vw, 7rem); }
+.tx-end__in { position: relative; margin-top: clamp(-5rem, -7vw, -3rem); padding: 0 clamp(1.25rem, 4vw, 3rem) clamp(2.5rem, 6vw, 4rem); }
 .tx-end .label { display: block; color: #ff7078; }
 .tx-end h2 { margin: 0.6rem 0 0; font-size: var(--fs-h2); font-weight: 500; letter-spacing: -0.02em; color: #fff; }
 .tx-end p { max-width: 34em; margin: 1rem 0 0; color: rgba(242, 241, 237, 0.78); line-height: 1.65; }
 .tx-end__sig { display: block; width: clamp(14rem, 24vw, 22rem); height: auto; margin-top: clamp(1.5rem, 3vw, 2.25rem); }
-/* the signature writes itself in, left to right, when the band comes on screen */
-.js .tx-end:not(.is-in) .tx-end__sig { clip-path: inset(0 100% 0 0); }
-.tx-end.is-in .tx-end__sig { animation: tx-sign 1.6s cubic-bezier(0.45, 0.05, 0.35, 1) 0.3s both; }
-@keyframes tx-sign { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
-.tx-end + .wrap .also { border-top: 0; }
+/* the signature writes itself the way it was signed: the ink (traced from his frame) shows through a mask of
+   centre-lines laid in pen order — the K's stem top to bottom, the rest of Krishna, the hyphen, Revanth, the i-dot and
+   t-bar, the underline left to right, then the full stop. Each line has its start (--d) and length in time (--t),
+   set from its length at one steady pen speed. */
+.txs-strokes path { fill: none; stroke: #fff; stroke-width: 5.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1 9; }
+.txs-dot { fill: #fff; }
+/* (tedx.js moves the lines frame by frame with attributes: a CSS animation inside a <mask> doesn't repaint in Chrome.
+   Without scripts, or with reduced motion, the signature simply shows whole.) */
 
 /* ---------- reduced motion: everything rests in its final place ---------- */
 @media (prefers-reduced-motion: reduce) {
   .tx-hero .txh-wm { display: none; }
-  .txa-sun, .txa-spl, .txa-dep, .tx-parts.is-in .is-fill, .tx-grid.is-in :is(.txg-line, .txg-ring, .txg-shape), .tx-end.is-in .tx-end__sig { animation: none !important; }
+  .txa-sun, .txa-spl, .txa-dep, .tx-parts.is-in .is-fill, .tx-grid.is-in :is(.txg-line, .txg-ring, .txg-shape) { animation: none !important; }
   .js .tx-parts:not(.is-in) .is-fill, .js .tx-grid:not(.is-in) :is(.txg-line, .txg-ring, .txg-shape) { opacity: 1; }
-  .js .tx-end:not(.is-in) .tx-end__sig { clip-path: none; }
+  .tx-web *, .txw-sea svg { animation: none !important; }
+  .txw-toggle { display: none; }
   .tx-part .is-fill, .tx-sw__chip { transition: none; }
   .tx-part:hover .is-fill { transform: none; }
 }

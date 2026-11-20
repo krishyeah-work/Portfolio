@@ -76,9 +76,11 @@ work/
   tedx-iitg/                   Case study 05, the TEDxIITGuwahati 2025 identity (IIT Guwahati, Jan – Feb 2025), in Krishna's own
                                words: hero (logo reveal) → overview (the event, facts, results) → 01 the theme wordmark over the
                                waves footage → 02 sketches, sun/citadel/waves, construction grid, colour, type → 03 collaterals
-                               (social, on the day, merch, web) → a dark closing band (photos from the day, thank-you, signature).
+                               (social, on the day, merch; web = the event website redesigned and played as motion in a browser window)
+                               → a dark closing card in the column (photos from the day, thank-you, signature).
                                tedx.css (TEDx red; the dark "stage"), tedx.js (reveal, pointer wash, parts and grid drawing in,
-                               the looping mark, swatches that copy, clips that play on screen, the signature writing in).
+                               the looping mark, the website animation, swatches that copy, clips that play on screen, the signature
+                               writing in).
                                The logo is his Figma SVG; the wordmark and TEDx name are traced from his exports; all kept once
                                in a hidden <svg> at the top of <main> and placed with <use>. media/ (waves + sketch timelapse,
                                WebM/MP4 from his After Effects files), img/ (mockups as WebP, *-lg for zoom; type-*.svg specimens;
