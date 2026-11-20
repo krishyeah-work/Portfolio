@@ -303,7 +303,7 @@ body.cs-tx {
 @keyframes txw-sun { 0%, 13% { opacity: 0; transform: translateY(-80%) scale(0.5); } 17%, 92% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; } }
 /* the sea along the bottom of the hero, always moving */
 .txw-sea { position: absolute; left: 0; right: 0; bottom: 0; height: 12cqw; }
-.txw-sea svg { position: absolute; left: 0; bottom: 0; width: 200%; height: 100%; animation-timing-function: linear !important; animation-fill-mode: none !important; }
+.txw-sea svg { position: absolute; left: 0; bottom: 0; width: 200%; max-width: none; height: 100%; animation-timing-function: linear !important; animation-fill-mode: none !important; }
 .txw-sea__a path { fill: #659aba; }
 .txw-sea__b path { fill: #054d73; stroke: #0a0a0a; stroke-width: 7; vector-effect: non-scaling-stroke; }
 .txw-sea__a { animation-name: txw-sea; animation-duration: 16s !important; }
